@@ -1,6 +1,8 @@
 package com.paladinzzz.game.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -50,9 +52,31 @@ public class GameScreen implements Screen {
 
     }
 
+    public void handleInput(float deltaT) {
+
+    }
+
+    public void update(float deltaT) {
+        handleInput(deltaT);
+    }
+
     @Override
     public void render(float delta) {
+        update(delta);
 
+        //Voordat we beginnen met tekenen maken we het scherm leeg:
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //Zet de positie van de camera:
+        game.batch.setProjectionMatrix(levelHUD.hudStage.getCamera().combined);
+
+        //Teken de HUD:
+        levelHUD.hudStage.draw();
+
+        //Open de batch en teken alles:
+        game.batch.begin();
+        game.batch.end();
     }
 
     @Override
