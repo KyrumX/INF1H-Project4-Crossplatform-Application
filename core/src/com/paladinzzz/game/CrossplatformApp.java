@@ -7,11 +7,12 @@ import com.paladinzzz.game.screens.MenuScreen;
 
 public class CrossplatformApp extends Game {
 	public SpriteBatch batch;
-	
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MenuScreen(this));
+
 	}
 
 	@Override
