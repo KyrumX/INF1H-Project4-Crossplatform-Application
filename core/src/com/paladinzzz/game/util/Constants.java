@@ -1,9 +1,5 @@
 package com.paladinzzz.game.util;
 
-/**
- * Created by aaron on 20-Jun-17.
- */
-
 public final class Constants {
     public static final boolean DEBUGGER_ON = true;
     public static final int V_WIDTH = 500;

@@ -19,17 +19,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
-import com.paladinzzz.game.screens.worldobjects.groundObject;
+import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
-
-/**
- * Created by aaron on 20-Jun-17.
- *
- * Edit by Jasper on 11:11 21/06
- *      Added MusicHandler
- *      Editted some Local Variables
- */
 
 public class GameScreen implements Screen {
     private CrossplatformApp game;
@@ -46,6 +38,8 @@ public class GameScreen implements Screen {
     private Mole player;
 
     private groundObject ground;
+    private rampObject ramp;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -74,6 +68,7 @@ public class GameScreen implements Screen {
 
         //Het maken van map objecten:
         this.ground = new groundObject(world, worldMap, player);
+        this.ramp = new rampObject(world, worldMap, player);
 
     }
 
@@ -83,10 +78,12 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaT) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (ground.collides()) {
-                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-            }        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+//            if (ground.collides()) {
+//                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+//            }        }
+            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+        }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
             player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
         }
@@ -99,11 +96,11 @@ public class GameScreen implements Screen {
     public void update(float deltaT) {
         handleInput(deltaT);
 
-        if (player.body.getLinearVelocity().x <= 4f)
-            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
+//        if (player.body.getLinearVelocity().x <= 4f)
+//            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
 
         world.step(1/60f, 6, 2);
-        System.out.println(player.body.getPosition().x);
+        System.out.println(player.body.getPosition().y);
         if(!(player.body.getPosition().y < 0.55))
             camera.position.y = player.body.getPosition().y + (float) 0.71;
         if(!(player.body.getPosition().x < 0.5384443))

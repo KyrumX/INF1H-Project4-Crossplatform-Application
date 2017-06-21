@@ -8,10 +8,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
 
-/**
- * Created by aaron on 21-Jun-17.
- */
-
 public class Mole extends Sprite {
     public World world;
     public Body body;
@@ -23,7 +19,7 @@ public class Mole extends Sprite {
 
     public void defineMole() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / Constants.PPM, 64 / Constants.PPM);
+        bodyDef.position.set(32 / Constants.PPM, 310 / Constants.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         System.out.println(bodyDef);
