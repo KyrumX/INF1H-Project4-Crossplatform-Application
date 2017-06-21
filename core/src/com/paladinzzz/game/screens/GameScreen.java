@@ -124,11 +124,14 @@ public class GameScreen implements Screen {
         //Teken de HUD:
         levelHUD.hudStage.draw();
 
-        // Set level boundaries
+        // Set level boundariesw
         if (player.body.getPosition().x <= 0) {
             player.body.setTransform(0, player.body.getPosition().y, 0);
-        } else if (player.body.getPosition().x >= 8){
-            player.body.setTransform(8, player.body.getPosition().y, 0);
+        } else {
+            player.body.setTransform(player.body.getPosition().x + 0.03f, player.body.getPosition().y, 0);
+        }
+        if (player.body.getPosition().x >= 8){
+                player.body.setTransform(8, player.body.getPosition().y, 0);
         }
         if (player.body.getPosition().y >= 2){
             player.body.setTransform(player.body.getPosition().x, 2, 0);
