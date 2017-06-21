@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
         this.player = new Mole(world);
 
         //Music Player
-        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.mp3", true);
+        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
         musicHandler.playMusic();
 
 
