@@ -23,7 +23,7 @@ public class Mole extends Sprite {
 
     public void defineMole() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / Constants.PPM, 32 / Constants.PPM);
+        bodyDef.position.set(32 / Constants.PPM, 64 / Constants.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         System.out.println(bodyDef);

@@ -55,10 +55,10 @@ public class GameScreen implements Screen {
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
-        this.worldMap = mapLoader.load("Worlds/level1/level1.tmx");
+        this.worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-        this.world = new World(new Vector2(0,-10), true);
+        this.world = new World(new Vector2(0,-9), true);
         this.player = new Mole(world);
 
         //Maak en bepaal of de debugger aan is
@@ -94,8 +94,8 @@ public class GameScreen implements Screen {
         handleInput(deltaT);
 
         world.step(1/60f, 6, 2);
-        camera.position.x = player.body.getPosition().x;
-        camera.position.y = player.body.getPosition().y;
+        camera.position.x = player.body.getPosition().x + 2;
+        camera.position.y = player.body.getPosition().y + (float) 0.71;
 
         camera.update();
         mapRenderer.setView(camera);
@@ -106,7 +106,7 @@ public class GameScreen implements Screen {
         update(delta);
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         //Render de map

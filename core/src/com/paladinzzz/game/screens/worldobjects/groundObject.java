@@ -23,7 +23,7 @@ public class groundObject {
         Body body;
 
         //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object
-        for(MapObject object : map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)){
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
 
