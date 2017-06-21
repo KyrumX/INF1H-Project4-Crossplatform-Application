@@ -26,7 +26,7 @@ public class MenuScreen implements Screen {
     private TextButton exitButton, playButton, optionsButton;
 
     public MenuScreen(CrossplatformApp menu) {
-        this.game = game;
+        this.game = menu;
     }
 
     @Override
