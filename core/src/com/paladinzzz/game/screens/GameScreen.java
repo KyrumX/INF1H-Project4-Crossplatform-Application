@@ -51,6 +51,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
+        System.out.println(gameFile);
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch);
