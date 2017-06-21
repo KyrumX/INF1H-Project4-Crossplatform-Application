@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="29">
+ <tileset firstgid="1" source="tiles.tsx"/>
+ <imagelayer name="Image Layer 1">
+  <image source="largebg.png" width="16000" height="720"/>
+ </imagelayer>
+ <layer name="graphics" width="1000" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4Mr8+AAE=
+  </data>
+ </layer>
+ <objectgroup name="ground">
+  <object id="23" x="2" y="186" width="16000" height="16"/>
+  <object id="25" x="15984" y="208" width="16" height="464"/>
+  <object id="27" x="2" y="666" width="15984" height="15"/>
+  <object id="28" x="0" y="208" width="16" height="448"/>
+ </objectgroup>
+</map>
