@@ -5,6 +5,7 @@ package com.paladinzzz.game.util;
  */
 
 public final class Constants {
+    public static final boolean DEBUGGER_ON = false;
     public static final int V_WIDTH = 400;
     public static final int V_HEIGHT = 208;
     public static final int WIDTH = 800;
