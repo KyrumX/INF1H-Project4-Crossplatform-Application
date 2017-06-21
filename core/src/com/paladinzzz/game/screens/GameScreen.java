@@ -19,10 +19,12 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.scenes.HUD;
+import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.util.Constants;
 
 /**
@@ -46,30 +48,22 @@ public class GameScreen implements Screen {
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
+        this.viewport = new FillViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
         this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,0), true);
-        this.debugRenderer = new Box2DDebugRenderer();
-        debugRenderer.SHAPE_STATIC.set(1,0,0,1);
+
+        //Maak en bepaal of de debugger aan is
+        if(Constants.DEBUGGER_ON) {
+            this.debugRenderer = new Box2DDebugRenderer();
+            debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
+        }
 
         //Het maken van map objecten:
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-        for(MapObject object :worldMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new groundObject(world, worldMap);
 
     }
 
@@ -104,7 +98,8 @@ public class GameScreen implements Screen {
         mapRenderer.render();
 
         //Render de debug renderer lijntjes:
-        debugRenderer.render(world, camera.combined);
+        if(Constants.DEBUGGER_ON)
+            debugRenderer.render(world, camera.combined);
 
         //Zet de positie van de camera:
         game.batch.setProjectionMatrix(levelHUD.hudStage.getCamera().combined);
