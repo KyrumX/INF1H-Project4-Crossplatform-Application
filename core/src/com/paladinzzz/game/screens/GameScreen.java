@@ -5,24 +5,16 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Mole;
@@ -30,6 +22,10 @@ import com.paladinzzz.game.util.Constants;
 
 /**
  * Created by aaron on 20-Jun-17.
+ *
+ * Edit by Jasper on 11:11 21/06
+ *      Added MusicHandler
+ *      Editted some Local Variables
  */
 
 public class GameScreen implements Screen {
@@ -37,8 +33,6 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private Viewport viewport;
     private HUD levelHUD;
-    private TmxMapLoader mapLoader;
-    private TiledMap worldMap;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
 
@@ -55,12 +49,15 @@ public class GameScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch);
-        this.mapLoader = new TmxMapLoader();
-        this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        TiledMap worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
         this.player = new Mole(world);
+        //Music Player
+        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.mp3", true);
+        musicHandler.playMusic();
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {

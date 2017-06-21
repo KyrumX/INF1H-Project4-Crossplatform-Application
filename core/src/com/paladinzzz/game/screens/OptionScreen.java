@@ -19,7 +19,6 @@ public class OptionScreen implements Screen{
 
     @Override
     public void show() {
-
     }
 
     @Override
