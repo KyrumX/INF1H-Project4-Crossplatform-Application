@@ -12,21 +12,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
-import com.paladinzzz.game.screens.worldobjects.groundObject;
+import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
-
-/**
- * Created by aaron on 20-Jun-17.
- *
- * Edit by Jasper on 11:11 21/06
- *      Added MusicHandler
- *      Editted some Local Variables
- */
 
 public class GameScreen implements Screen {
     private CrossplatformApp game;
@@ -43,6 +38,8 @@ public class GameScreen implements Screen {
     private Mole player;
 
     private groundObject ground;
+    private rampObject ramp;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -59,8 +56,8 @@ public class GameScreen implements Screen {
         this.player = new Mole(world);
 
         //Music Player
-        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
+        //MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+        //musicHandler.playMusic();
 
 
         //Maak en bepaal of de debugger aan is
@@ -71,6 +68,7 @@ public class GameScreen implements Screen {
 
         //Het maken van map objecten:
         this.ground = new groundObject(world, worldMap, player);
+        this.ramp = new rampObject(world, worldMap, player);
 
     }
 
@@ -80,10 +78,12 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaT) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (ground.collides()) {
-                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-            }        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+//            if (ground.collides()) {
+//                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+//            }        }
+            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+        }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
             player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
         }
@@ -96,12 +96,15 @@ public class GameScreen implements Screen {
     public void update(float deltaT) {
         handleInput(deltaT);
 
-        if (player.body.getLinearVelocity().x <= 2)
-            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
+//        if (player.body.getLinearVelocity().x <= 4f)
+//            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
 
         world.step(1/60f, 6, 2);
-        camera.position.x = player.body.getPosition().x + 2;
-        camera.position.y = player.body.getPosition().y + (float) 0.71;
+        System.out.println(player.body.getPosition().y);
+        if(!(player.body.getPosition().y < 0.55))
+            camera.position.y = player.body.getPosition().y + (float) 0.71;
+        if(!(player.body.getPosition().x < 0.5384443))
+            camera.position.x = player.body.getPosition().x + 2;
 
         camera.update();
         mapRenderer.setView(camera);

@@ -12,12 +12,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.sprites.Mole;
 
-/**
- * Created by aaron on 21-Jun-17.
- *
- * Editted by Jasper
- */
-
 public class groundObject {
 
     private Body body;
@@ -30,7 +24,7 @@ public class groundObject {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
 
-        //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object
+        //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object in code
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
             this.rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
