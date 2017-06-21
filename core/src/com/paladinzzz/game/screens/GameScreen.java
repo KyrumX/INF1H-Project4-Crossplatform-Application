@@ -74,10 +74,11 @@ public class GameScreen implements Screen {
 
     public void handleInput(float deltaT) {
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-                camera.position.x += 100 * deltaT;
-            if(Gdx.input.isKeyPressed(Input.Keys.S))
-                camera.position.x -= 100 * deltaT;
+            camera.position.x += 100 * deltaT;
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.S))
+            camera.position.x -= 100 * deltaT;
+
     }
 
     public void update(float deltaT) {
