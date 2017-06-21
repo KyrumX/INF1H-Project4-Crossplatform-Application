@@ -15,8 +15,6 @@ public class HUD  {
     public Stage hudStage;
     private Viewport viewport;
 
-
-
     public HUD(SpriteBatch batch) {
         this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera());
         this.hudStage = new Stage(viewport, batch);
