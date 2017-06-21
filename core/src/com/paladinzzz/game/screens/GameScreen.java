@@ -12,6 +12,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
@@ -59,8 +62,8 @@ public class GameScreen implements Screen {
         this.player = new Mole(world);
 
         //Music Player
-        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
+        //MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+        //musicHandler.playMusic();
 
 
         //Maak en bepaal of de debugger aan is
@@ -96,12 +99,15 @@ public class GameScreen implements Screen {
     public void update(float deltaT) {
         handleInput(deltaT);
 
-        if (player.body.getLinearVelocity().x <= 2)
+        if (player.body.getLinearVelocity().x <= 4f)
             player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
 
         world.step(1/60f, 6, 2);
-        camera.position.x = player.body.getPosition().x + 2;
-        camera.position.y = player.body.getPosition().y + (float) 0.71;
+        System.out.println(player.body.getPosition().x);
+        if(!(player.body.getPosition().y < 0.55))
+            camera.position.y = player.body.getPosition().y + (float) 0.71;
+        if(!(player.body.getPosition().x < 0.5384443))
+            camera.position.x = player.body.getPosition().x + 2;
 
         camera.update();
         mapRenderer.setView(camera);
