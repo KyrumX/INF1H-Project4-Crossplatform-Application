@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.paladinzzz.game.screens.GameScreen;
+import com.paladinzzz.game.screens.MenuScreen;
 
 public class CrossplatformApp extends Game {
 	public SpriteBatch batch;
@@ -13,14 +15,12 @@ public class CrossplatformApp extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.end();
+		super.render();
 	}
 	
 	@Override
