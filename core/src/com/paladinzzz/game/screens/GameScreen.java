@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
+import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
 /**
@@ -44,17 +45,21 @@ public class GameScreen implements Screen {
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
 
+    //Playable character:
+    private Mole player;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
-        this.viewport = new FillViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
+        this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
         this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
-        this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap);
+        this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-        this.world = new World(new Vector2(0,0), true);
+        this.world = new World(new Vector2(0,-10), true);
+        this.player = new Mole(world);
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {
@@ -73,16 +78,24 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaT) {
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            camera.position.x += 100 * deltaT;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.S))
-            camera.position.x -= 100 * deltaT;
+        if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
+            player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.S) && player.body.getLinearVelocity().x >= -2) {
+            player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
+        }
 
     }
 
     public void update(float deltaT) {
         handleInput(deltaT);
+
+        world.step(1/60f, 6, 2);
+        camera.position.x = player.body.getPosition().x;
+
         camera.update();
         mapRenderer.setView(camera);
     }
