@@ -55,7 +55,7 @@ public class GameScreen implements Screen {
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
-        this.worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        TiledMap worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-9), true);
