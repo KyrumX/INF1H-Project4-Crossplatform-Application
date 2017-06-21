@@ -1,6 +1,7 @@
 package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,14 +38,15 @@ public class GameScreen implements Screen {
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT);
+        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
-        this.worldMap = mapLoader.load("");
+        this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap);
-        this.camera.position.set(viewport.getWorldWidth() /2, viewport.getWorldHeight() / 2, 0);
-        this.world = new World(new Vector2(0,0), true);
-        this.debugRenderer = new Box2DDebugRenderer();
+        this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+//        this.world = new World(new Vector2(0,0), true);
+//        this.debugRenderer = new Box2DDebugRenderer();
+
     }
 
     @Override
@@ -53,11 +55,17 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaT) {
-
+        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+                camera.position.x += 100 * deltaT;
+            if(Gdx.input.isKeyPressed(Input.Keys.S))
+                camera.position.x -= 100 * deltaT;
+        }
     }
 
     public void update(float deltaT) {
         handleInput(deltaT);
+        camera.update();
+        mapRenderer.setView(camera);
     }
 
     @Override
@@ -67,6 +75,9 @@ public class GameScreen implements Screen {
         //Voordat we beginnen met tekenen maken we het scherm leeg:
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //Render de map
+        mapRenderer.render();
 
         //Zet de positie van de camera:
         game.batch.setProjectionMatrix(levelHUD.hudStage.getCamera().combined);
@@ -81,7 +92,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
