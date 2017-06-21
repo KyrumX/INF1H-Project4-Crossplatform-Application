@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
@@ -47,7 +48,7 @@ public class GameScreen implements Screen {
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
+        this.viewport = new FillViewport(Constants.V_WIDTH, Constants.V_HEIGHT, camera);
         this.levelHUD = new HUD(gameFile.batch);
         this.mapLoader = new TmxMapLoader();
         this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
