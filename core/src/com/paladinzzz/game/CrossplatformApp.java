@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.paladinzzz.game.screens.GameScreen;
+import com.paladinzzz.game.screens.MenuScreen;
 
 public class CrossplatformApp extends Game {
 	public SpriteBatch batch;
@@ -14,7 +15,7 @@ public class CrossplatformApp extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new GameScreen(this));
+		setScreen(new MenuScreen(this));
 	}
 
 	@Override
