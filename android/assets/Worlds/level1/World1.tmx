@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="36">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="37">
  <tileset firstgid="1" source="tiles.tsx"/>
  <imagelayer name="Image Layer 1">
   <image source="largebg.png" width="16000" height="720"/>
