@@ -5,22 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.Map;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitView;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
@@ -51,6 +42,7 @@ public class GameScreen implements Screen {
     //Playable character:
     private Mole player;
 
+    private groundObject ground;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -61,8 +53,6 @@ public class GameScreen implements Screen {
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         TiledMap worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
-        this.mapLoader = new TmxMapLoader();
-        this.worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
@@ -80,7 +70,7 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        new groundObject(world, worldMap);
+        this.ground = new groundObject(world, worldMap, player);
 
     }
 
@@ -91,8 +81,9 @@ public class GameScreen implements Screen {
 
     public void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-        }
+            if (ground.collides()) {
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+            }        }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
             player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
         }
@@ -132,6 +123,16 @@ public class GameScreen implements Screen {
 
         //Teken de HUD:
         levelHUD.hudStage.draw();
+
+        // Set level boundaries
+        if (player.body.getPosition().x <= 0) {
+            player.body.setTransform(0, player.body.getPosition().y, 0);
+        } else if (player.body.getPosition().x >= 8){
+            player.body.setTransform(8, player.body.getPosition().y, 0);
+        }
+        if (player.body.getPosition().y >= 2){
+            player.body.setTransform(player.body.getPosition().x, 2, 0);
+        }
 
         //Open de batch en teken alles:
         game.batch.begin();

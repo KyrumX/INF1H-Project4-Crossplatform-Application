@@ -10,30 +10,42 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.sprites.Mole;
 
 /**
  * Created by aaron on 21-Jun-17.
+ *
+ * Editted by Jasper
  */
 
 public class groundObject {
-    public groundObject(World world, TiledMap map) {
+
+    private Body body;
+    private Mole player;
+    private Rectangle rect;
+
+    public groundObject(World world, TiledMap map, Mole player) {
+        this.player = player;
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
-        Body body;
 
         //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object
         for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            this.rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
 
             //De positie delen we door 2, omdat libgdx begint in het midden van elke vorm.
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
-            body = world.createBody(bdef);
+            this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
         }
 
+    }
+
+    public boolean collides(){
+        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
     }
 }
