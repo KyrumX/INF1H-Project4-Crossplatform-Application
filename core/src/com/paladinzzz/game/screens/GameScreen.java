@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.scenes.HUD;
+import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.util.Constants;
 
 /**
@@ -61,19 +62,7 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
-        for(MapObject object :worldMap.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fdef.shape = shape;
-            body.createFixture(fdef);
-        }
+        new groundObject(world, worldMap);
 
     }
 
