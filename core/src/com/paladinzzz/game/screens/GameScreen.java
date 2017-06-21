@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
         this.levelHUD = new HUD(gameFile.batch);
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap worldMap = mapLoader.load("Worlds/TestWorld/TestWorld.tmx");
+        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
@@ -96,8 +96,12 @@ public class GameScreen implements Screen {
     public void update(float deltaT) {
         handleInput(deltaT);
 
+        if (player.body.getLinearVelocity().x <= 2)
+            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
+
         world.step(1/60f, 6, 2);
-        camera.position.x = player.body.getPosition().x;
+        camera.position.x = player.body.getPosition().x + 2;
+        camera.position.y = player.body.getPosition().y + (float) 0.71;
 
         camera.update();
         mapRenderer.setView(camera);
@@ -124,18 +128,18 @@ public class GameScreen implements Screen {
         //Teken de HUD:
         levelHUD.hudStage.draw();
 
-        // Set level boundariesw
-        if (player.body.getPosition().x <= 0) {
-            player.body.setTransform(0, player.body.getPosition().y, 0);
-        } else {
-            player.body.setTransform(player.body.getPosition().x + 0.03f, player.body.getPosition().y, 0);
-        }
-        if (player.body.getPosition().x >= 8){
-                player.body.setTransform(8, player.body.getPosition().y, 0);
-        }
-        if (player.body.getPosition().y >= 2){
-            player.body.setTransform(player.body.getPosition().x, 2, 0);
-        }
+//        // Set level boundariesw
+//        if (player.body.getPosition().x <= 0) {
+//            player.body.setTransform(0, player.body.getPosition().y, 0);
+//        } else {
+//            player.body.setTransform(player.body.getPosition().x + 0.03f, player.body.getPosition().y, 0);
+//        }
+//        if (player.body.getPosition().x >= 8){
+//                player.body.setTransform(8, player.body.getPosition().y, 0);
+//        }
+//        if (player.body.getPosition().y >= 2){
+//            player.body.setTransform(player.body.getPosition().x, 2, 0);
+//        }
 
         //Open de batch en teken alles:
         game.batch.begin();
