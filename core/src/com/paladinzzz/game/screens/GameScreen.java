@@ -53,8 +53,12 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,0), true);
-        this.debugRenderer = new Box2DDebugRenderer();
-        debugRenderer.SHAPE_STATIC.set(1,0,0,1);
+
+        //Maak en bepaal of de debugger aan is
+        if(Constants.DEBUGGER_ON) {
+            this.debugRenderer = new Box2DDebugRenderer();
+            debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
+        }
 
         //Het maken van map objecten:
         BodyDef bdef = new BodyDef();
@@ -104,7 +108,8 @@ public class GameScreen implements Screen {
         mapRenderer.render();
 
         //Render de debug renderer lijntjes:
-        debugRenderer.render(world, camera.combined);
+        if(Constants.DEBUGGER_ON)
+            debugRenderer.render(world, camera.combined);
 
         //Zet de positie van de camera:
         game.batch.setProjectionMatrix(levelHUD.hudStage.getCamera().combined);
