@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -15,10 +16,13 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.fonts.Text;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
+
+import static com.paladinzzz.game.screens.MenuScreen.inPlayscreen;
 
 /**
  * Created by aaron on 20-Jun-17.
@@ -30,11 +34,14 @@ import com.paladinzzz.game.util.Constants;
 
 public class GameScreen implements Screen {
     private CrossplatformApp game;
+    private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
+    BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
+    static boolean showtext = true;
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
@@ -82,6 +89,7 @@ public class GameScreen implements Screen {
     public void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if (ground.collides()) {
+
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
             }        }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
@@ -102,6 +110,10 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
         camera.position.x = player.body.getPosition().x + 2;
         camera.position.y = player.body.getPosition().y + (float) 0.71;
+
+//        metersran = metersran + this.player.body.getPosition().x;
+//        if (metersran == (int) metersran)
+//        System.out.println((int) metersran);
 
         camera.update();
         mapRenderer.setView(camera);
@@ -128,7 +140,7 @@ public class GameScreen implements Screen {
         //Teken de HUD:
         levelHUD.hudStage.draw();
 
-//        // Set level boundariesw
+//        // Set level boundaries
 //        if (player.body.getPosition().x <= 0) {
 //            player.body.setTransform(0, player.body.getPosition().y, 0);
 //        } else {
@@ -143,6 +155,16 @@ public class GameScreen implements Screen {
 
         //Open de batch en teken alles:
         game.batch.begin();
+        if (this.showtext && inPlayscreen) {
+            font.draw(game.batch, "Press space to jump!", 200, 250);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            this.showtext = false;
+        }
+
+        font.draw(game.batch, "Herobrine", player.body.getLocalCenter().x - 1, player.body.getLocalCenter().y + 150);
+
         game.batch.end();
     }
 
