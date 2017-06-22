@@ -1,0 +1,40 @@
+
+MoleRun.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+MoleRun
+  rotate: false
+  xy: 1, 1
+  size: 103, 32
+  orig: 103, 32
+  offset: 0, 0
+  index: -1
+MoleRun0
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+MoleRun1
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+MoleRun2
+  rotate: false
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+MoleRun3
+  rotate: false
+  xy: 103, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
