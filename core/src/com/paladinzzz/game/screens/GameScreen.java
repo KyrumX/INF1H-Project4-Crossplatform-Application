@@ -90,8 +90,6 @@ public class GameScreen implements Screen {
 
     }
 
-     }
-
     private void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);

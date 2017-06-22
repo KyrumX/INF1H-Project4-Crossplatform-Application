@@ -27,7 +27,7 @@ public class HUD  {
 
 
     public HUD(SpriteBatch batch, String worldName) {
-        this.viewport = new FitViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, new OrthographicCamera());
+        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera());
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
         this.worldName = worldName;
@@ -42,7 +42,7 @@ public class HUD  {
         table.top();
         table.setFillParent(true);
 
-        table.add(worldNameLabel).expandX().padTop((float) 65);
+        table.add(worldNameLabel).expandX().padTop((float) 1);
         table.add(scoreLabel).expandX().padTop((float) 1);
         table.add(playerNameLabel).expandX().padTop((float) 1);
 

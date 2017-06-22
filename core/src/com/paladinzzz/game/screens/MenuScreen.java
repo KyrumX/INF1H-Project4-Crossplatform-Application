@@ -32,7 +32,6 @@ public class MenuScreen implements Screen {
     private OrthographicCamera camera;
 
     public static boolean inPlayscreen = false;
-    private GameScreen gs = new GameScreen(game);
     private Table table;
 
 
