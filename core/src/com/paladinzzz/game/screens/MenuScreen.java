@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 
+import static com.paladinzzz.game.screens.GameScreen.showtext;
+
 
 public class MenuScreen implements Screen {
 
@@ -28,6 +30,9 @@ public class MenuScreen implements Screen {
     private Texture exitTexture, playTexture, optionsTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions;
     private OrthographicCamera camera;
+
+    public static boolean inPlayscreen = false;
+    private GameScreen gs = new GameScreen(game);
     private Table table;
 
 
@@ -62,6 +67,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new LevelScreen(game));
+                inPlayscreen = true;
             }
         });
 
@@ -72,6 +78,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new OptionScreen(game));
+                showtext = true;
             }
         });
 
