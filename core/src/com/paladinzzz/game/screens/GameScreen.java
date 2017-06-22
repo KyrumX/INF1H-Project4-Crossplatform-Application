@@ -100,11 +100,14 @@ public class GameScreen implements Screen {
 //            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
 
         world.step(1/60f, 6, 2);
-        System.out.println(player.body.getPosition().y);
-        if(!(player.body.getPosition().y < 0.55))
-            camera.position.y = player.body.getPosition().y + (float) 0.71;
-        if(!(player.body.getPosition().x < 0.5384443))
-            camera.position.x = player.body.getPosition().x + 2;
+//        System.out.println(player.body.getPosition().y);
+//        if(!(player.body.getPosition().y < 0.55))
+//            camera.position.y = player.body.getPosition().y + (float) 0.71;
+//        if(!(player.body.getPosition().x < 0.5384443))
+//            camera.position.x = player.body.getPosition().x + 2;
+
+        camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+        camera.position.y = player.body.getPosition().y;
 
         camera.update();
         mapRenderer.setView(camera);

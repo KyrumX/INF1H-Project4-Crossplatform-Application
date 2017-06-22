@@ -12,10 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.util.Constants;
 
-/**
- * Created by aaron on 20-Jun-17.
- */
-
 public class HUD  {
     public Stage hudStage;
     private Viewport viewport;
@@ -31,7 +27,7 @@ public class HUD  {
 
 
     public HUD(SpriteBatch batch, String worldName) {
-        this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera());
+        this.viewport = new FitViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, new OrthographicCamera());
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
         this.worldName = worldName;
@@ -47,8 +43,8 @@ public class HUD  {
         table.setFillParent(true);
 
         table.add(worldNameLabel).expandX().padTop((float) 65);
-        table.add(scoreLabel).expandX().padTop((float) 65);
-        table.add(playerNameLabel).expandX().padTop((float) 65);
+        table.add(scoreLabel).expandX().padTop((float) 1);
+        table.add(playerNameLabel).expandX().padTop((float) 1);
 
         hudStage.addActor(table);
 
