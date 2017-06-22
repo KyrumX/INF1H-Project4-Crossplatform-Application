@@ -12,7 +12,7 @@ public abstract class objectFactory {
     public static IObject createObject(int objectNum, World world, TiledMap map, Mole mole) {
         switch (objectNum) {
             case 1: return new groundObject(world, map, mole);
-            case 2: return new polygonObject(world, map, mole);
+            case 2: return new polygonObject(world, map);
             case 3: return new bounceObject(world, map);
             default: return null;
         }
