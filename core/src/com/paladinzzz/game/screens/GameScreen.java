@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -13,9 +13,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
@@ -31,16 +28,13 @@ public class GameScreen implements Screen {
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
+    private TextureAtlas atlas;
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
 
     //Playable character:
     private Mole player;
-
-    private groundObject ground;
-    private rampObject ramp;
-
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -54,7 +48,8 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
-        this.player = new Mole(world, new Texture("Mole/Movement0.png"));
+        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+        this.player = new Mole(world, this);
 
         //Music Player
         MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -68,8 +63,8 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        this.ground = new groundObject(world, worldMap, player);
-        this.ramp = new rampObject(world, worldMap, player);
+        groundObject ground = new groundObject(world, worldMap, player);
+        rampObject ramp = new rampObject(world, worldMap, player);
 
     }
 
@@ -78,11 +73,8 @@ public class GameScreen implements Screen {
 
     }
 
-    public void handleInput(float deltaT) {
+    private void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-//            if (ground.collides()) {
-//                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-//            }        }
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
@@ -94,19 +86,16 @@ public class GameScreen implements Screen {
 
     }
 
-    public void update(float deltaT) {
+    private void update(float deltaT) {
         handleInput(deltaT);
 
-//        if (player.body.getLinearVelocity().x <= 4f)
-//            player.body.applyLinearImpulse(new Vector2(4f / Constants.PPM, 0), player.body.getWorldCenter(), true);
-
         world.step(1/60f, 6, 2);
-        System.out.println(player.body.getPosition().y);
         if(!(player.body.getPosition().y < 0.55))
             camera.position.y = player.body.getPosition().y + (float) 0.71;
         if(!(player.body.getPosition().x < 0.5384443))
             camera.position.x = player.body.getPosition().x + 2;
 
+        player.update(deltaT);
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -133,9 +122,14 @@ public class GameScreen implements Screen {
         levelHUD.hudStage.draw();
 
         //Open de batch en teken alles:
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         player.draw(game.batch);
         game.batch.end();
+    }
+
+    public TextureAtlas getAtlas(){
+        return atlas;
     }
 
     @Override
