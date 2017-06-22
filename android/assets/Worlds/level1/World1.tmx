@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="38">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="67">
  <tileset firstgid="1" source="tiles.tsx"/>
  <imagelayer name="Image Layer 1">
   <image source="largebg.png" width="16000" height="720"/>
  </imagelayer>
  <layer name="graphics" width="1000" height="45">
   <data encoding="base64" compression="zlib">
-   eJzt27ENgDAQBMGX26AQoEFKoA6XCBUARohLZqSTHH2+gasAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCv7wKY2dnsbHAAAAHCv13ijAwAAAN/qpdEBAAAgrZdGBwAAgDR/yAEAACBPnwMAAECePgcAAIA8fQ4AAAB5+hwAAADy9DkAAADk6XMAAADI0+cAAACQp88BAAAgT58DAABAnj4HAACAvCd9Preq5dza/n0DAAAAAAAAAAAAAAAAAADw3gEQPFCj
+   eJzt3V1OwkAYBdBp2Qm6BzXoTpCwIVyCugJcgnUVxKXw5lciCQ+KU35aas9JbsJDGdq+3c50SAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmnkrUrWMdH0eAAAAMGT6OQAAAHRPPwcAAIDu6ecAAADQvSH281FGAAAAoE1D7Oe7ZnHtj5HpgO8BAAAA3Rt6P3+Ia7+PTAZ8DwAAAOjeU/TSRc+7ac569UPWrFv3DgAAAAAAAAAAAAAAAAAAcH5lRk7xHQAAAOB312WqriLj8vi96UZlmsd487qfL4rNnneHjZMZAAAA+C+iU1dlpDhBP49x5lff/XxZbP4zDgAAAC5K7pxwnc+GvbbJ2Oecd46OPx/r5wAAAPwT66J5R981K1L1GJlGTrl+PVfO++neVwcAAODS1f38mI7+EL38PjKJnHL9eq7d5wNt/WbTNQTeYwcAAOAv235+7Dx6V3afD3R9LgAAAHAoc74AAAAAAAAAMCzeGwcAAAByrYqU6q0A9gUAAAA4n7qbr+x1BwAAQI/1fc26bg4AAADt2Ld2XTcHAABgiNqeazc/DgAAQJ/VvXacfk5f6OYAAAD0Wd1r1xe+YXnOfuu6OQAAAH217eY5/fw9jqkiHy13efPiAAAAtOWmTOk2cle2+3ndoJ8/xzEvkdcW+7luDgAAAAAAAAAAAAAAAAAAXLIvctRtsA==
   </data>
  </layer>
  <objectgroup name="ground">
@@ -17,10 +17,40 @@
   <object id="33" x="16" y="416" width="176" height="16"/>
   <object id="34" x="384" y="416" width="192" height="16"/>
   <object id="35" x="192" y="480" width="144" height="16"/>
+  <object id="39" x="320" y="496" width="16" height="176"/>
+  <object id="41" x="864" y="608" width="96" height="16"/>
+  <object id="42" x="624" y="368" width="144" height="16"/>
+  <object id="43" x="832" y="368" width="144" height="16"/>
+  <object id="44" x="960" y="384" width="48" height="64"/>
+  <object id="45" x="1008" y="432" width="160" height="16"/>
+  <object id="46" x="928" y="304" width="160" height="16"/>
+  <object id="47" x="1120" y="256" width="144" height="16"/>
+  <object id="48" x="1280" y="304" width="80" height="16"/>
+  <object id="50" x="1216" y="384" width="160" height="16"/>
+  <object id="51" x="1136" y="512" width="240" height="16"/>
+  <object id="52" x="1008" y="560" width="192" height="16"/>
+  <object id="53" x="1200" y="592" width="176" height="16"/>
+  <object id="55" x="144" y="304" width="32" height="16"/>
+  <object id="61" x="1424" y="448" width="240" height="16"/>
+  <object id="63" x="1504" y="624" width="128" height="16"/>
+  <object id="65" x="1680" y="576" width="96" height="16"/>
+  <object id="66" x="1824" y="528" width="128" height="16"/>
  </objectgroup>
  <objectgroup name="polygon">
   <object id="30" x="192" y="416">
    <polygon points="0,0 64,63 2,65"/>
+  </object>
+  <object id="40" x="862" y="608">
+   <polygon points="0,0 -48,48 3,63"/>
+  </object>
+  <object id="56" x="1823" y="528">
+   <polygon points="0,0 3,15 -47,62 -50,51"/>
+  </object>
+  <object id="57" x="1679" y="575">
+   <polygon points="0,0 -47,49 -47,62 2,19"/>
+  </object>
+  <object id="58" x="1504" y="623">
+   <polygon points="0,0 -44,45 -29,50 2,16"/>
   </object>
  </objectgroup>
  <objectgroup name="bounceblocks">
