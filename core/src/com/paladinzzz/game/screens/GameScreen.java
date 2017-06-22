@@ -12,14 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
-import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.*;
+import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
@@ -37,8 +34,9 @@ public class GameScreen implements Screen {
     //Playable character:
     private Mole player;
 
-    private groundObject ground;
-    private rampObject ramp;
+    private IObject ground;
+    private IObject ramp;
+    private IObject bounceBlocks;
 
 
     public GameScreen(CrossplatformApp gameFile) {
@@ -67,8 +65,9 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        this.ground = new groundObject(world, worldMap, player);
-        this.ramp = new rampObject(world, worldMap, player);
+        this.ground = objectFactory.createObject(1, world, worldMap, this.player);
+        this.ramp = objectFactory.createObject(2, world, worldMap, player);
+        this.bounceBlocks = objectFactory.createObject(3, world, worldMap, player);
 
     }
 
