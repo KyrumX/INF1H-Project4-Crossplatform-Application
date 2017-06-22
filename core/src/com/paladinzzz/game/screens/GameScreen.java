@@ -46,7 +46,7 @@ public class GameScreen implements Screen {
         System.out.println(gameFile);
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
-        this.levelHUD = new HUD(gameFile.batch);
+        this.levelHUD = new HUD(gameFile.batch, "hoi");
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
