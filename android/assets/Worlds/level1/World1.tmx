@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="37">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="1000" height="45" tilewidth="16" tileheight="16" nextobjectid="38">
  <tileset firstgid="1" source="tiles.tsx"/>
  <imagelayer name="Image Layer 1">
   <image source="largebg.png" width="16000" height="720"/>
  </imagelayer>
  <layer name="graphics" width="1000" height="45">
   <data encoding="base64" compression="zlib">
-   eJzt28EJhEAQRcHGNDZfQzCOCXEzUAaEB1IF/9r3d+gZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAODOtbHfsXf73BwAAADwbM1+owMAAADvWqPRAQAAoLZGowMAAEDNDzkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAD09DkAAAAAAAAAAAAAAAAAAMA3/QHvNknX
+   eJzt27ENgDAQBMGX26AQoEFKoA6XCBUARohLZqSTHH2+gasAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCv7wKY2dnsbHAAAAHCv13ijAwAAAN/qpdEBAAAgrZdGBwAAgDR/yAEAACBPnwMAAECePgcAAIA8fQ4AAAB5+hwAAADy9DkAAADk6XMAAADI0+cAAACQp88BAAAgT58DAABAnj4HAACAvCd9Preq5dza/n0DAAAAAAAAAAAAAAAAAADw3gEQPFCj
   </data>
  </layer>
  <objectgroup name="ground">
@@ -22,5 +22,8 @@
   <object id="30" x="192" y="416">
    <polygon points="0,0 64,63 2,65"/>
   </object>
+ </objectgroup>
+ <objectgroup name="bounceblocks">
+  <object id="37" x="334" y="656" width="480" height="16"/>
  </objectgroup>
 </map>

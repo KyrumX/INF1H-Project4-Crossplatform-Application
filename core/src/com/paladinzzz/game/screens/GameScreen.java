@@ -18,6 +18,7 @@ import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.*;
+import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
@@ -63,8 +64,9 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        groundObject ground = new groundObject(world, worldMap, player);
-        rampObject ramp = new rampObject(world, worldMap, player);
+        IObject ground = objectFactory.createObject(1, world, worldMap, this.player);
+        IObject ramp = objectFactory.createObject(2, world, worldMap, player);
+        IObject bounceBlocks = objectFactory.createObject(3, world, worldMap, player);
 
     }
 
@@ -90,10 +92,14 @@ public class GameScreen implements Screen {
         handleInput(deltaT);
 
         world.step(1/60f, 6, 2);
-        if(!(player.body.getPosition().y < 0.55))
-            camera.position.y = player.body.getPosition().y + (float) 0.71;
-        if(!(player.body.getPosition().x < 0.5384443))
-            camera.position.x = player.body.getPosition().x + 2;
+//        System.out.println(player.body.getPosition().y);
+//        if(!(player.body.getPosition().y < 0.55))
+//            camera.position.y = player.body.getPosition().y + (float) 0.71;
+//        if(!(player.body.getPosition().x < 0.5384443))
+//            camera.position.x = player.body.getPosition().x + 2;
+
+        camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+        camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
         camera.update();

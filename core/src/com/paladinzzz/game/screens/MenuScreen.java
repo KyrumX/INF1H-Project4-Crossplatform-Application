@@ -19,9 +19,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 
-/**
- * Created by Ralph on 20-6-2017.
- */
 
 public class MenuScreen implements Screen {
 
@@ -34,8 +31,8 @@ public class MenuScreen implements Screen {
     private Table table;
 
 
-    public MenuScreen(CrossplatformApp menu) {
-        this.game = menu;
+    public MenuScreen(CrossplatformApp game) {
+        this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.exitTexture = new Texture("ExitGameButton.png");
@@ -64,14 +61,13 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new LevelScreen(game));
             }
         });
 
         //Geef de texture van de optionsbutton mee aan de ImageButton
         drawableOptions = new TextureRegionDrawable(new TextureRegion(optionsTexture));
         optionsButton = new ImageButton(drawableOptions);
-
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

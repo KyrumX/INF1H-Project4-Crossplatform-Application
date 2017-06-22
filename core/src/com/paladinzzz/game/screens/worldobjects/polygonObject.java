@@ -15,12 +15,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
-public class rampObject {
+public class polygonObject implements IObject{
     private Body body;
     private Mole player;
     private Polygon polygon;
 
-    public rampObject(World world, TiledMap map, Mole player) {
+    public polygonObject(World world, TiledMap map, Mole player) {
         this.player = player;
         BodyDef bdef = new BodyDef();
         PolygonShape shape;
