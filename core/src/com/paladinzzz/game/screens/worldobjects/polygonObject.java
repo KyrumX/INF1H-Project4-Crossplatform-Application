@@ -17,11 +17,9 @@ import com.paladinzzz.game.util.Constants;
 
 public class polygonObject implements IObject{
     private Body body;
-    private Mole player;
     private Polygon polygon;
 
-    public polygonObject(World world, TiledMap map, Mole player) {
-        this.player = player;
+    public polygonObject(World world, TiledMap map) {
         BodyDef bdef = new BodyDef();
         PolygonShape shape;
         FixtureDef fdef = new FixtureDef();
@@ -42,9 +40,5 @@ public class polygonObject implements IObject{
             world.createBody(bdef).createFixture(fdef);
         }
 
-    }
-
-    public boolean collides(){
-        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
     }
 }
