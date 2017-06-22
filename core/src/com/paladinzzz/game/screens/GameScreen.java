@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,6 +20,7 @@ import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
+
 
 /**
  * Created by aaron on 20-Jun-17.
@@ -56,7 +58,7 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
-        this.player = new Mole(world);
+        this.player = new Mole(world, new Texture("Mole/Movement0.png"));
 
         //Music Player
         MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -128,21 +130,9 @@ public class GameScreen implements Screen {
         //Teken de HUD:
         levelHUD.hudStage.draw();
 
-//        // Set level boundariesw
-//        if (player.body.getPosition().x <= 0) {
-//            player.body.setTransform(0, player.body.getPosition().y, 0);
-//        } else {
-//            player.body.setTransform(player.body.getPosition().x + 0.03f, player.body.getPosition().y, 0);
-//        }
-//        if (player.body.getPosition().x >= 8){
-//                player.body.setTransform(8, player.body.getPosition().y, 0);
-//        }
-//        if (player.body.getPosition().y >= 2){
-//            player.body.setTransform(player.body.getPosition().x, 2, 0);
-//        }
-
         //Open de batch en teken alles:
         game.batch.begin();
+        player.draw(game.batch);
         game.batch.end();
     }
 

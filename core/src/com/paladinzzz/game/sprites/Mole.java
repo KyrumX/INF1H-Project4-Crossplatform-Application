@@ -1,5 +1,7 @@
 package com.paladinzzz.game.sprites;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,9 +17,11 @@ import com.paladinzzz.game.util.Constants;
 public class Mole extends Sprite {
     public World world;
     public Body body;
+    public Texture texture;
 
-    public Mole(World world) {
+    public Mole(World world, Texture texture) {
         this.world = world;
+        this.texture = texture;
         defineMole();
     }
 
@@ -36,5 +40,9 @@ public class Mole extends Sprite {
         shape.setRadius(5 / Constants.PPM);
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
+    }
+
+    public void draw (Batch batch) {
+        batch.draw(texture, this.body.getPosition().x + 2, this.body.getPosition().y*2);
     }
 }
