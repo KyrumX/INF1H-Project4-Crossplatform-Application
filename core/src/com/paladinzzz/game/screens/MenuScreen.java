@@ -39,6 +39,7 @@ public class MenuScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.exitTexture = new Texture("ExitGameButton.png");
+        this.playTexture = new Texture("StartGameButton.png");
         this.optionsTexture = new Texture("OptionsButton.png");
         this.background = new Texture("Titlescreen.png");
     }
