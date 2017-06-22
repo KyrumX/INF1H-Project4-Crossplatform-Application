@@ -21,42 +21,37 @@ import com.paladinzzz.game.util.Constants;
 
 import static com.paladinzzz.game.screens.GameScreen.showtext;
 
-/**
- * Created by Ralph on 20-6-2017.
- */
 
 public class MenuScreen implements Screen {
 
     private CrossplatformApp game;
     private Stage stage;
     private ImageButton exitButton, playButton, optionsButton;
-    private Texture exitTexture, playTexture, optionsTexture, backGround;
+    private Texture exitTexture, playTexture, optionsTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions;
     private OrthographicCamera camera;
+
     public static boolean inPlayscreen = false;
     private GameScreen gs = new GameScreen(game);
+    private Table table;
 
 
-
-
-    public MenuScreen(CrossplatformApp menu) {
-        this.game = menu;
+    public MenuScreen(CrossplatformApp game) {
+        this.game = game;
         this.camera = new OrthographicCamera();
-        this.playTexture = new Texture("StartGameButton.png");
-        this.exitTexture = new Texture("ExitGameButton.png");
-        this.optionsTexture = new Texture("OptionsButton.png");
-        this.backGround = new Texture("Titlescreen.png");
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
-
+        this.exitTexture = new Texture("ExitGameButton.png");
+        this.playTexture = new Texture("StartGameButton.png");
+        this.optionsTexture = new Texture("OptionsButton.png");
+        this.background = new Texture("Titlescreen.png");
     }
 
     @Override
     public void show() {
 
-
+        //Geef de texture van de exitButton mee aan de ImageButton
         drawableExit = new TextureRegionDrawable(new TextureRegion(exitTexture));
         exitButton = new ImageButton(drawableExit);
-        exitButton.setPosition(Gdx.graphics.getWidth()/2 - exitButton.getWidth()/2, Gdx.graphics.getHeight()/2);
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -65,27 +60,24 @@ public class MenuScreen implements Screen {
         });
 
 
+        //Geef de texture van de playButton mee aan de ImageButton
         drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
         playButton = new ImageButton(drawablePlay);
-        playButton.setPosition(Gdx.graphics.getWidth()/2 - playButton.getWidth()/2, Gdx.graphics.getHeight() - 150);
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((CrossplatformApp)Gdx.app.getApplicationListener()).setScreen(gs);
-                stage.dispose();
+                game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
             }
         });
 
-
+        //Geef de texture van de optionsbutton mee aan de ImageButton
         drawableOptions = new TextureRegionDrawable(new TextureRegion(optionsTexture));
         optionsButton = new ImageButton(drawableOptions);
-        optionsButton.setPosition(10, 300);
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((CrossplatformApp)Gdx.app.getApplicationListener()).setScreen(new OptionScreen(game));
-                stage.dispose();
+                game.setScreen(new OptionScreen(game));
                 showtext = true;
             }
         });
@@ -95,37 +87,27 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
 
-        //Maak een table waar we de buttons aan toevoegen
-//        Table table = new Table();
-//        table.setFillParent(true);
-
-//        table.add(playButton);
-//        table.row();
-//        table.add(exitButton);
-//        table.row();
-//        table.add(optionsButton);
-
-        stage.addActor(exitButton);
-        stage.addActor(playButton);
-        stage.addActor(optionsButton);
-
-
-
+        //Een table wordt aangemaakt om buttons aan toe te voegen.
+        table = new Table();
+        table.top();
+        table.setFillParent(true);
+        table.add(playButton).padTop(40);
+        table.row();
+        table.add(exitButton).padTop(40);
+        table.row();
+        table.add(optionsButton).padTop(40);
+        stage.addActor(table);
     }
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        game.batch.draw(backGround, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.end();
-
         stage.draw();
-
-
     }
 
     @Override
@@ -150,6 +132,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
 
     }
 }

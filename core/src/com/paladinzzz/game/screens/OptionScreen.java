@@ -5,9 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.paladinzzz.game.CrossplatformApp;
 
-/**
- * Created by Ralph on 21-6-2017.
- */
 
 public class OptionScreen implements Screen{
 
