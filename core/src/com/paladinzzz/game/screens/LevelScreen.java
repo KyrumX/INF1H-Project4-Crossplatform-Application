@@ -19,7 +19,7 @@ public class LevelScreen implements Screen {
 
     private CrossplatformApp game;
     private Stage stage;
-    private TextButton level1, level2, level3;
+    private TextButton level1, level2, level3, backButton;
     private OrthographicCamera camera;
     private Table table;
     private Skin skin;
@@ -44,6 +44,14 @@ public class LevelScreen implements Screen {
             }
         });
 
+        backButton = new TextButton("back", skin);
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
+
 
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
@@ -53,6 +61,8 @@ public class LevelScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
         table.add(level1).size(100, 100);
+        table.row();
+        table.add(backButton).size(100, 100);
         stage.addActor(table);
     }
 
