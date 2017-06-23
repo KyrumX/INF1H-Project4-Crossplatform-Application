@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -23,12 +24,14 @@ public class OptionScreen implements Screen{
     private OrthographicCamera camera;
     private Table table;
     private Skin skin;
+    private Texture background;
 
     public OptionScreen(CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
+        this.background = new Texture("Screens/OptionsScreen/OptionsScreen_InProgress.png");
     }
 
 
@@ -58,10 +61,8 @@ public class OptionScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         game.batch.begin();
+        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.end();
         stage.draw();
     }
