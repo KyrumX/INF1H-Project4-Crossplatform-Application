@@ -27,9 +27,9 @@ public class MenuScreen implements Screen {
 
     private CrossplatformApp game;
     private Stage stage;
-    private ImageButton exitButton, playButton, optionsButton;
-    private Texture exitTexture, playTexture, optionsTexture, background;
-    private Drawable drawableExit, drawablePlay, drawableOptions;
+    private ImageButton exitButton, playButton, optionsButton, highscoreButton;
+    private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
+    private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
     private OrthographicCamera camera;
     private MusicHandler musicHandler;
 
@@ -41,10 +41,11 @@ public class MenuScreen implements Screen {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
-        this.exitTexture = new Texture("ExitGameButton.png");
-        this.playTexture = new Texture("StartGameButton.png");
-        this.optionsTexture = new Texture("OptionsButton.png");
-        this.background = new Texture("Titlescreen.png");
+        this.exitTexture = new Texture("Screens/TitleScreen/ExitGameButton.png");
+        this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
+        this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
+        this.highscoreTexture = new Texture("Screens/TitleScreen/HighscoresButton.png");
+        this.background = new Texture("Screens/TitleScreen/MainScreen.png");
         this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
         musicHandler.playMusic();
     }
@@ -84,6 +85,17 @@ public class MenuScreen implements Screen {
             }
         });
 
+        drawableHighscore = new TextureRegionDrawable(new TextureRegion(highscoreTexture));
+        highscoreButton = new ImageButton(drawableHighscore);
+        highscoreButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Clicked");
+            }
+        });
+
+
+
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
@@ -91,11 +103,13 @@ public class MenuScreen implements Screen {
         table = new Table();
         table.top();
         table.setFillParent(true);
-        table.add(playButton).padTop(40);
+        table.add(playButton).padTop(59);
         table.row();
-        table.add(exitButton).padTop(40);
+        table.add(optionsButton).padTop(5).padRight(5);
         table.row();
-        table.add(optionsButton).padTop(40);
+        table.add(highscoreButton).padTop(2).padRight(7);
+        table.row();
+        table.add(exitButton).padTop(5).padRight(10);
         stage.addActor(table);
     }
 
