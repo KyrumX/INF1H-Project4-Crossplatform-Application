@@ -8,7 +8,7 @@ package com.paladinzzz.game.database;
 import java.sql.*;
 
 public class Database{
-    private final String url = "jdbc:postgresql://localhost:5432/diggydb";
+    private final String url = "jdbc:postgresql://37.97.173.46:5432/diggydb";
     private final String user = "postgres";
     private final String password = "kaas123";
     private Connection conn;
