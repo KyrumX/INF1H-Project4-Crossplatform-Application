@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.audio.MusicHandler;
 
 import static com.paladinzzz.game.screens.GameScreen.showtext;
 
@@ -30,6 +31,7 @@ public class MenuScreen implements Screen {
     private Texture exitTexture, playTexture, optionsTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions;
     private OrthographicCamera camera;
+    private MusicHandler musicHandler;
 
     public static boolean inPlayscreen = false;
     private Table table;
@@ -43,6 +45,8 @@ public class MenuScreen implements Screen {
         this.playTexture = new Texture("StartGameButton.png");
         this.optionsTexture = new Texture("OptionsButton.png");
         this.background = new Texture("Titlescreen.png");
+        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
+        musicHandler.playMusic();
     }
 
     @Override
@@ -58,14 +62,13 @@ public class MenuScreen implements Screen {
             }
         });
 
-
         //Geef de texture van de playButton mee aan de ImageButton
         drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
         playButton = new ImageButton(drawablePlay);
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LevelScreen(game));
+                game.setScreen(new LevelScreen(game, musicHandler));
                 inPlayscreen = true;
             }
         });
@@ -81,10 +84,8 @@ public class MenuScreen implements Screen {
             }
         });
 
-
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
-
 
         //Een table wordt aangemaakt om buttons aan toe te voegen.
         table = new Table();
