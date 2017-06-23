@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
-import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.fonts.Text;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
@@ -66,11 +64,6 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
-
-        //Music Player
-        MusicHandler musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
-
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {
