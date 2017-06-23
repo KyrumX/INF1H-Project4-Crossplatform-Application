@@ -53,9 +53,6 @@ public class Mole extends Sprite {
         bodyDef.position.set(32 / Constants.PPM, 310 / Constants.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        System.out.println(bodyDef);
-        System.out.println(body);
-
         body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();

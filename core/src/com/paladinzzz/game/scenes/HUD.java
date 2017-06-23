@@ -31,11 +31,11 @@ public class HUD  {
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
         this.worldName = worldName;
-        this.playerName = "PLACEHOLDER";
+        this.playerName = "Diggy the Mole";
 
         //Maken van de labels:
         scoreLabel = new Label(String.format("Score: " + "%03d", score), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        worldNameLabel = new Label(("WORLDNAME HERE"), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        worldNameLabel = new Label(("Level 1"), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         playerNameLabel = new Label(playerName, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
 
         Table table = new Table();
