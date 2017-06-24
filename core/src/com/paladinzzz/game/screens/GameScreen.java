@@ -16,11 +16,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
+import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
+
 
 /**
  * Created by aaron on 20-Jun-17.
@@ -75,6 +78,10 @@ public class GameScreen implements Screen {
         IObject ground = objectFactory.createObject(1, world, worldMap, this.player);
         IObject ramp = objectFactory.createObject(2, world, worldMap, player);
         IObject bounceBlocks = objectFactory.createObject(3, world, worldMap, player);
+
+        musicHandler.stopMusic();
+        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+        musicHandler.playMusic();
 
     }
 

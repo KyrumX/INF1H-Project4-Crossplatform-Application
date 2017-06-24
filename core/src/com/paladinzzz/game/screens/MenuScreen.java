@@ -40,8 +40,8 @@ public class MenuScreen implements Screen {
     private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
     private OrthographicCamera camera;
-    private MusicHandler musicHandler;
-    boolean isPressed = false;
+    public static MusicHandler musicHandler;
+    boolean inMenuScreen = true;
     BitmapFont font = new BitmapFont();
     int[] x = new int[255];
     public static boolean inPlayscreen = false;
@@ -59,7 +59,7 @@ public class MenuScreen implements Screen {
         this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
         this.highscoreTexture = new Texture("Screens/TitleScreen/HighscoresButton.png");
         this.background = new Texture("Screens/TitleScreen/MainScreen.png");
-        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
+        musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
         musicHandler.playMusic();
     }
 
@@ -167,5 +167,9 @@ public class MenuScreen implements Screen {
     public void dispose() {
         stage.dispose();
 
+    }
+
+    public MusicHandler getMusicHandler(){
+        return this.musicHandler;
     }
 }

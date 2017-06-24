@@ -23,6 +23,7 @@ import com.paladinzzz.game.audio.MusicHandler;
 
 import static com.paladinzzz.game.screens.GameScreen.inPause;
 import static com.paladinzzz.game.screens.GameScreen.showtext;
+import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 
 public class PauseScreen implements Screen {
@@ -34,7 +35,6 @@ public class PauseScreen implements Screen {
     private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
     private OrthographicCamera camera;
-    private MusicHandler musicHandler;
 
     public static boolean inPlayscreen = false;
     private Table table;
@@ -50,7 +50,8 @@ public class PauseScreen implements Screen {
         this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
         this.highscoreTexture = new Texture("Screens/TitleScreen/HighscoresButton.png");
         this.background = new Texture("Screens/TitleScreen/MainScreen.png");
-        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
+        musicHandler.stopMusic();
+        musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
         musicHandler.playMusic();
     }
 
@@ -129,6 +130,9 @@ public class PauseScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && inPause){
             inPause = false;
             game.setScreen(currentgame);
+            musicHandler.stopMusic();
+            musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+            musicHandler.playMusic();
         }
 
         game.batch.begin();

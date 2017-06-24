@@ -20,7 +20,7 @@ import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.audio.MusicHandler;
 import static com.badlogic.gdx.Gdx.input;
-
+import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 
 public class LoginScreen implements Screen {
@@ -31,14 +31,11 @@ public class LoginScreen implements Screen {
     private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
     private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
     private OrthographicCamera camera;
-    private MusicHandler musicHandler;
-    boolean isPressed = false;
     BitmapFont font = new BitmapFont();
     int[] x = new int[255];
     public static boolean inPlayscreen = false;
     private Table table;
     public static String playername = "";
-    private int amountbackspacepressed = 0;
     private boolean isConverted = false;
 
 
@@ -48,8 +45,9 @@ public class LoginScreen implements Screen {
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
-        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
-        musicHandler.playMusic();
+//        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
+//        musicHandler.setMusic("Music/Main_Menu_Theme.ogg", true);
+//        musicHandler.playMusic();
     }
 
     @Override
@@ -61,7 +59,7 @@ public class LoginScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LevelScreen(game, musicHandler));
+                game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
             }
         });
@@ -90,7 +88,7 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if (input.isKeyPressed(66)){
-            game.setScreen(new LevelScreen(game, musicHandler));
+            game.setScreen(new LevelScreen(game));
             inPlayscreen = true;
 
             if (!isConverted){
@@ -116,7 +114,6 @@ public class LoginScreen implements Screen {
         }
 
         font.draw(game.batch, playername, 250, 200);
-        System.out.println(playername);
 
         game.batch.end();
         stage.draw();

@@ -24,14 +24,12 @@ public class LevelScreen implements Screen {
     private OrthographicCamera camera;
     private Table table;
     private Skin skin;
-    private MusicHandler musicHandler;
 
-    public LevelScreen(CrossplatformApp game, MusicHandler musicHandler) {
+    public LevelScreen(CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
-        this.musicHandler = musicHandler;
     }
 
     @Override
@@ -43,8 +41,6 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game));
-                musicHandler.setMusic("Music/Town_Theme_1.ogg", true);
-                musicHandler.playMusic();
             }
         });
 
