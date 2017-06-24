@@ -11,7 +11,10 @@ public class Database{
     private final String url = "jdbc:postgresql://37.97.173.46:5432/diggydb";
     private final String user = "postgres";
     private final String password = "kaas123";
+//    private String names;
     private Connection conn;
+    String[] playernames = new String[100];
+    String[] scores = new String[100];
 
     public Connection connect(){
         Connection conn = null;
@@ -41,6 +44,55 @@ public class Database{
         } catch (SQLException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    public String[] getNames(Connection conn) {
+        try {
+            Statement get = conn.createStatement();
+            String query = "Select * from player ORDER BY score DESC";
+            ResultSet rs = get.executeQuery(query);
+
+            int counter = 0;
+            while (rs.next()){
+                if (rs.getString("name") != null) {
+                    playernames[counter] = rs.getString("name");
+                    counter++;
+                }
+            }
+
+            for (String s : playernames){
+                if (s != null) {
+                    System.out.println(s);
+                } else {
+                    break;
+                }
+            }
+
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return playernames;
+    }
+
+    public String[] getScores(Connection conn) {
+        try {
+            Statement get = conn.createStatement();
+            String query = "Select * from player ORDER BY score DESC";
+            ResultSet rs = get.executeQuery(query);
+
+            int counter = 0;
+            while (rs.next()){
+                if (rs.getString("name") != null) {
+                    scores[counter] = rs.getString("score");
+                    counter++;
+                }
+            }
+
+
+        } catch (SQLException exception) {
+            System.out.println(exception.getMessage());
+        }
+        return scores;
     }
 
 }

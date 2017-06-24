@@ -45,9 +45,6 @@ public class LoginScreen implements Screen {
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
-//        this.musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
-//        musicHandler.setMusic("Music/Main_Menu_Theme.ogg", true);
-//        musicHandler.playMusic();
     }
 
     @Override
