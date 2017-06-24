@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.util.Constants;
+
+import static com.paladinzzz.game.screens.LoginScreen.playername;
 
 public class HUD  {
     public Stage hudStage;
@@ -21,8 +22,9 @@ public class HUD  {
     private Label worldNameLabel;
     private int score;
     private Label scoreLabel;
-    private String playerName;
     private Label playerNameLabel;
+    private Label startLabel;
+    public static boolean spacepressed = false;
 
 
 
@@ -31,12 +33,23 @@ public class HUD  {
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
         this.worldName = worldName;
-        this.playerName = "Diggy the Mole";
 
         //Maken van de labels:
         scoreLabel = new Label(String.format("Score: " + "%03d", score), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         worldNameLabel = new Label(("Level 1"), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        playerNameLabel = new Label(playerName, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        playerNameLabel = new Label(playername, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        startLabel = new Label(("Press Space to jump!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        Table table1 = new Table();
+        table1.center();
+        table1.setFillParent(true);
+        table1.add(startLabel);
+
+        if (spacepressed) {
+            hudStage.clear();
+        } else {
+            hudStage.addActor(table1);
+        }
 
         Table table = new Table();
         table.top();
@@ -48,5 +61,18 @@ public class HUD  {
 
         hudStage.addActor(table);
 
+    }
+
+    public void removeSpaceText(){
+        this.hudStage.clear();
+        Table table = new Table();
+        table.top();
+        table.setFillParent(true);
+
+        table.add(worldNameLabel).expandX().padTop((float) 1);
+        table.add(scoreLabel).expandX().padTop((float) 1);
+        table.add(playerNameLabel).expandX().padTop((float) 1);
+
+        hudStage.addActor(table);
     }
 }

@@ -3,21 +3,15 @@ package com.paladinzzz.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -26,14 +20,14 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.util.TextInput;
 
-import static com.badlogic.gdx.Gdx.input;
+import static com.paladinzzz.game.screens.GameScreen.inPause;
 import static com.paladinzzz.game.screens.GameScreen.showtext;
 
 
-public class MenuScreen implements Screen {
+public class PauseScreen implements Screen {
 
+    static GameScreen currentgame;
     private CrossplatformApp game;
     private Stage stage;
     private ImageButton exitButton, playButton, optionsButton, highscoreButton;
@@ -41,17 +35,14 @@ public class MenuScreen implements Screen {
     private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
     private OrthographicCamera camera;
     private MusicHandler musicHandler;
-    boolean isPressed = false;
-    BitmapFont font = new BitmapFont();
-    int[] x = new int[255];
+
     public static boolean inPlayscreen = false;
     private Table table;
-    String s = "";
-    private int amountbackspacepressed = 0;
 
 
-    public MenuScreen(CrossplatformApp game) {
+    public PauseScreen(GameScreen currentgame, CrossplatformApp game) {
         this.game = game;
+        this.currentgame = currentgame;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.exitTexture = new Texture("Screens/TitleScreen/ExitGameButton.png");
@@ -65,7 +56,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-
+        System.out.println("in pause");
         //Geef de texture van de exitButton mee aan de ImageButton
         drawableExit = new TextureRegionDrawable(new TextureRegion(exitTexture));
         exitButton = new ImageButton(drawableExit);
@@ -82,10 +73,12 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LoginScreen(game));
+                game.setScreen(currentgame);
                 inPlayscreen = true;
             }
         });
+
+
 
         //Geef de texture van de optionsbutton mee aan de ImageButton
         drawableOptions = new TextureRegionDrawable(new TextureRegion(optionsTexture));
@@ -110,7 +103,7 @@ public class MenuScreen implements Screen {
 
 
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
-        input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(stage);
 
         //Een table wordt aangemaakt om buttons aan toe te voegen.
         table = new Table();
@@ -130,15 +123,16 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && inPause){
+            inPause = false;
+            game.setScreen(currentgame);
+        }
+
         game.batch.begin();
-
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
         game.batch.end();
         stage.draw();
     }
@@ -168,4 +162,5 @@ public class MenuScreen implements Screen {
         stage.dispose();
 
     }
+
 }

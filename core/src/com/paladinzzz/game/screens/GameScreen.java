@@ -21,7 +21,6 @@ import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
-import static com.paladinzzz.game.screens.MenuScreen.inPlayscreen;
 
 /**
  * Created by aaron on 20-Jun-17.
@@ -32,6 +31,7 @@ import static com.paladinzzz.game.screens.MenuScreen.inPlayscreen;
  */
 
 public class GameScreen implements Screen {
+    static boolean inPause = false;
     private CrossplatformApp game;
     private double metersran = 0.0;
     private OrthographicCamera camera;
@@ -86,12 +86,17 @@ public class GameScreen implements Screen {
     private void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+            HUD.spacepressed = true;
         }
         if(Gdx.input.isKeyPressed(Input.Keys.W) && player.body.getLinearVelocity().x <= 2) {
             player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S) && player.body.getLinearVelocity().x >= -2) {
             player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            inPause = true;
+            game.setScreen(new PauseScreen(this, game));
         }
 
     }
@@ -100,15 +105,6 @@ public class GameScreen implements Screen {
         handleInput(deltaT);
 
         world.step(1/60f, 6, 2);
-//        System.out.println(player.body.getPosition().y);
-//        if(!(player.body.getPosition().y < 0.55))
-//            camera.position.y = player.body.getPosition().y + (float) 0.71;
-//        if(!(player.body.getPosition().x < 0.5384443))
-//            camera.position.x = player.body.getPosition().x + 2;
-
-//        metersran = metersran + this.player.body.getPosition().x;
-//        if (metersran == (int) metersran)
-//        System.out.println((int) metersran);
 
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
@@ -125,6 +121,7 @@ public class GameScreen implements Screen {
         //Voordat we beginnen met tekenen maken we het scherm leeg:
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         //Render de map
         mapRenderer.render();
@@ -143,15 +140,9 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        if (this.showtext && inPlayscreen) {
-            font.draw(game.batch, "Press space to jump!", 200, 250);
-        }
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-            this.showtext = false;
+            levelHUD.removeSpaceText();
         }
-
-        font.draw(game.batch, "Herobrine", player.body.getLocalCenter().x - 1, player.body.getLocalCenter().y + 150);
 
         player.draw(game.batch);
 
