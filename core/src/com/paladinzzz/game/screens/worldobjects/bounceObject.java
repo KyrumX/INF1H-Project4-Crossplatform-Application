@@ -40,7 +40,7 @@ public class bounceObject implements IObject {
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
             fdef.shape = shape;
-            fdef.restitution = (float) 1.5;
+            fdef.restitution = (float) 1.2;
             body.createFixture(fdef);
         }
     }
