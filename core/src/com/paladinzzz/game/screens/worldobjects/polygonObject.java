@@ -16,16 +16,20 @@ import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
 public class polygonObject implements IObject{
-    private Body body;
-    private Polygon polygon;
+    private PolygonShape shape;
+    private BodyDef bdef;
+    private FixtureDef fdef;
 
-    public polygonObject(World world, TiledMap map) {
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape;
-        FixtureDef fdef = new FixtureDef();
+    public polygonObject() {
+        bdef = new BodyDef();
+        shape = new PolygonShape();
+        fdef = new FixtureDef();
+    }
 
+    @Override
+    public void defineObject(World world, TiledMap map) {
         //De ramp objecten zijn het 4e object in onze map editor, beginnend bij 0 is dat het 3e object in code
-        for(MapObject object : map.getLayers().get(3).getObjects().getByType(PolygonMapObject.class)){
+        for(MapObject object : map.getLayers().get(3).getObjects().getByType(PolygonMapObject.class)) {
             shape = new PolygonShape();
             float[] vertices = ((PolygonMapObject) object).getPolygon().getTransformedVertices();
 
@@ -39,6 +43,5 @@ public class polygonObject implements IObject{
             fdef.shape = shape;
             world.createBody(bdef).createFixture(fdef);
         }
-
     }
 }
