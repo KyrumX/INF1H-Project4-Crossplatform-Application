@@ -7,7 +7,7 @@ Aaron Beetstra - Scrum Master and Dev team<br/>
 Ralph Verburg - Dev team<br/>
 Jasper Wijnhoven - Dev team<br/>
 Selim Aydi - Dev team<br/>
-Ryan Wilson - Scrum Master<br/>
+Ryan Wilson - Dev Team<br/>
 
 
 Supported platforms:
