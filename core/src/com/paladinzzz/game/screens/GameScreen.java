@@ -19,6 +19,7 @@ import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.worldobjects.*;
+import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
@@ -53,6 +54,9 @@ public class GameScreen implements Screen {
     //Playable character:
     private Mole player;
 
+    private ObjectIterator objectList;
+    private IObject ground, water, ramp, bounceBlocks;
+
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         System.out.println(gameFile);
@@ -75,9 +79,20 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        IObject ground = objectFactory.createObject(1, world, worldMap, this.player);
-        IObject ramp = objectFactory.createObject(2, world, worldMap, player);
-        IObject bounceBlocks = objectFactory.createObject(3, world, worldMap, player);
+        ground = objectFactory.createObject(1, this.player);
+        ramp = objectFactory.createObject(2, player);
+        bounceBlocks = objectFactory.createObject(3, player);
+
+        //Voeg de objecten toe aan een iterator:
+        this.objectList = new ObjectIterator();
+        this.objectList.add(ground);
+        this.objectList.add(ramp);
+        this.objectList.add(bounceBlocks);
+
+        //Iterate door de objecten om ze te definiëren:
+        while (objectList.hasNext()) {
+            objectList.getNext().defineObject(world, worldMap);
+        }
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);

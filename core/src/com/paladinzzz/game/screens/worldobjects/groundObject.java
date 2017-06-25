@@ -12,20 +12,30 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.sprites.Mole;
 
-public class groundObject implements IObject{
+public class groundObject implements IObject {
 
     private Body body;
     private Mole player;
     private Rectangle rect;
+    private FixtureDef fdef;
+    private BodyDef bdef;
+    private PolygonShape shape;
 
-    public groundObject(World world, TiledMap map, Mole player) {
-        this.player = player;
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
+    public groundObject(Mole player) {
+        bdef = new BodyDef();
+        shape = new PolygonShape();
+        fdef = new FixtureDef();
+        shape = new PolygonShape();
+    }
 
+    public boolean collides() {
+        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
+    }
+
+    @Override
+    public void defineObject(World world, TiledMap map) {
         //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object in code
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
             this.rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
 
@@ -36,10 +46,5 @@ public class groundObject implements IObject{
             fdef.shape = shape;
             body.createFixture(fdef);
         }
-
-    }
-
-    public boolean collides(){
-        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
     }
 }

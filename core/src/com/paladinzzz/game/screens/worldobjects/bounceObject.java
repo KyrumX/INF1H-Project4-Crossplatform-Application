@@ -17,14 +17,21 @@ public class bounceObject implements IObject {
     private Body body;
     private Mole player;
     private Rectangle rect;
+    private FixtureDef fdef;
+    private BodyDef bdef;
+    private PolygonShape shape;
 
-    public bounceObject(World world, TiledMap map) {
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
+    public bounceObject() {
+        bdef = new BodyDef();
+        shape = new PolygonShape();
+        fdef = new FixtureDef();
+        shape = new PolygonShape();
+    }
 
+    @Override
+    public void defineObject(World world, TiledMap map) {
         //De grond objecten zijn het 5e object in onze map editor, beginnend bij 0 is dat het 4e object in code
-        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
             this.rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
 
@@ -33,7 +40,7 @@ public class bounceObject implements IObject {
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
             fdef.shape = shape;
-            fdef.restitution = (float) 1.5;
+            fdef.restitution = (float) 1.2;
             body.createFixture(fdef);
         }
     }

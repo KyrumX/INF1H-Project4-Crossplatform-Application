@@ -9,11 +9,11 @@ import com.paladinzzz.game.screens.worldobjects.polygonObject;
 import com.paladinzzz.game.sprites.Mole;
 
 public abstract class objectFactory {
-    public static IObject createObject(int objectNum, World world, TiledMap map, Mole mole) {
+    public static IObject createObject(int objectNum, Mole mole) {
         switch (objectNum) {
-            case 1: return new groundObject(world, map, mole);
-            case 2: return new polygonObject(world, map);
-            case 3: return new bounceObject(world, map);
+            case 1: return new groundObject(mole);
+            case 2: return new polygonObject();
+            case 3: return new bounceObject();
             default: return null;
         }
     }
