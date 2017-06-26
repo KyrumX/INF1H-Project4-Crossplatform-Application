@@ -42,6 +42,7 @@ public class bounceObject implements IObject {
             fdef.shape = shape;
             fdef.restitution = (float) 1.2;
             body.createFixture(fdef);
+            body.setUserData(this);
         }
     }
 }

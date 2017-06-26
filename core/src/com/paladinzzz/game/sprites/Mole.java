@@ -1,5 +1,7 @@
 package com.paladinzzz.game.sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,9 +24,11 @@ public class Mole extends Sprite {
     private Animation<TextureRegion> moleRun;
     private Animation<TextureRegion> moleJump;
     private float stateTimer;
+    private GameScreen gameScreen;
 
     public Mole(World world, GameScreen screen) {
         super(screen.getAtlas().findRegion("MoleRun"));
+        this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -60,6 +64,7 @@ public class Mole extends Sprite {
         shape.setRadius(7 / Constants.PPM);
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
+        body.setUserData(this);
     }
 
     public void update(float deltaT) {
@@ -99,5 +104,18 @@ public class Mole extends Sprite {
         } else {
             return State.STANDING;
         }
+    }
+
+    public void killMole() {
+        System.out.println("A mole has been slain...!");
+        Gdx.app.postRunnable(new Runnable() {
+
+            @Override
+            public void run () {
+                body.setTransform(32 / Constants.PPM, 310 / Constants.PPM, body.getAngle());
+                body.setAngularVelocity(0);
+                body.setLinearVelocity(0, 0);
+            }
+        });
     }
 }

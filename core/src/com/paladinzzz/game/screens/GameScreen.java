@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
+import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
@@ -36,7 +37,7 @@ import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
-    private CrossplatformApp game;
+    public CrossplatformApp game;
     private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -50,6 +51,7 @@ public class GameScreen implements Screen {
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
+    private TiledMap worldMap;
 
     //Playable character:
     private Mole player;
@@ -65,7 +67,7 @@ public class GameScreen implements Screen {
         this.levelHUD = new HUD(gameFile.batch, "hoi");
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
@@ -94,9 +96,11 @@ public class GameScreen implements Screen {
             objectList.getNext().defineObject(world, worldMap);
         }
 
-        musicHandler.stopMusic();
-        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
+        world.setContactListener(new CollisionListener());
+
+//        musicHandler.stopMusic();
+//        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+//        musicHandler.playMusic();
 
     }
 
@@ -197,6 +201,15 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        this.worldMap.dispose();
+        this.mapRenderer.dispose();
+        this.world.dispose();
+        this.debugRenderer.dispose();
+        this.levelHUD.dispose();
+    }
 
+    public void gameOver() {
+        dispose();
+        game.setScreen(new GameScreen(game));
     }
 }
