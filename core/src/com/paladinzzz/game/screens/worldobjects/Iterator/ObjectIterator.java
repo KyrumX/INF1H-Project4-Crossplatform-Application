@@ -21,7 +21,6 @@ public class ObjectIterator implements IIteratorObject {
 
     @Override
     public IObject getNext() {
-        System.out.println("Element defined");
         currentPos += 1;
         return this.list.get(currentPos);
         }
@@ -33,14 +32,11 @@ public class ObjectIterator implements IIteratorObject {
 
     @Override
     public boolean hasNext() {
-        System.out.println(list.size());
         int checkPos = currentPos;
         if((checkPos + 1) >= this.list.size()) {
-            System.out.println("Returning false!");
             return false;
         }
         else {
-            System.out.println("Returning true!");
             return true;
         }
     }

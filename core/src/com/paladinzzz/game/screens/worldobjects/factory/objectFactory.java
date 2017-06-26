@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.IObject;
 import com.paladinzzz.game.screens.worldobjects.bounceObject;
+import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.screens.worldobjects.polygonObject;
 import com.paladinzzz.game.sprites.Mole;
@@ -14,6 +15,7 @@ public abstract class objectFactory {
             case 1: return new groundObject(mole);
             case 2: return new polygonObject();
             case 3: return new bounceObject();
+            case 4: return new fluidKillable();
             default: return null;
         }
     }

@@ -45,6 +45,7 @@ public class groundObject implements IObject {
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
             fdef.shape = shape;
             body.createFixture(fdef);
+            body.setUserData(this);
         }
     }
 }
