@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
+import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
@@ -25,18 +26,9 @@ import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
-
-/**
- * Created by aaron on 20-Jun-17.
- *
- * Edit by Jasper on 11:11 21/06
- *      Added MusicHandler
- *      Editted some Local Variables
- */
-
 public class GameScreen implements Screen {
     static boolean inPause = false;
-    private CrossplatformApp game;
+    public CrossplatformApp game;
     private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -50,12 +42,13 @@ public class GameScreen implements Screen {
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
+    private TiledMap worldMap;
 
     //Playable character:
     private Mole player;
 
     private ObjectIterator objectList;
-    private IObject ground, water, ramp, bounceBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -65,7 +58,7 @@ public class GameScreen implements Screen {
         this.levelHUD = new HUD(gameFile.batch, "hoi");
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
@@ -82,17 +75,22 @@ public class GameScreen implements Screen {
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
+        fluid = objectFactory.createObject(4, player);
+
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
         this.objectList.add(ground);
         this.objectList.add(ramp);
         this.objectList.add(bounceBlocks);
+        this.objectList.add(fluid);
 
         //Iterate door de objecten om ze te definiëren:
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
+
+        world.setContactListener(new CollisionListener());
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -197,6 +195,15 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        this.worldMap.dispose();
+        this.mapRenderer.dispose();
+        this.world.dispose();
+        this.debugRenderer.dispose();
+        this.levelHUD.dispose();
+    }
 
+    public void gameOver() {
+        dispose();
+        game.setScreen(new GameScreen(game));
     }
 }
