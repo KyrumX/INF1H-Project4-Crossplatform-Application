@@ -42,15 +42,18 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 click.play();
                 game.setScreen(new GameScreen(game));
+
             }
         });
+
 
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play();
-                game.setScreen(new MenuScreen(game));
+                game.setScreen(new LoginScreen(game));
+
             }
         });
 
