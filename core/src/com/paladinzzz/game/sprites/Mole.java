@@ -68,7 +68,7 @@ public class Mole extends Sprite {
     }
 
     public void update(float deltaT) {
-        setPosition((body.getPosition().x - getWidth() / 4), (body.getPosition().y - getHeight() / 2) + 0.05f);
+        setPosition((body.getPosition().x - getWidth() / 2), (body.getPosition().y - getHeight() / 2) + 0.05f);
         setRegion(getFrame(deltaT));
     }
 
