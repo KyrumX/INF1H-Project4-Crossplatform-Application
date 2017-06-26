@@ -1,7 +1,5 @@
 package com.paladinzzz.game.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.screens.GameScreen;
 
-public class Mole extends Sprite {
+public class Enemy extends Sprite {
     public enum State{JUMPING, STANDING, RUNNING};
     public State currentState;
     public State previousState;
@@ -24,11 +22,9 @@ public class Mole extends Sprite {
     private Animation<TextureRegion> moleRun;
     private Animation<TextureRegion> moleJump;
     private float stateTimer;
-    private GameScreen gameScreen;
 
-    public Mole(World world, GameScreen screen) {
+    public Enemy(World world, GameScreen screen) {
         super(screen.getAtlas().findRegion("MoleRun"));
-        this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -54,7 +50,7 @@ public class Mole extends Sprite {
 
     public void defineMole() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(32 / Constants.PPM, 310 / Constants.PPM);
+        bodyDef.position.set((32 / Constants.PPM) + 3.1f, (320 / Constants.PPM) - 0.7f) ;
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodyDef);
@@ -64,11 +60,10 @@ public class Mole extends Sprite {
         shape.setRadius(7 / Constants.PPM);
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
-        body.setUserData(this);
     }
 
     public void update(float deltaT) {
-        setPosition((body.getPosition().x - getWidth() / 4), (body.getPosition().y - getHeight() / 2) + 0.05f);
+        setPosition((body.getPosition().x - getWidth() / 2), (body.getPosition().y - getHeight() / 2) + 0.05f);
         setRegion(getFrame(deltaT));
     }
 
@@ -106,16 +101,7 @@ public class Mole extends Sprite {
         }
     }
 
-    public void killMole() {
-        System.out.println("A mole has been slain...!");
-        Gdx.app.postRunnable(new Runnable() {
-
-            @Override
-            public void run () {
-                body.setTransform(32 / Constants.PPM, 310 / Constants.PPM, body.getAngle());
-                body.setAngularVelocity(0);
-                body.setLinearVelocity(0, 0);
-            }
-        });
+    public float getX(){
+        return body.getPosition().x;
     }
 }
