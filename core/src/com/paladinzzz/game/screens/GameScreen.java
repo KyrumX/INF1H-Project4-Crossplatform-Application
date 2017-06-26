@@ -3,6 +3,7 @@ package com.paladinzzz.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -43,6 +44,7 @@ public class GameScreen implements Screen {
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
+    private Sound jump = Gdx.audio.newSound(Gdx.files.internal("Audio/jump.wav"));
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
@@ -65,7 +67,7 @@ public class GameScreen implements Screen {
         this.levelHUD = new HUD(gameFile.batch, "hoi");
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        TiledMap worldMap = mapLoader.load("Worlds/level2/World2.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
@@ -107,6 +109,7 @@ public class GameScreen implements Screen {
 
     private void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+            jump.play(1.0f);
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
             HUD.spacepressed = true;
         }
@@ -120,7 +123,6 @@ public class GameScreen implements Screen {
             inPause = true;
             game.setScreen(new PauseScreen(this, game));
         }
-
     }
 
     private void update(float deltaT) {
