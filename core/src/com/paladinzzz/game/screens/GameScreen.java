@@ -26,15 +26,6 @@ import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
-
-/**
- * Created by aaron on 20-Jun-17.
- *
- * Edit by Jasper on 11:11 21/06
- *      Added MusicHandler
- *      Editted some Local Variables
- */
-
 public class GameScreen implements Screen {
     static boolean inPause = false;
     public CrossplatformApp game;
@@ -57,7 +48,7 @@ public class GameScreen implements Screen {
     private Mole player;
 
     private ObjectIterator objectList;
-    private IObject ground, water, ramp, bounceBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -84,12 +75,15 @@ public class GameScreen implements Screen {
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
+        fluid = objectFactory.createObject(4, player);
+
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
         this.objectList.add(ground);
         this.objectList.add(ramp);
         this.objectList.add(bounceBlocks);
+        this.objectList.add(fluid);
 
         //Iterate door de objecten om ze te definiëren:
         while (objectList.hasNext()) {
@@ -98,9 +92,9 @@ public class GameScreen implements Screen {
 
         world.setContactListener(new CollisionListener());
 
-//        musicHandler.stopMusic();
-//        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-//        musicHandler.playMusic();
+        musicHandler.stopMusic();
+        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
+        musicHandler.playMusic();
 
     }
 

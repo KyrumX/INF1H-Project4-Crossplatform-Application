@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.paladinzzz.game.screens.worldobjects.bounceObject;
+import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Mole;
 
@@ -29,10 +30,10 @@ public class CollisionListener implements ContactListener {
             isAmole = false;
         }
 
-        if((isAmole) && (udB instanceof bounceObject)) {
+        if((isAmole) && (udB instanceof fluidKillable)) {
             ((Mole) udA).killMole();
         }
-        else if((isBmole) && (udA instanceof bounceObject)) {
+        else if((isBmole) && (udA instanceof fluidKillable)) {
             ((Mole) udB).killMole();
         }
     }
