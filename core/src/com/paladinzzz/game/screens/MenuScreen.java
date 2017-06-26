@@ -95,6 +95,7 @@ public class MenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new OptionScreen(game));
                 showtext = true;
+
             }
         });
 
