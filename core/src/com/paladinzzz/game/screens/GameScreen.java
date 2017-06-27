@@ -22,7 +22,9 @@ import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
+import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Enemy;
+import com.paladinzzz.game.sprites.ISprite;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
@@ -40,7 +42,6 @@ public class GameScreen implements Screen {
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
-    private int cnt = 0;
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
@@ -55,8 +56,12 @@ public class GameScreen implements Screen {
     private Enemy enemy;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
     private float initialenemyposition;
+
+
+    //TEMP:
+    private Ant ant;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -71,10 +76,6 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
-        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
-        this.player = new Mole(world, this);
-        this.enemy = new Enemy(world, this);
-        initialenemyposition = enemy.getX();
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {
@@ -82,11 +83,18 @@ public class GameScreen implements Screen {
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
 
+        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+
+        this.player = new Mole(world, this);
+        this.ant = new Ant(world, this, 290 / Constants.PPM, 380 / Constants.PPM);
+
+
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
+        antStoppers = new antStopObject();
 
 
         //Voeg de objecten toe aan een iterator:
@@ -100,6 +108,7 @@ public class GameScreen implements Screen {
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
+        antStoppers.defineObject(world, worldMap);
 
         world.setContactListener(new CollisionListener());
 
@@ -135,40 +144,12 @@ public class GameScreen implements Screen {
     private void update(float deltaT) {
         handleInput(deltaT);
 
-        System.out.println(cnt);
-
         world.step(1/60f, 6, 2);
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
 
-        cnt++;
-        if (cnt < 70) {
-            if (enemy.body.getLinearVelocity().x <= 2) {
-                enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), enemy.body.getWorldCenter(), true);
-            }
-        } else if(cnt >= 70 && cnt < 139){
-            if (enemy.body.getPosition().x > initialenemyposition) {
-                if (enemy.body.getLinearVelocity().x <= 2) {
-                    enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
-                    System.out.println("REVERSING");
-                }
-            }
-        } else {
-            cnt = 0;
-        }
-
-
-//        if (enemy.body.getLinearVelocity().x <= 1 && cnt < 15) {
-//            enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), player.body.getWorldCenter(), true);
-//        } else {
-//            enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), player.body.getWorldCenter(), true);
-//            if (cnt > 80) {
-//                cnt = 0;
-//            }
-//        }
-
         player.update(deltaT);
-        enemy.update(deltaT);
+        ant.update(deltaT);
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -204,7 +185,7 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
-        enemy.draw(game.batch);
+        ant.draw(game.batch);
 
         game.batch.end();
     }
