@@ -46,6 +46,15 @@ public class LevelScreen implements Screen {
             }
         });
 
+        level2 = new TextButton("Level 2", skin);
+        level2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                click.play();
+//                game.setScreen(new GameScreen(game));
+            }
+        });
+
 
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
@@ -64,6 +73,8 @@ public class LevelScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
         table.add(level1).size(100, 100);
+        table.row();
+        table.add(level2).size(100, 100);
         table.row();
         table.add(backButton).size(100, 100);
         stage.addActor(table);
