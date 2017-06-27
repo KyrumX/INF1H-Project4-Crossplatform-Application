@@ -1,5 +1,7 @@
 package com.paladinzzz.game.screens;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -24,7 +26,11 @@ import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Mole;
+import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
+
+import java.util.ArrayList;
+
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
@@ -48,9 +54,12 @@ public class GameScreen implements Screen {
 
     //Playable character:
     private Mole player;
+    private Wurrumpie wurrumpie;
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks;
+
+    private ArrayList<Wurrumpie> Wurrumpies;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -67,6 +76,8 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
+        this.wurrumpie = new Wurrumpie(world, this, 500, 100);
+        Wurrumpies.add(new Wurrumpie(world, this, 500, 100));
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {
@@ -103,7 +114,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
     }
 
     private void handleInput(float deltaT) {
@@ -132,9 +142,27 @@ public class GameScreen implements Screen {
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
 
+        if (deltaT / 100 == 0) {
+            WurrumpieMaker();
+        }
+
+        for (Wurrumpie wurrumpies : Wurrumpies) {
+            wurrumpie.update(deltaT, player);
+        }
+
         player.update(deltaT);
         camera.update();
         mapRenderer.setView(camera);
+    }
+
+    public Wurrumpie WurrumpieMaker () {
+        Random rand = new Random();
+        int x = rand.nextInt(600);
+        int y = rand.nextInt(400);
+
+        this.wurrumpie = new Wurrumpie(world, this, x, y);
+        Wurrumpies.add(this.wurrumpie);
+        return this.wurrumpie;
     }
 
     @Override
@@ -142,7 +170,7 @@ public class GameScreen implements Screen {
         update(delta);
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
@@ -168,6 +196,7 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
+        wurrumpie.draw(game.batch);
 
         game.batch.end();
     }

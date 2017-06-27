@@ -40,7 +40,6 @@ public class MenuScreen implements Screen {
     int[] x = new int[255];
     public static boolean inPlayscreen = false;
     private Table table;
-    String s = "";
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
 
     private int amountbackspacepressed = 0;
@@ -67,7 +66,7 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                click.play();
+                click.play(2.0f);
                 Gdx.app.exit();
             }
         });
@@ -78,7 +77,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play();
+                click.play(2.0f);
                 game.setScreen(new LoginScreen(game));
                 inPlayscreen = true;
             }
@@ -90,7 +89,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play();
+                click.play(1.0f);
                 game.setScreen(new OptionScreen(game));
                 showtext = true;
 
@@ -102,7 +101,7 @@ public class MenuScreen implements Screen {
         highscoreButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play();
+                click.play(2.0f);
                 game.setScreen(new HighScoresScreen(game));
             }
         });
