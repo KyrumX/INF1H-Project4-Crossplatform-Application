@@ -14,6 +14,7 @@ import com.paladinzzz.game.sprites.Mole;
 public class CollisionListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
+        System.out.println("Collision detected!");
         boolean isAmole = false;
         boolean isBmole = false;
         Fixture fixOne = contact.getFixtureA();

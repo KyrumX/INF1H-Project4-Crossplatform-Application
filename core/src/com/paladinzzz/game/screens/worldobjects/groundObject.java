@@ -43,6 +43,9 @@ public class groundObject implements IObject {
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
+
+            fdef.filter.categoryBits = Constants.GROUND_BIT; //De grond is dus een GROUND_BITs
+
             fdef.shape = shape;
             body.createFixture(fdef);
             body.setUserData(this);
