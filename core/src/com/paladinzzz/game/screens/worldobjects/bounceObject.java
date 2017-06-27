@@ -39,6 +39,9 @@ public class bounceObject implements IObject {
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
+
+            fdef.filter.categoryBits = Constants.BOUNCY_BIT; //De bouncyblocks zijn dus BOUNCY_BITs
+
             fdef.shape = shape;
             fdef.restitution = (float) 1.2;
             body.createFixture(fdef);
