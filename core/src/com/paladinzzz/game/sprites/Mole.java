@@ -65,9 +65,8 @@ public class Mole extends Sprite {
 
         //Hier bepalen we waar we mee kunnen botsen:
         fixtureDef.filter.categoryBits = Constants.MOLE_BIT; //De mol is dus een MOLE_BIT
-        fixtureDef.filter.maskBits = Constants.ANT_BIT | Constants.GROUND_BIT | Constants.BOUNCY_BIT | Constants.POLYGON_BIT | Constants.FLUID_BIT; //De mol kan dus botsen met GROUND_BITs, BOUNCY_BITs, POLYGON_BITs en FLUID_BIT;
-        fixtureDef.filter.maskBits = Constants.GROUND_BIT | Constants.BOUNCY_BIT | Constants.POLYGON_BIT | Constants.FLUID_BIT | Constants.WURRUMPIE_BIT; //De mol kan dus botsen met GROUND_BITs, BOUNCY_BITs, POLYGON_BITs en FLUID_BITs;
-
+        fixtureDef.filter.maskBits = Constants.ANT_BIT | Constants.GROUND_BIT | Constants.BOUNCY_BIT | Constants.POLYGON_BIT | Constants.FLUID_BIT | Constants.WURRUMPIE_BIT; //De mol kan dus botsen met GROUND_BITs, BOUNCY_BITs, POLYGON_BITs en FLUID_BIT;
+        
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
         body.setUserData(this);
