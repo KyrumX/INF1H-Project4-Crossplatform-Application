@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
         this.enemy = new Enemy(world, this);
         initialenemyposition = enemy.getX();
 
-        //Maak en bepaal of de debugger aan is
+        //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
             this.debugRenderer = new Box2DDebugRenderer();
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);

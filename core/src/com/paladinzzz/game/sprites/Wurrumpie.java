@@ -26,11 +26,6 @@ public class Wurrumpie extends Sprite {
     private int y;
 
     public Wurrumpie(World world, GameScreen screen, int x, int y) {
-//        this.world = world;
-//        this.gameScreen = screen;
-//        this.texture = new Texture(Gdx.files.internal("Mole/Movement0.png"));
-//
-//        defineWurm();
 
         super(screen.getAtlas().findRegion("MoleRun"));
         this.gameScreen = screen;
@@ -71,8 +66,6 @@ public class Wurrumpie extends Sprite {
         this.destroyed = true;
         System.out.println("Wurrumpie neeeeeee!");
         System.out.println("Score + 10");
-        Constants.score += 10;
-        System.out.println(Constants.score);
         //destroy this
     }
 
