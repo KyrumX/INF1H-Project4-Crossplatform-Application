@@ -20,8 +20,8 @@ public class CrossplatformApp extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MenuScreen(this));
-		Database database = new Database();
-		database.getData(database.connect());
+		//Database database = new Database();
+		//database.getData(database.connect());
 
 	}
 

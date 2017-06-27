@@ -23,7 +23,9 @@ import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
+import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Enemy;
+import com.paladinzzz.game.sprites.ISprite;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
@@ -60,8 +62,10 @@ public class GameScreen implements Screen {
     private Wurrumpie wurrumpie;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
+    private antObject antsObject;
     private float initialenemyposition;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -88,12 +92,18 @@ public class GameScreen implements Screen {
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
 
+        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+
+        this.player = new Mole(world, this);
+
+
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
-
+        antStoppers = new antStopObject();
+        antsObject = new antObject(this, world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -106,6 +116,7 @@ public class GameScreen implements Screen {
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
+        antStoppers.defineObject(world, worldMap);
 
         world.setContactListener(new CollisionListener());
 
@@ -146,33 +157,10 @@ public class GameScreen implements Screen {
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
 
-        cnt++;
-        if (cnt < 70) {
-            if (enemy.body.getLinearVelocity().x <= 2) {
-                enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), enemy.body.getWorldCenter(), true);
-            }
-        } else if(cnt >= 70 && cnt < 139){
-            if (enemy.body.getPosition().x > initialenemyposition) {
-                if (enemy.body.getLinearVelocity().x <= 2) {
-                    enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
-                }
-            }
-        } else {
-            cnt = 0;
-        }
-
-
-//        if (enemy.body.getLinearVelocity().x <= 1 && cnt < 15) {
-//            enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), player.body.getWorldCenter(), true);
-//        } else {
-//            enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), player.body.getWorldCenter(), true);
-//            if (cnt > 80) {
-//                cnt = 0;
-//            }
-//        }
-
         player.update(deltaT);
-        enemy.update(deltaT);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.update(deltaT);
+        }
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -208,6 +196,9 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.draw(game.batch);
+        }
         enemy.draw(game.batch);
         wurrumpie.draw(game.batch);
 
