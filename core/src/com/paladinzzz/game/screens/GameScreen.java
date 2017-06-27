@@ -25,6 +25,7 @@ import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Enemy;
 import com.paladinzzz.game.sprites.Mole;
+import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 
 import java.util.concurrent.TimeUnit;
@@ -56,6 +57,7 @@ public class GameScreen implements Screen {
     //Playable character:
     private Mole player;
     private Enemy enemy;
+    private Wurrumpie wurrumpie;
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks;
@@ -76,10 +78,11 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
+        this.wurrumpie = new Wurrumpie(world, this);
         this.enemy = new Enemy(world, this);
         initialenemyposition = enemy.getX();
 
-        //Maak en bepaal of de debugger aan is
+        //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
             this.debugRenderer = new Box2DDebugRenderer();
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
@@ -138,9 +141,8 @@ public class GameScreen implements Screen {
     private void update(float deltaT) {
         handleInput(deltaT);
 
-        System.out.println(cnt);
-
         world.step(1/60f, 6, 2);
+
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
 
@@ -153,7 +155,6 @@ public class GameScreen implements Screen {
             if (enemy.body.getPosition().x > initialenemyposition) {
                 if (enemy.body.getLinearVelocity().x <= 2) {
                     enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
-                    System.out.println("REVERSING");
                 }
             }
         } else {
@@ -208,6 +209,7 @@ public class GameScreen implements Screen {
 
         player.draw(game.batch);
         enemy.draw(game.batch);
+        wurrumpie.draw(game.batch);
 
         game.batch.end();
     }

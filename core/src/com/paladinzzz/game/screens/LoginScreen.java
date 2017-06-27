@@ -18,18 +18,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
-import com.paladinzzz.game.audio.MusicHandler;
 import static com.badlogic.gdx.Gdx.input;
-import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
-
 
 public class LoginScreen implements Screen {
 
     private CrossplatformApp game;
     private Stage stage;
-    private ImageButton exitButton, playButton, optionsButton, highscoreButton;
-    private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
-    private Drawable drawableExit, drawablePlay, drawableOptions, drawableHighscore;
+    private ImageButton playButton, backButton;
+    private Texture playTexture, backTexture, background;
+    private Drawable drawablePlay, drawableBack;
+
     private OrthographicCamera camera;
     BitmapFont font = new BitmapFont();
     int[] x = new int[255];
@@ -44,6 +42,7 @@ public class LoginScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
+        this.backTexture = new Texture("BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
     }
 
@@ -61,6 +60,16 @@ public class LoginScreen implements Screen {
             }
         });
 
+        drawableBack = new TextureRegionDrawable(new TextureRegion(backTexture));
+        backButton = new ImageButton(drawableBack);
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+                MenuScreen.musicHandler.stopMusic();
+            }
+        });
+
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
 
@@ -70,6 +79,7 @@ public class LoginScreen implements Screen {
         table.setFillParent(true);
         table.add(playButton).padTop(250);
         table.row();
+        table.add(backButton).padRight(325);
         stage.addActor(table);
 
         for (int i = 0 ; i < 255; i++){

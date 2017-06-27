@@ -45,7 +45,6 @@ public class HighScoresScreen implements Screen{
     @Override
     public void show() {
 
-
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
             @Override
