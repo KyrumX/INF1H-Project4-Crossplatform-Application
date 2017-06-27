@@ -40,6 +40,9 @@ public class polygonObject implements IObject{
             }
 
             shape.set(worldVertices);
+
+            fdef.filter.categoryBits = Constants.POLYGON_BIT; //De ramp objecten zijn dus POLYGON_BITs
+
             fdef.shape = shape;
             world.createBody(bdef).createFixture(fdef);
         }

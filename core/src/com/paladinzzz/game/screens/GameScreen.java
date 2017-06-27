@@ -23,13 +23,18 @@ import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
+import com.paladinzzz.game.sprites.Enemy;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
+
+import java.util.concurrent.TimeUnit;
+
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
     public CrossplatformApp game;
+    private IObject ground1, ramp1, bounceBlocks1;
     private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -37,6 +42,8 @@ public class GameScreen implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
     private Sound jump = Gdx.audio.newSound(Gdx.files.internal("Audio/jump.wav"));
+    private int cnt = 0;
+
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
@@ -48,9 +55,11 @@ public class GameScreen implements Screen {
 
     //Playable character:
     private Mole player;
+    private Enemy enemy;
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks;
+    private float initialenemyposition;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -60,13 +69,15 @@ public class GameScreen implements Screen {
         this.levelHUD = new HUD(gameFile.batch, "hoi");
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        TiledMap worldMap = mapLoader.load("Worlds/level2/World2.tmx");
         worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
+        this.enemy = new Enemy(world, this);
+        initialenemyposition = enemy.getX();
 
         //Maak en bepaal of de debugger aan is
         if(Constants.DEBUGGER_ON) {
@@ -127,12 +138,40 @@ public class GameScreen implements Screen {
     private void update(float deltaT) {
         handleInput(deltaT);
 
-        world.step(1/60f, 6, 2);
+        System.out.println(cnt);
 
+        world.step(1/60f, 6, 2);
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         camera.position.y = player.body.getPosition().y;
 
+        cnt++;
+        if (cnt < 70) {
+            if (enemy.body.getLinearVelocity().x <= 2) {
+                enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), enemy.body.getWorldCenter(), true);
+            }
+        } else if(cnt >= 70 && cnt < 139){
+            if (enemy.body.getPosition().x > initialenemyposition) {
+                if (enemy.body.getLinearVelocity().x <= 2) {
+                    enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
+                    System.out.println("REVERSING");
+                }
+            }
+        } else {
+            cnt = 0;
+        }
+
+
+//        if (enemy.body.getLinearVelocity().x <= 1 && cnt < 15) {
+//            enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), player.body.getWorldCenter(), true);
+//        } else {
+//            enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), player.body.getWorldCenter(), true);
+//            if (cnt > 80) {
+//                cnt = 0;
+//            }
+//        }
+
         player.update(deltaT);
+        enemy.update(deltaT);
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -168,6 +207,7 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
+        enemy.draw(game.batch);
 
         game.batch.end();
     }
