@@ -82,8 +82,6 @@ public class GameScreen implements Screen {
 
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
 
-        this.player = new Mole(world, this);
-
 
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);
