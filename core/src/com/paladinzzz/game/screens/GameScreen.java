@@ -3,6 +3,7 @@ package com.paladinzzz.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,19 +23,22 @@ import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
+import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Mole;
+import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
+
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
     public CrossplatformApp game;
-    private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
+    private Sound jump = Gdx.audio.newSound(Gdx.files.internal("Audio/jump.wav"));
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
@@ -44,11 +48,14 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private TiledMap worldMap;
 
-    //Playable character:
+    //Playable character and AI:
     private Mole player;
+    private Wurrumpie wurrumpie;
+    private antObject antsObject;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -59,24 +66,30 @@ public class GameScreen implements Screen {
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
+        this.wurrumpie = new Wurrumpie(world, this);
 
-        //Maak en bepaal of de debugger aan is
+        //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
             this.debugRenderer = new Box2DDebugRenderer();
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
+
+        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+
 
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
-
+        antStoppers = new antStopObject();
+        antsObject = new antObject(this, world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -89,6 +102,7 @@ public class GameScreen implements Screen {
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
+        antStoppers.defineObject(world, worldMap);
 
         world.setContactListener(new CollisionListener());
 
@@ -105,6 +119,7 @@ public class GameScreen implements Screen {
 
     private void handleInput(float deltaT) {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+            jump.play(1.0f);
             player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
             HUD.spacepressed = true;
         }
@@ -118,7 +133,6 @@ public class GameScreen implements Screen {
             inPause = true;
             game.setScreen(new PauseScreen(this, game));
         }
-
     }
 
     private void update(float deltaT) {
@@ -130,6 +144,9 @@ public class GameScreen implements Screen {
         camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.update(deltaT);
+        }
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -165,6 +182,10 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.draw(game.batch);
+        }
+        wurrumpie.draw(game.batch);
 
         game.batch.end();
     }

@@ -1,23 +1,18 @@
 package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -26,7 +21,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.util.TextInput;
 
 import static com.badlogic.gdx.Gdx.input;
 import static com.paladinzzz.game.screens.GameScreen.showtext;
@@ -46,9 +40,9 @@ public class MenuScreen implements Screen {
     int[] x = new int[255];
     public static boolean inPlayscreen = false;
     private Table table;
-    String s = "";
-    private int amountbackspacepressed = 0;
+    private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
 
+    private int amountbackspacepressed = 0;
 
     public MenuScreen(CrossplatformApp game) {
         this.game = game;
@@ -72,6 +66,7 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                click.play(2.0f);
                 Gdx.app.exit();
             }
         });
@@ -82,6 +77,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(2.0f);
                 game.setScreen(new LoginScreen(game));
                 inPlayscreen = true;
             }
@@ -93,6 +89,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f);
                 game.setScreen(new OptionScreen(game));
                 showtext = true;
 
@@ -104,11 +101,10 @@ public class MenuScreen implements Screen {
         highscoreButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(2.0f);
                 game.setScreen(new HighScoresScreen(game));
             }
         });
-
-
 
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
@@ -125,13 +121,10 @@ public class MenuScreen implements Screen {
         table.row();
         table.add(exitButton).padTop(5).padRight(10);
         stage.addActor(table);
-
-
     }
 
     @Override
     public void render(float delta) {
-
 
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

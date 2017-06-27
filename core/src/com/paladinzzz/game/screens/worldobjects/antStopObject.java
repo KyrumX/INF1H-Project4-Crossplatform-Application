@@ -10,32 +10,24 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
-import com.paladinzzz.game.sprites.Mole;
 
-public class groundObject implements IObject {
-
+public class antStopObject implements IObject {
     private Body body;
-    private Mole player;
     private Rectangle rect;
     private FixtureDef fdef;
     private BodyDef bdef;
     private PolygonShape shape;
 
-    public groundObject(Mole player) {
+    public antStopObject() {
         bdef = new BodyDef();
         shape = new PolygonShape();
         fdef = new FixtureDef();
         shape = new PolygonShape();
     }
 
-    public boolean collides() {
-        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
-    }
-
     @Override
     public void defineObject(World world, TiledMap map) {
-        //De grond objecten zijn het 3e object in onze map editor, beginnend bij 0 is dat het 2e object in code
-        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             this.rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
 
@@ -44,7 +36,7 @@ public class groundObject implements IObject {
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
 
-            fdef.filter.categoryBits = Constants.GROUND_BIT; //De grond is dus een GROUND_BITs
+            fdef.filter.categoryBits = Constants.ANT_STOP_BIT; //De grond is dus een GROUND_BITs
 
             fdef.shape = shape;
             body.createFixture(fdef);

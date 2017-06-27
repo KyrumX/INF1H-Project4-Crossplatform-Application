@@ -39,6 +39,9 @@ public class fluidKillable implements IObject {
             bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
+
+            fdef.filter.categoryBits = Constants.FLUID_BIT; //Het water/lava is dus een FLUID_BIT
+
             fdef.shape = shape;
             body.createFixture(fdef);
             body.setUserData(this);
