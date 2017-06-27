@@ -57,11 +57,9 @@ public class GameScreen implements Screen {
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
+    private antObject antsObject;
     private float initialenemyposition;
 
-
-    //TEMP:
-    private Ant ant;
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
@@ -86,7 +84,6 @@ public class GameScreen implements Screen {
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
 
         this.player = new Mole(world, this);
-        this.ant = new Ant(world, this, 290 / Constants.PPM, 380 / Constants.PPM);
 
 
         //Het maken van map objecten:
@@ -95,7 +92,7 @@ public class GameScreen implements Screen {
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
         antStoppers = new antStopObject();
-
+        antsObject = new antObject(this, world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -149,7 +146,9 @@ public class GameScreen implements Screen {
         camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
-        ant.update(deltaT);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.update(deltaT);
+        }
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -185,7 +184,9 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
-        ant.draw(game.batch);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.draw(game.batch);
+        }
 
         game.batch.end();
     }
