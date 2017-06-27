@@ -16,5 +16,6 @@ public final class Constants {
     public static final short POLYGON_BIT = 8;
     public static final short BOUNCY_BIT = 16;
     public static final short FLUID_BIT = 32;
+    public static final short WURRUMPIE_BIT = 256;
 
 }

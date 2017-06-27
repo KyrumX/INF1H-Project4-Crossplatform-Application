@@ -9,12 +9,12 @@ import com.paladinzzz.game.screens.worldobjects.bounceObject;
 import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Mole;
+import com.paladinzzz.game.sprites.Wurrumpie;
 
 //Deze klas registreert contact tussen twee fixtures in onze wereld
 public class CollisionListener implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("Collision detected!");
         boolean isAmole = false;
         boolean isBmole = false;
         Fixture fixOne = contact.getFixtureA();
@@ -36,6 +36,12 @@ public class CollisionListener implements ContactListener {
         }
         else if((isBmole) && (udA instanceof fluidKillable)) {
             ((Mole) udB).killMole();
+        }
+
+        if ((isAmole) && (udB instanceof Wurrumpie)){
+            ((Wurrumpie)udB).killWurrumpie();
+        } else if ((isBmole) && (udA instanceof Wurrumpie)) {
+            ((Wurrumpie)udA).killWurrumpie();
         }
     }
 

@@ -1,7 +1,5 @@
 package com.paladinzzz.game.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.screens.GameScreen;
 
@@ -22,16 +19,12 @@ public class Wurrumpie extends Sprite {
     private Texture texture;
     public boolean destroyed = false;
     private TextureRegion wurmStand;
-    private int x;
-    private int y;
 
-    public Wurrumpie(World world, GameScreen screen, int x, int y) {
+    public Wurrumpie(World world, GameScreen screen) {
 
         super(screen.getAtlas().findRegion("MoleRun"));
         this.gameScreen = screen;
         this.world = world;
-        this.x = x;
-        this.y = y;
 
         defineWurm();
         wurmStand = new TextureRegion(getTexture(),0, 0, 32, 32);
@@ -41,7 +34,7 @@ public class Wurrumpie extends Sprite {
 
     public void defineWurm() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(x / Constants.PPM, y / Constants.PPM);
+        bodyDef.position.set(64 / Constants.PPM, 310 / Constants.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
         body = world.createBody(bodyDef);
@@ -49,23 +42,23 @@ public class Wurrumpie extends Sprite {
         FixtureDef fixtureDef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(7 / Constants.PPM);
+
+        fixtureDef.filter.categoryBits = Constants.WURRUMPIE_BIT;
+
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
         body.setUserData(this);
     }
 
-    public void update(float deltaT, Mole player) {
-        // if worm position - 1 < player position < worm position + 1: worm dies.
-        if ((this.body.getPosition().x - (15 / Constants.PPM) <= player.body.getPosition().x) && (player.body.getPosition().x <= this.body.getPosition().x + (15 / Constants.PPM) &&
-                (this.body.getPosition().y - (15 / Constants.PPM) <= player.body.getPosition().y) && (player.body.getPosition().y <= this.body.getPosition().y + (15 / Constants.PPM)))) {
-            killWurrumpie();
-        }
+    public void update(float deltaT) {
     }
 
     public void killWurrumpie() {
-        this.destroyed = true;
-        System.out.println("Wurrumpie neeeeeee!");
-        System.out.println("Score + 10");
+        if (!destroyed) {
+            System.out.println("Wurrumpie neeeeeee!");
+            System.out.println("Score + 10");
+            this.destroyed = true;
+        }
         //destroy this
     }
 

@@ -78,7 +78,7 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0,-10), true);
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
-        this.wurrumpie = new Wurrumpie(world, this, 500, 100);
+        this.wurrumpie = new Wurrumpie(world, this);
         this.enemy = new Enemy(world, this);
         initialenemyposition = enemy.getX();
 
@@ -141,8 +141,6 @@ public class GameScreen implements Screen {
     private void update(float deltaT) {
         handleInput(deltaT);
 
-        System.out.println(cnt);
-
         world.step(1/60f, 6, 2);
 
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
@@ -157,7 +155,6 @@ public class GameScreen implements Screen {
             if (enemy.body.getPosition().x > initialenemyposition) {
                 if (enemy.body.getLinearVelocity().x <= 2) {
                     enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
-                    System.out.println("REVERSING");
                 }
             }
         } else {
