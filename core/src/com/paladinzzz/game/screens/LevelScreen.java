@@ -65,6 +65,7 @@ public class LevelScreen implements Screen {
         playButton1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MenuScreen.musicHandler.stopMusic();
                 game.setScreen(new GameScreen(game));
                 inPlayscreen = true;
             }
