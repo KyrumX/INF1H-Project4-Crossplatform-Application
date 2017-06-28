@@ -80,7 +80,23 @@ public class LoginScreen implements Screen {
             }
         });
 
-        Gdx.input.setOnscreenKeyboardVisible(true);
+//        drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
+//        hugebutton = new ImageButton(drawableHighscore);
+//        hugebutton.addListener(new ClickListener(){
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//
+//                Gdx.input.setOnscreenKeyboardVisible(true);
+//            }
+//        });
+//
+        stage.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.input.setOnscreenKeyboardVisible(true);
+            }
+        });
+
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
 
