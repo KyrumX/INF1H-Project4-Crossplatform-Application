@@ -112,15 +112,15 @@ public class Mole extends Sprite {
 
     public void killMole() {
         System.out.println("A mole has been slain...!");
-        Gdx.app.postRunnable(new Runnable() {
-
-            @Override
-            public void run () {
-                body.setTransform(32 / Constants.PPM, 310 / Constants.PPM, body.getAngle());
-                body.setAngularVelocity(0);
-                body.setLinearVelocity(0, 0);
-            }
-        });
+//        Gdx.app.postRunnable(new Runnable() {
+//
+//            @Override
+//            public void run () {
+//                body.setTransform(32 / Constants.PPM, 310 / Constants.PPM, body.getAngle());
+//                body.setAngularVelocity(0);
+//                body.setLinearVelocity(0, 0);
+//            }
+//        });
     }
 
     public void draw(SpriteBatch batch) {
