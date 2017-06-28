@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
@@ -80,9 +81,6 @@ public class GameScreen implements Screen {
             this.debugRenderer = new Box2DDebugRenderer();
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
-
-        this.moleAtlas = new TextureAtlas("Mole2.0/MoleRun.pack");
-
 
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);

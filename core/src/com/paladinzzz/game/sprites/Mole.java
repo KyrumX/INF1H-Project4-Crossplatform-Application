@@ -1,5 +1,6 @@
 package com.paladinzzz.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,9 +15,9 @@ import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.screens.GameScreen;
 
 public class Mole extends Sprite {
-    public enum State{JUMPING, STANDING, RUNNING};
-    public State currentState;
-    public State previousState;
+    private enum State{JUMPING, STANDING, RUNNING};
+    private State currentState;
+    private State previousState;
     public World world;
     public Body body;
     private TextureRegion moleStand;
