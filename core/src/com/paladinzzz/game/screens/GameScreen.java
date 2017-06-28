@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.player.Player;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;

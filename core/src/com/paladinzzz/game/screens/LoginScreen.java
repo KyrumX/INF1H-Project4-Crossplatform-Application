@@ -19,8 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.player.Player;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.util.playerMemory;
+
 import static com.badlogic.gdx.Gdx.input;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
@@ -69,6 +72,8 @@ public class LoginScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                playerMemory.player = null;
+                playerMemory.player = new Player(playername, playerMemory.database);
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
             }
@@ -108,21 +113,6 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            game.setScreen(new LevelScreen(game));
-            inPlayscreen = true;
-
-
-            if (!isConverted){
-                if(playername.length()>=2) {
-                    playername = playername.substring(0, 1).toUpperCase() + playername.substring(1, playername.length() - 1).toLowerCase();
-                }
-                else
-                { playername = "unnamed"; }
-                isConverted = true;
-            }
-        }
-
         game.batch.begin();
 
         //Er wordt een mogelijkheid gemaakt om de naam van de speler in te voeren
@@ -140,6 +130,8 @@ public class LoginScreen implements Screen {
                 }
             }
         }
+
+
 
         font.draw(game.batch, playername, 180, 110);
 

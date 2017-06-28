@@ -12,6 +12,7 @@ import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.MenuScreen;
 import com.paladinzzz.game.sprites.Mole;
+import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.MenuScreen.inPlayscreen;
 
@@ -22,6 +23,9 @@ public class CrossplatformApp extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MenuScreen(this));
+		playerMemory.database = new Database();
+		playerMemory.database.connect();
+
 		JSONfunctions json = new JSONfunctions();
 		System.out.println(json.doInBackground());
 
