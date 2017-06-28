@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
-        System.out.println(gameFile);
+        //System.out.println(gameFile);
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, "hoi");
@@ -118,20 +118,30 @@ public class GameScreen implements Screen {
     }
 
     private void handleInput(float deltaT) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-            jump.play(1.0f);
-            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-            HUD.spacepressed = true;
-        }
-        if((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.body.getLinearVelocity().x <= 2) {
-            player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
-        }
-        if((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.body.getLinearVelocity().x >= -2) {
-            player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            inPause = true;
-            game.setScreen(new PauseScreen(this, game));
+        if (Constants.DEBUGGER_ON) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+                jump.play(1.0f);
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+                HUD.spacepressed = true;
+            }
+            if ((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.body.getLinearVelocity().x <= 2) {
+                player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
+            }
+            if ((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.body.getLinearVelocity().x >= -2) {
+                player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
+            }
+        } else {
+            if (player.body.getLinearVelocity().x <= 2.0)
+                player.body.applyLinearImpulse(new Vector2(2, 0f), player.body.getWorldCenter(), true);
+            if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
+                jump.play(1.0f);
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+                HUD.spacepressed = true;
+            }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+//            inPause = true;
+//            game.setScreen(new PauseScreen(this, game));
+//        }
         }
     }
 
@@ -140,7 +150,6 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
-        System.out.println(player.body.getPosition().y);
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
         if(!(player.body.getPosition().y <= 133 / Constants.PPM))
             camera.position.y = player.body.getPosition().y;
