@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.player.Player;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
@@ -131,7 +132,7 @@ public class GameScreen implements Screen {
                 player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
             }
         } else {
-            if (player.body.getLinearVelocity().x <= 2.0)
+            if (player.body.getLinearVelocity().x <= 1.0)
                 player.body.applyLinearImpulse(new Vector2(2, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
                 jump.play(1.0f);

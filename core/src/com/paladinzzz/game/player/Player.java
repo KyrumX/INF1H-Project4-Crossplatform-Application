@@ -13,24 +13,24 @@ public class Player {
     public Player(String playerName, Database db) {
         this.playerName = playerName;
         this.db = db;
+        this.definePlayer();
     }
 
     private void verifyPlayer() {
-        db.verifyPlayer(playerName);
+        db.verifyPlayer(playerName, db.connect());
     }
 
-    private String getName() {
+    public String getName() {
         return playerName;
     }
 
-    public static void main (String[] arg) {
-        Database database = new Database();
-        database.getData(database.connect());
-        Player p1 = new Player("aaron", database);
-        if(!database.verifyPlayer(p1.getName())) {
+    private void definePlayer() {
+        if (!db.verifyPlayer(this.getName(), db.connect())) {
             System.out.println("Nieuwe speler aanmaken");
-        }
-        else
+            db.makePlayer(this.getName(), db.connect());
+        } else
             System.out.println("Geen nieuwe speler aanmaken");
     }
 }
+
+
