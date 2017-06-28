@@ -95,4 +95,29 @@ public class Database{
         return scores;
     }
 
+    public boolean verifyPlayer(String nameIn) {
+        try {
+            Statement get = conn.createStatement();
+            ResultSet rs = get.executeQuery(String.format("SELECT name FROM player WHERE name = '%s'", nameIn));
+            if (!rs.next()) {
+                return false;
+            } else
+                return true;
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public void makePlayer(String nameIn) {
+        try {
+            Statement get = conn.createStatement();
+            String query = "INSERT INTO player(name, score, haslevel1, haslevel2) VALUES(?, ? ,?)";
+            ResultSet rs = get.executeQuery(query);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

@@ -19,4 +19,5 @@ public final class Constants {
     public static final short ANT_BIT = 64;
     public static final short ANT_STOP_BIT = 128;
     public static final short WURRUMPIE_BIT = 256;
+    public static final short FINISH_BIT = 512;
 }
