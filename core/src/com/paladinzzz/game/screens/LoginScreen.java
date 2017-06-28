@@ -3,6 +3,7 @@ package com.paladinzzz.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,54 +13,46 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.audio.MusicHandler;
 import static com.badlogic.gdx.Gdx.input;
+import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
+
 
 public class LoginScreen implements Screen {
 
     private CrossplatformApp game;
     private Stage stage;
-    private ImageButton playButton, backButton;
-    private Texture playTexture, backTexture, background;
-    private Drawable drawablePlay, drawableBack;
-
+    private ImageButton backButton, playButton;
+    private Texture backTexture, playTexture, background;
+    private Drawable drawableBack, drawablePlay;
     private OrthographicCamera camera;
     BitmapFont font = new BitmapFont();
     int[] x = new int[255];
     public static boolean inPlayscreen = false;
-    private Table table;
     public static String playername = "";
     private boolean isConverted = false;
-
+    private Table table, table2;
 
     public LoginScreen(CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
-        this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
-        this.backTexture = new Texture("BackButton.png");
+        this.playTexture = new Texture("Screens/LoginScreen/LvlSelection.png");
+        this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
     }
 
     @Override
     public void show() {
 
-        //Geef de texture van de playButton mee aan de ImageButton
-        drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
-        playButton = new ImageButton(drawablePlay);
-        playButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new LevelScreen(game));
-                inPlayscreen = true;
-            }
-        });
-
+        //Geeft de texture van de backButton mee aan een nieuwe ImageButton
         drawableBack = new TextureRegionDrawable(new TextureRegion(backTexture));
         backButton = new ImageButton(drawableBack);
         backButton.addListener(new ClickListener(){
@@ -70,22 +63,35 @@ public class LoginScreen implements Screen {
             }
         });
 
+        //Geeft de texture van de playButton mee aan een nieuwe ImageButton
+        drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
+        playButton = new ImageButton(drawablePlay);
+        playButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new LevelScreen(game));
+                inPlayscreen = true;
+            }
+        });
+
+
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
 
-        //Een table wordt aangemaakt om buttons aan toe te voegen.
+        //Een table wordt aangemaakt om de button te maken die naar de level selection leidt
         table = new Table();
-        table.top();
+        table.bottom();
         table.setFillParent(true);
-        table.add(playButton).padTop(250);
-        table.row();
-        table.add(backButton).padRight(325);
+        table.add(playButton).padBottom(40);
         stage.addActor(table);
 
-        for (int i = 0 ; i < 255; i++){
-            x[i] = i;
-        }
-
+        //Een table wordt aangemaakt om de back button toe te voegen naar het main menu
+        table2 = new Table();
+        table2.bottom();
+        table2.setFillParent(true);
+        table2.add(backButton).padBottom(13).padRight(640);
+        table2.row();
+        stage.addActor((table2));
     }
 
     @Override
@@ -94,25 +100,31 @@ public class LoginScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (input.isKeyPressed(66)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             game.setScreen(new LevelScreen(game));
             inPlayscreen = true;
 
+
             if (!isConverted){
-                playername = playername.substring(0, 1).toUpperCase() + playername.substring(1, playername.length()).toLowerCase();
+                if(playername.length()>=2) {
+                    playername = playername.substring(0, 1).toUpperCase() + playername.substring(1, playername.length() - 1).toLowerCase();
+                }
+                else
+                { playername = "unnamed"; }
                 isConverted = true;
             }
         }
 
-
         game.batch.begin();
 
+        //Er wordt een mogelijkheid gemaakt om de naam van de speler in te voeren
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        font.setColor(Color.WHITE);
         for (int i : x) {
-            if (input.isKeyJustPressed(i)){
-                if (i != 62 && i != 67 && i!= 66) {
+            if (input.isKeyJustPressed(i)) {
+                if (i != 62 && i != 67 && i != 66) {
                     playername += Input.Keys.toString(i).toLowerCase();
-                } else if(i == 67 & playername.length() > 0){
+                } else if (i == 67 & playername.length() > 0) {
                     playername = playername.substring(0, playername.length() - 1).toLowerCase();
                 } else {
                     playername += " ";
@@ -120,8 +132,10 @@ public class LoginScreen implements Screen {
             }
         }
 
-        font.draw(game.batch, playername, 250, 200);
 
+        font.draw(game.batch, playername, 320, 110);
+
+//        font.draw(game.batch, "Hello world", 320, 110);
         game.batch.end();
         stage.draw();
     }
@@ -152,4 +166,3 @@ public class LoginScreen implements Screen {
 
     }
 }
-

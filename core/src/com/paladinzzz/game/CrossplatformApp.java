@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.paladinzzz.game.database.Database;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.MenuScreen;
 import com.paladinzzz.game.sprites.Mole;
@@ -20,8 +22,13 @@ public class CrossplatformApp extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MenuScreen(this));
-		Database database = new Database();
-		database.getData(database.connect());
+		//Database database = new Database();
+		//database.getData(database.connect());
+		JSONfunctions json = new JSONfunctions();
+		System.out.println(json.doInBackground());
+
+		parseJSON parse = new parseJSON(json.doInBackground());
+		parse.getData();
 
 	}
 

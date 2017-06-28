@@ -23,28 +23,22 @@ import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
-import com.paladinzzz.game.sprites.Enemy;
+import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
-
-import java.util.concurrent.TimeUnit;
 
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
     public CrossplatformApp game;
-    private IObject ground1, ramp1, bounceBlocks1;
-    private double metersran = 0.0;
     private OrthographicCamera camera;
     private Viewport viewport;
     private HUD levelHUD;
     private OrthogonalTiledMapRenderer mapRenderer;
     private World world;
     private Sound jump = Gdx.audio.newSound(Gdx.files.internal("Audio/jump.wav"));
-    private int cnt = 0;
-
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
@@ -54,18 +48,18 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private TiledMap worldMap;
 
-    //Playable character:
+    //Playable character and AI:
     private Mole player;
-    private Enemy enemy;
     private Wurrumpie wurrumpie;
+    private antObject antsObject;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks;
-    private float initialenemyposition;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
+
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
-        System.out.println(gameFile);
+        //System.out.println(gameFile);
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, "hoi");
@@ -79,8 +73,6 @@ public class GameScreen implements Screen {
         this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
         this.player = new Mole(world, this);
         this.wurrumpie = new Wurrumpie(world, this);
-        this.enemy = new Enemy(world, this);
-        initialenemyposition = enemy.getX();
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
@@ -88,12 +80,16 @@ public class GameScreen implements Screen {
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
 
+        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+
+
         //Het maken van map objecten:
         ground = objectFactory.createObject(1, this.player);
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
-
+        antStoppers = new antStopObject();
+        antsObject = new antObject(this, world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -106,6 +102,7 @@ public class GameScreen implements Screen {
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
+        antStoppers.defineObject(world, worldMap);
 
         world.setContactListener(new CollisionListener());
 
@@ -121,20 +118,30 @@ public class GameScreen implements Screen {
     }
 
     private void handleInput(float deltaT) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-            jump.play(1.0f);
-            player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
-            HUD.spacepressed = true;
-        }
-        if((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.body.getLinearVelocity().x <= 2) {
-            player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
-        }
-        if((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.body.getLinearVelocity().x >= -2) {
-            player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
-            inPause = true;
-            game.setScreen(new PauseScreen(this, game));
+        if (Constants.DEBUGGER_ON) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
+                jump.play(1.0f);
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+                HUD.spacepressed = true;
+            }
+            if ((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.D)) && player.body.getLinearVelocity().x <= 2) {
+                player.body.applyLinearImpulse(new Vector2(0.1f, 0), player.body.getWorldCenter(), true);
+            }
+            if ((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.A)) && player.body.getLinearVelocity().x >= -2) {
+                player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
+            }
+        } else {
+            if (player.body.getLinearVelocity().x <= 2.0)
+                player.body.applyLinearImpulse(new Vector2(2, 0f), player.body.getWorldCenter(), true);
+            if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
+                jump.play(1.0f);
+                player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
+                HUD.spacepressed = true;
+            }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+//            inPause = true;
+//            game.setScreen(new PauseScreen(this, game));
+//        }
         }
     }
 
@@ -144,35 +151,13 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
 
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
-        camera.position.y = player.body.getPosition().y;
-
-        cnt++;
-        if (cnt < 70) {
-            if (enemy.body.getLinearVelocity().x <= 2) {
-                enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), enemy.body.getWorldCenter(), true);
-            }
-        } else if(cnt >= 70 && cnt < 139){
-            if (enemy.body.getPosition().x > initialenemyposition) {
-                if (enemy.body.getLinearVelocity().x <= 2) {
-                    enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), enemy.body.getWorldCenter(), true);
-                }
-            }
-        } else {
-            cnt = 0;
-        }
-
-
-//        if (enemy.body.getLinearVelocity().x <= 1 && cnt < 15) {
-//            enemy.body.applyLinearImpulse(new Vector2(0.05f, 0), player.body.getWorldCenter(), true);
-//        } else {
-//            enemy.body.applyLinearImpulse(new Vector2(-0.05f, 0), player.body.getWorldCenter(), true);
-//            if (cnt > 80) {
-//                cnt = 0;
-//            }
-//        }
+        if(!(player.body.getPosition().y <= 133 / Constants.PPM))
+            camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
-        enemy.update(deltaT);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.update(deltaT);
+        }
         camera.update();
         mapRenderer.setView(camera);
     }
@@ -182,7 +167,7 @@ public class GameScreen implements Screen {
         update(delta);
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
@@ -208,7 +193,9 @@ public class GameScreen implements Screen {
         }
 
         player.draw(game.batch);
-        enemy.draw(game.batch);
+        for(Ant ant : antsObject.getAnts()) {
+            ant.draw(game.batch);
+        }
         wurrumpie.draw(game.batch);
 
         game.batch.end();

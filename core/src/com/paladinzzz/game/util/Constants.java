@@ -1,7 +1,7 @@
 package com.paladinzzz.game.util;
 
 public final class Constants {
-    public static final boolean DEBUGGER_ON = true;
+    public static final boolean DEBUGGER_ON = false;
     public static final int V_WIDTH = 480;
     public static final int V_HEIGHT = 270;
     public static final int WIDTH = 720;
@@ -16,6 +16,7 @@ public final class Constants {
     public static final short POLYGON_BIT = 8;
     public static final short BOUNCY_BIT = 16;
     public static final short FLUID_BIT = 32;
+    public static final short ANT_BIT = 64;
+    public static final short ANT_STOP_BIT = 128;
     public static final short WURRUMPIE_BIT = 256;
-
 }
