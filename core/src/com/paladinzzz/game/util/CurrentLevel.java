@@ -4,7 +4,6 @@ public class CurrentLevel {
     public int currentLevel;
 
     public CurrentLevel(int setWorld) {
-        currentWorld = setWorld;
         currentLevel = 1;
     }
 
@@ -14,5 +13,17 @@ public class CurrentLevel {
 
     public void setCurrentLevel(int setLevel) {
         this.currentLevel = setLevel;
+    }
+
+    public void addLevel() {
+        this.currentLevel += 1;
+    }
+
+    public int getCurrentWorld() {
+        return currentWorld;
+    }
+
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 }

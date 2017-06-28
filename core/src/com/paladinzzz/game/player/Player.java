@@ -10,12 +10,13 @@ public class Player {
     private Boolean levelOneDone;
     private Boolean levelTwoDone;
     private Database db;
-    private CurrentLevel worldAndLevelData;
+    public CurrentLevel worldAndLevelData;
 
     public Player(String playerName, Database db) {
         this.playerName = playerName;
         this.db = db;
         this.definePlayer();
+        this.worldAndLevelData = new CurrentLevel(1);
     }
 
     private void verifyPlayer() {

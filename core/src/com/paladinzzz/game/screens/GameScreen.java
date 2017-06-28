@@ -29,6 +29,7 @@ import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
+import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
@@ -59,7 +60,7 @@ public class GameScreen implements Screen {
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
 
-    public GameScreen(CrossplatformApp gameFile, int worldNum) {
+    public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
         //System.out.println(gameFile);
         this.camera = new OrthographicCamera();
@@ -69,7 +70,7 @@ public class GameScreen implements Screen {
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Hier bepalen we welke wereld het wordt:
-        this.worldMap = mapLoader.load(WorldPicker.pickWorld(worldNum));
+        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -109,7 +110,7 @@ public class GameScreen implements Screen {
         }
         antStoppers.defineObject(world, worldMap);
 
-        world.setContactListener(new CollisionListener());
+        world.setContactListener(new CollisionListener(this.game));
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -237,5 +238,9 @@ public class GameScreen implements Screen {
         this.world.dispose();
         this.debugRenderer.dispose();
         this.levelHUD.dispose();
+    }
+
+    public CrossplatformApp getGame() {
+        return game;
     }
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.playerMemory;
 
 public class LevelScreen implements Screen {
 
@@ -49,7 +50,8 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game, 1));
+                playerMemory.player.worldAndLevelData.setCurrentWorld(1);
+                game.setScreen(new GameScreen(game));
                 levelstage.dispose();
             }
         });
