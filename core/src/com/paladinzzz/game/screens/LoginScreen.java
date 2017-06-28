@@ -79,7 +79,7 @@ public class LoginScreen implements Screen {
             }
         });
 
-
+        Gdx.input.setOnscreenKeyboardVisible(true);
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
 
