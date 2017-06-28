@@ -140,8 +140,10 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
+        System.out.println(player.body.getPosition().y);
         camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
-        camera.position.y = player.body.getPosition().y;
+        if(!(player.body.getPosition().y <= 133 / Constants.PPM))
+            camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
         for(Ant ant : antsObject.getAnts()) {
@@ -156,7 +158,7 @@ public class GameScreen implements Screen {
         update(delta);
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
