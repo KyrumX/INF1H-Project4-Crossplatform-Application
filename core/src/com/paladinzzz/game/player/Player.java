@@ -2,10 +2,35 @@ package com.paladinzzz.game.player;
 
 //Class voor het generen van players en bijhouden/uploaden van score
 
-public class Player {
-    public String playerName;
+import com.paladinzzz.game.database.Database;
 
-    public Player(String playerName) {
+public class Player {
+    private String playerName;
+    private Boolean levelOneDone;
+    private Boolean levelTwoDone;
+    private Database db;
+
+    public Player(String playerName, Database db) {
         this.playerName = playerName;
+        this.db = db;
+    }
+
+    private void verifyPlayer() {
+        db.verifyPlayer(playerName);
+    }
+
+    private String getName() {
+        return playerName;
+    }
+
+    public static void main (String[] arg) {
+        Database database = new Database();
+        database.getData(database.connect());
+        Player p1 = new Player("aaron", database);
+        if(!database.verifyPlayer(p1.getName())) {
+            System.out.println("Nieuwe speler aanmaken");
+        }
+        else
+            System.out.println("Geen nieuwe speler aanmaken");
     }
 }
