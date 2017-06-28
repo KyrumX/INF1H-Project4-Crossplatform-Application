@@ -13,16 +13,18 @@ public class Player {
     public Player(String playerName, Database db) {
         this.playerName = playerName;
         this.db = db;
+        this.definePlayer();
     }
 
     private void verifyPlayer() {
-        db.verifyPlayer(playerName);
+        db.verifyPlayer(playerName, db.connect());
     }
 
-    private String getName() {
+    public String getName() {
         return playerName;
     }
 
+<<<<<<< Updated upstream
     public static void main (String[] arg) {
         Database database = new Database();
         database.getData(database.connect());
@@ -32,6 +34,14 @@ public class Player {
             database.makePlayer(p1.getName());
         }
         else
+=======
+    private void definePlayer() {
+        if (!db.verifyPlayer(this.getName(), db.connect())) {
+            System.out.println("Nieuwe speler aanmaken");
+        } else
+>>>>>>> Stashed changes
             System.out.println("Geen nieuwe speler aanmaken");
     }
 }
+
+

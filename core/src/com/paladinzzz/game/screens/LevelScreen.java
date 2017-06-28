@@ -18,10 +18,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 
-/**
- * Created by Ralph on 28-6-2017.
- */
-
 public class LevelScreen implements Screen {
 
     private OrthographicCamera camera;
