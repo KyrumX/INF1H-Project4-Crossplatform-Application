@@ -27,6 +27,7 @@ public class Player {
     private void definePlayer() {
         if (!db.verifyPlayer(this.getName(), db.connect())) {
             System.out.println("Nieuwe speler aanmaken");
+            db.makePlayer(this.getName(), db.connect());
         } else
             System.out.println("Geen nieuwe speler aanmaken");
     }

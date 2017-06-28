@@ -133,7 +133,7 @@ public class GameScreen implements Screen {
                 player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
             }
         } else {
-            if (player.body.getLinearVelocity().x <= 2.0)
+            if (player.body.getLinearVelocity().x <= 1.0)
                 player.body.applyLinearImpulse(new Vector2(2, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
                 jump.play(1.0f);
