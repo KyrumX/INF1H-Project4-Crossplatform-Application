@@ -19,7 +19,7 @@ public class Ant extends Sprite implements ISprite{
     private boolean movingForward;
 
     public Ant(World world, GameScreen screen, float x, float y) {
-        super(screen.getAtlas().findRegion("MoleRun"));
+        super(screen.getMoleAtlas().findRegion("MoleRun"));
         this.gameScreen = screen;
         this.world = world;
         setPosition(x, y);

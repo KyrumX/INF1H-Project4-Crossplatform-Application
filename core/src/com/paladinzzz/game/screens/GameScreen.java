@@ -42,7 +42,8 @@ public class GameScreen implements Screen {
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
-    private TextureAtlas atlas;
+    private TextureAtlas moleAtlas;
+    private TextureAtlas wurmAtlas;
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
@@ -59,7 +60,6 @@ public class GameScreen implements Screen {
 
     public GameScreen(CrossplatformApp gameFile) {
         this.game = gameFile;
-        //System.out.println(gameFile);
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, "hoi");
@@ -70,7 +70,8 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
-        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+        this.moleAtlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+        this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
         this.player = new Mole(world, this);
         this.wurrumpie = new Wurrumpie(world, this);
 
@@ -80,7 +81,7 @@ public class GameScreen implements Screen {
             debugRenderer.SHAPE_STATIC.set(1, 0, 0, 1);
         }
 
-        this.atlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+        this.moleAtlas = new TextureAtlas("Mole2.0/MoleRun.pack");
 
 
         //Het maken van map objecten:
@@ -155,6 +156,7 @@ public class GameScreen implements Screen {
             camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
+        wurrumpie.update(deltaT);
         for(Ant ant : antsObject.getAnts()) {
             ant.update(deltaT);
         }
@@ -201,9 +203,11 @@ public class GameScreen implements Screen {
         game.batch.end();
     }
 
-    public TextureAtlas getAtlas(){
-        return atlas;
+    public TextureAtlas getMoleAtlas(){
+        return moleAtlas;
     }
+
+    public TextureAtlas getWurmAtlas() {return wurmAtlas;}
 
     @Override
     public void resize(int width, int height) {

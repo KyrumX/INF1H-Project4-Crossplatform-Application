@@ -1,12 +1,13 @@
 package com.paladinzzz.game.sprites;
 
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
@@ -16,15 +17,23 @@ public class Wurrumpie extends Sprite {
     public World world;
     public Body body;
     private GameScreen gameScreen;
-    private Texture texture;
+    private Animation<TextureRegion> wurrumpieStasis;
     public boolean destroyed = false;
     private TextureRegion wurmStand;
+    private float stateTimer;
 
-    public Wurrumpie(World world, GameScreen screen) {
-
-        super(screen.getAtlas().findRegion("MoleRun"));
+    public Wurrumpie (World world, GameScreen screen) {
+        super(screen.getWurmAtlas().findRegion("Wurrumpie"));
         this.gameScreen = screen;
         this.world = world;
+        stateTimer = 0;
+
+        Array<TextureRegion> frames = new Array<TextureRegion>();
+        for(int i = 0; i < 4; i ++) {
+            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
+        }
+        wurrumpieStasis = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
 
         defineWurm();
         wurmStand = new TextureRegion(getTexture(),0, 0, 32, 32);
@@ -51,6 +60,14 @@ public class Wurrumpie extends Sprite {
     }
 
     public void update(float deltaT) {
+        setRegion(getFrame(deltaT));
+    }
+
+    public TextureRegion getFrame(float deltaT) {
+        TextureRegion region;
+        region = wurrumpieStasis.getKeyFrame(stateTimer);
+        stateTimer = stateTimer + deltaT;
+        return region;
     }
 
     public void killWurrumpie() {

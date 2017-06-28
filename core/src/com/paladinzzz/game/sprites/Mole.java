@@ -1,6 +1,5 @@
 package com.paladinzzz.game.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -27,7 +26,7 @@ public class Mole extends Sprite {
     private GameScreen gameScreen;
 
     public Mole(World world, GameScreen screen) {
-        super(screen.getAtlas().findRegion("MoleRun"));
+        super(screen.getMoleAtlas().findRegion("MoleRun"));
         this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
