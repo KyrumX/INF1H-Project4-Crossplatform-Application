@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.database.Database;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.util.Constants;
 
 
@@ -57,31 +59,29 @@ public class HighScoresScreen implements Screen{
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
-        Database database = new Database();
-        data = database.getNames(database.connect());
-        playerscores = database.getScores(database.connect());
+        JSONfunctions json = new JSONfunctions();
+        parseJSON parse = new parseJSON(json.doInBackground());
 
-        // geeft de namen weer
-        for (String s : data){
-            if (s != null) {
-                nm += s;
+        for (String i : parse.getNames()){
+            if(i != null) {
+                nm += i;
                 nm += "\n\n";
             } else {
                 break;
             }
         }
 
-        // geeft de scores weer
-        for (String s : playerscores){
-            if (s != null) {
-                sc += s;
-                sc += " Points\n\n";
+        System.out.println(nm);
+//
+        for (String i : parse.getScores()){
+            if(i != null) {
+                sc += i;
+                sc += "\n\n";
             } else {
                 break;
             }
         }
-
-
+        
         //Een table wordt aangemaakt om buttons aan toe te voegen.
         table = new Table();
         table.setFillParent(true);
@@ -95,7 +95,7 @@ public class HighScoresScreen implements Screen{
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        font.draw(game.batch, nm, 170, 300);
+        font.draw(game.batch, nm, 100, 300);
         font.draw(game.batch, sc, 480, 300);
 
         game.batch.end();

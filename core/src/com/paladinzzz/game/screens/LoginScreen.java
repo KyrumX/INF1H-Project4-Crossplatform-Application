@@ -119,9 +119,6 @@ public class LoginScreen implements Screen {
             x[lel] = lel;
         }
 
-        for(int i : x){
-            System.out.println(i);
-        }
     }
 
     @Override
