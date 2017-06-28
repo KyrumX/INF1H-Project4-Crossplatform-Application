@@ -26,9 +26,10 @@ public class Player {
     public static void main (String[] arg) {
         Database database = new Database();
         database.getData(database.connect());
-        Player p1 = new Player("aaron", database);
+        Player p1 = new Player("ralph", database);
         if(!database.verifyPlayer(p1.getName())) {
             System.out.println("Nieuwe speler aanmaken");
+            database.makePlayer(p1.getName());
         }
         else
             System.out.println("Geen nieuwe speler aanmaken");
