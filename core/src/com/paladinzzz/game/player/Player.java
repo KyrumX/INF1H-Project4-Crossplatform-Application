@@ -24,22 +24,10 @@ public class Player {
         return playerName;
     }
 
-<<<<<<< Updated upstream
-    public static void main (String[] arg) {
-        Database database = new Database();
-        database.getData(database.connect());
-        Player p1 = new Player("ralph", database);
-        if(!database.verifyPlayer(p1.getName())) {
-            System.out.println("Nieuwe speler aanmaken");
-            database.makePlayer(p1.getName());
-        }
-        else
-=======
     private void definePlayer() {
         if (!db.verifyPlayer(this.getName(), db.connect())) {
             System.out.println("Nieuwe speler aanmaken");
         } else
->>>>>>> Stashed changes
             System.out.println("Geen nieuwe speler aanmaken");
     }
 }
