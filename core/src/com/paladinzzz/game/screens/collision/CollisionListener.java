@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.paladinzzz.game.screens.worldobjects.bounceObject;
+import com.paladinzzz.game.screens.worldobjects.finishObject;
 import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Ant;
@@ -42,11 +43,19 @@ public class CollisionListener implements ContactListener {
         } else if ((isBmole) && (udA instanceof Ant)) {
             ((Mole) udB).killMole();
         }
+
         if ((isAmole) && (udB instanceof Wurrumpie)) {
             ((Wurrumpie) udB).killWurrumpie();
         } else if ((isBmole) && (udA instanceof Wurrumpie)) {
             ((Wurrumpie) udA).killWurrumpie();
             }
+
+        //Finish line
+        if ((isAmole) && (udB instanceof finishObject)) {
+            ((Mole) udA).killMole();
+        } else if ((isBmole) && (udA instanceof finishObject)) {
+            ((Mole) udB).killMole();
+        }
         }
 
 

@@ -54,7 +54,7 @@ public class GameScreen implements Screen {
     private antObject antsObject;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks, antStoppers;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
 
     public GameScreen(CrossplatformApp gameFile) {
@@ -90,6 +90,7 @@ public class GameScreen implements Screen {
         fluid = objectFactory.createObject(4, player);
         antStoppers = new antStopObject();
         antsObject = new antObject(this, world, worldMap);
+        finishBlocks = new finishObject(world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
