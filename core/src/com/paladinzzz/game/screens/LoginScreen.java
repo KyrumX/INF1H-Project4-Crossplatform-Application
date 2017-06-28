@@ -92,6 +92,14 @@ public class LoginScreen implements Screen {
         table2.add(backButton).padBottom(13).padRight(640);
         table2.row();
         stage.addActor((table2));
+
+        for (int lel = 0 ; lel < 255; lel++){
+            x[lel] = lel;
+        }
+
+        for(int i : x){
+            System.out.println(i);
+        }
     }
 
     @Override
@@ -122,6 +130,7 @@ public class LoginScreen implements Screen {
 //        font.setColor(Color.WHITE);
         for (int i : x) {
             if (input.isKeyJustPressed(i)) {
+                System.out.println(i);
                 if (i != 62 && i != 67 && i != 66) {
                     playername += Input.Keys.toString(i).toLowerCase();
                 } else if (i == 67 & playername.length() > 0) {
@@ -132,10 +141,8 @@ public class LoginScreen implements Screen {
             }
         }
 
+        font.draw(game.batch, playername, 180, 110);
 
-        font.draw(game.batch, playername, 320, 110);
-
-//        font.draw(game.batch, "Hello world", 320, 110);
         game.batch.end();
         stage.draw();
     }
