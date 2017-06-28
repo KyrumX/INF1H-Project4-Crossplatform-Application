@@ -49,7 +49,7 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game, 1));
                 levelstage.dispose();
             }
         });
