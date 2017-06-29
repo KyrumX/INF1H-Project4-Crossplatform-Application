@@ -24,6 +24,7 @@ import com.paladinzzz.game.screens.worldobjects.IObject;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.screens.worldobjects.wormObject;
+import com.paladinzzz.game.screens.worldobjects.antObject;
 import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
     static boolean showtext = true;
     private TextureAtlas moleAtlas;
     private TextureAtlas wurmAtlas;
+    private TextureAtlas antAtlas;
 
     //World Debugger:
     private Box2DDebugRenderer debugRenderer;
@@ -55,8 +57,9 @@ public class GameScreen implements Screen {
 
     //Playable character and AI:
     private com.paladinzzz.game.sprites.Mole player;
-    private com.paladinzzz.game.screens.worldobjects.antObject antsObject;
+    private com.paladinzzz.game.screens.worldobjects.antObject antObject;
     private wormObject wormObject;
+    private antObject antsObject;
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
@@ -79,6 +82,7 @@ public class GameScreen implements Screen {
         this.world = new World(new Vector2(0,-10), true);
         this.moleAtlas = new TextureAtlas("Mole3.0/Mole_3.0.pack");
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
+        this.antAtlas = new TextureAtlas("Ant/Ant.pack");
         this.player = new com.paladinzzz.game.sprites.Mole(world, this);
 
         //Maak en bepaal of de debugger aan is.
@@ -221,6 +225,9 @@ public class GameScreen implements Screen {
         return moleAtlas;
     }
 
+    public TextureAtlas getAntAtlas(){
+        return antAtlas;
+    }
     public TextureAtlas getWurmAtlas() {return wurmAtlas;}
 
     @Override

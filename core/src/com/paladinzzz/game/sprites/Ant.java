@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.util.Constants;
 
 public class Ant extends Sprite implements ISprite{
@@ -18,15 +19,15 @@ public class Ant extends Sprite implements ISprite{
     private State currentState;
     private State previousState;
     private World world;
-    private com.paladinzzz.game.screens.GameScreen gameScreen;
+    private GameScreen gameScreen;
     private Animation<TextureRegion> antWalk;
     private Body body;
     private boolean movingForward;
     private float stateTimer;
     private boolean flipped;
 
-    public Ant(World world, com.paladinzzz.game.screens.GameScreen screen, float x, float y) {
-        super(screen.getMoleAtlas().findRegion("MoleRun"));
+    public Ant(World world, GameScreen screen, float x, float y) {
+        super(screen.getAntAtlas().findRegion("Ant"));
         this.gameScreen = screen;
         this.world = world;
         currentState = State.WALKING;
@@ -34,7 +35,7 @@ public class Ant extends Sprite implements ISprite{
         stateTimer = 0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 6; i++) {
             frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
         }
         antWalk = new Animation<TextureRegion>(0.1f, frames);
