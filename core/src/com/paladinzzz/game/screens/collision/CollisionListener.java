@@ -53,14 +53,18 @@ public class CollisionListener implements ContactListener {
         }
 
         if ((isAmole) && (udB instanceof Ant)) {
+            playerMemory.player.reducePoints();
             ((com.paladinzzz.game.sprites.Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof Ant)) {
+            playerMemory.player.reducePoints();
             ((com.paladinzzz.game.sprites.Mole) udB).killMole();
         }
 
         if ((isAmole) && (udB instanceof Wurrumpie)) {
+            playerMemory.player.addPoints();
             ((Wurrumpie) udB).killWurrumpie();
         } else if ((isBmole) && (udA instanceof Wurrumpie)) {
+            playerMemory.player.addPoints();
             ((Wurrumpie) udA).killWurrumpie();
         }
 

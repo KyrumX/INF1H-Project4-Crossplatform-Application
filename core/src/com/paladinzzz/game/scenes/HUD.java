@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
@@ -39,7 +40,7 @@ public class HUD implements Disposable {
         scoreLabel = new Label(String.format("Score: " + "%03d", score), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         worldNameLabel = new Label((worldName), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         playerNameLabel = new Label(playername, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        startLabel = new Label(("Press Space to jump!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        startLabel = new Label(("Click the screen to jump!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
         Table table1 = new Table();
         table1.center();
@@ -77,6 +78,10 @@ public class HUD implements Disposable {
         table.add(playerNameLabel).expandX().padTop((float) 1);
 
         hudStage.addActor(table);
+    }
+
+    public void update(float dt) {
+        this.scoreLabel.setText(String.format("Score: " + "%03d", playerMemory.player.getScore()));
     }
 
     @Override
