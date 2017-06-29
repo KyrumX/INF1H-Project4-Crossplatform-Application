@@ -76,7 +76,6 @@ public class HighScoresScreen implements Screen{
         Table nametable = new Table();
         nametable.center().padRight(420f).padBottom(115f);
         nametable.setFillParent(true);
-//        nametable.add(nameslbl);
 
         for (String i : parse.getNames()){
             Label nameslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -91,7 +90,6 @@ public class HighScoresScreen implements Screen{
         Table scoretable = new Table();
         scoretable.center().padLeft(450f).padBottom(115f);
         scoretable.setFillParent(true);
-//        nametable.add(nameslbl);
 
         for (String i : parse.getScores()){
             Label scoreslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -122,13 +120,13 @@ public class HighScoresScreen implements Screen{
         stage.addActor(nametable);
         stage.addActor(scoretable);
 
-//        stage.addActor(this.nameslbl);
     }
 
     @Override
     public void render(float delta) {
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         game.batch.end();
         stage.draw();
 
