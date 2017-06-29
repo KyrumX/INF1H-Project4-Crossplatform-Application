@@ -35,7 +35,7 @@ public class Ant extends Sprite implements ISprite{
         stateTimer = 0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 9; i++) {
             frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
         }
         antWalk = new Animation<TextureRegion>(0.1f, frames);
@@ -67,7 +67,7 @@ public class Ant extends Sprite implements ISprite{
     }
 
     public void update(float deltaT) {
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.05f);
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.08f);
         if(body.getLinearVelocity().x == 0 && movingForward) {
             movingForward = false;
         }
