@@ -50,12 +50,10 @@ public class Wurrumpie extends Sprite {
 
         setPosition(x, y);
         defineWurm();
-        wurmStand = new TextureRegion(getTexture(),0, 0, 32, 32);
         setBounds(0, 0, 32 / Constants.PPM, 32 / Constants.PPM);
-        setRegion(wurmStand);
     }
 
-    public void defineWurm() {
+    private void defineWurm() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(getX(), getY());
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -80,7 +78,7 @@ public class Wurrumpie extends Sprite {
         }
     }
 
-    public TextureRegion getFrame(float deltaT) {
+    private TextureRegion getFrame(float deltaT) {
         currentState = getState();
 
         TextureRegion region;
@@ -98,7 +96,7 @@ public class Wurrumpie extends Sprite {
         return region;
     }
 
-    public State getState() {
+    private State getState() {
         if(destroyed) {
             return State.DYING;
         } else {
