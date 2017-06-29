@@ -21,7 +21,7 @@ public class wormObject implements IObject {
 
     @Override
     public void defineObject(World world, TiledMap map) {
-        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)) {
+        for(MapObject object : map.getLayers().get(9).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             this.worms.add(new Wurrumpie(world, screen, rect.getX() / com.paladinzzz.game.util.Constants.PPM, rect.getY() / com.paladinzzz.game.util.Constants.PPM));
         }

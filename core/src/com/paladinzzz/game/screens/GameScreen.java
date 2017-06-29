@@ -181,6 +181,7 @@ public class GameScreen implements Screen {
             worm.update(deltaT);
         }
         camera.update();
+        levelHUD.update(deltaT);
         mapRenderer.setView(camera);
     }
 
@@ -210,7 +211,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isTouched()){
             levelHUD.removeSpaceText();
         }
 
