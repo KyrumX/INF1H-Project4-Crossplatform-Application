@@ -37,7 +37,7 @@ public class HUD implements Disposable {
 
         //Maken van de labels:
         scoreLabel = new Label(String.format("Score: " + "%03d", score), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        worldNameLabel = new Label(("Level 1"), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        worldNameLabel = new Label((worldName), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         playerNameLabel = new Label(playername, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         startLabel = new Label(("Press Space to jump!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
