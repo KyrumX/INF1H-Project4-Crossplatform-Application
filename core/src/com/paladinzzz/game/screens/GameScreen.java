@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.IObject;
@@ -33,6 +35,7 @@ import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.CrossplatformApp;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
@@ -67,6 +70,8 @@ public class GameScreen implements Screen {
 
     public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
         this.game = gameFile;
+        JSONfunctions json = new JSONfunctions();
+        parseJSON parse = new parseJSON(json.doInBackground());
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
@@ -124,6 +129,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        grantPoints();
     }
 
     private void handleInput(float deltaT) {
@@ -259,5 +265,14 @@ public class GameScreen implements Screen {
 
     public CrossplatformApp getGame() {
         return game;
+    }
+
+    public void grantPoints(){
+        JSONfunctions json = new JSONfunctions();
+        String userurl = "http://www.wemoney.nl/getpoints.php?user=" + playername;
+        System.out.println(userurl);
+
+        json.doInBackground2(userurl);
+        System.out.println("Granted " + playername + " 10 points");
     }
 }
