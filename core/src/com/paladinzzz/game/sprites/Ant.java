@@ -11,49 +11,38 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.util.Constants;
 
 public class Ant extends Sprite implements ISprite{
-    private enum State{STANDING, DYING};
+    private enum State{WALKING};
     private State currentState;
     private State previousState;
     private World world;
-    private GameScreen gameScreen;
-    private Animation<TextureRegion> antStasis;
-    private Animation<TextureRegion> antDeath;
-    private boolean destroyed = false;
+    private com.paladinzzz.game.screens.GameScreen gameScreen;
+    private Animation<TextureRegion> antWalk;
     private Body body;
-    private TextureRegion antStand;
     private boolean movingForward;
     private float stateTimer;
+    private boolean flipped;
 
-    public Ant(World world, GameScreen screen, float x, float y) {
+    public Ant(World world, com.paladinzzz.game.screens.GameScreen screen, float x, float y) {
         super(screen.getMoleAtlas().findRegion("MoleRun"));
         this.gameScreen = screen;
         this.world = world;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        currentState = State.WALKING;
+        previousState = State.WALKING;
         stateTimer = 0;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i = 0; i < 4; i ++) {
-            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
+        for(int i = 0; i < 4; i++) {
+            frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
         }
-        antStasis = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-
-        for(int i = 0; i < 4; i ++) {
-            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
-        }
-        antDeath = new Animation<TextureRegion>(0.1f, frames);
+        antWalk = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
         setPosition(x, y);
         defineSprite();
-        antStand = new TextureRegion(getTexture(),0, 0, 32, 32);
         setBounds(0, 0, 32 / Constants.PPM, 32 / Constants.PPM);
-        setRegion(antStand);
     }
 
     @Override
@@ -69,7 +58,7 @@ public class Ant extends Sprite implements ISprite{
         shape.setRadius(7 / Constants.PPM);
 
         fixtureDef.filter.categoryBits = Constants.ANT_BIT; //De Ants zijn de ANT_BITs
-        fixtureDef.filter.maskBits = Constants.MOLE_BIT | Constants.GROUND_BIT | Constants.ANT_STOP_BIT;
+        fixtureDef.filter.maskBits = Constants.MOLE_BIT | com.paladinzzz.game.util.Constants.GROUND_BIT | com.paladinzzz.game.util.Constants.ANT_STOP_BIT;
 
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
@@ -77,47 +66,36 @@ public class Ant extends Sprite implements ISprite{
     }
 
     public void update(float deltaT) {
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.08f);
-        if(body.getLinearVelocity().x == 0 && movingForward == true) {
+        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.05f);
+        if(body.getLinearVelocity().x == 0 && movingForward) {
             movingForward = false;
         }
-        else if (body.getLinearVelocity().x == 0 && movingForward == false) {
+        else if (body.getLinearVelocity().x == 0 && !movingForward) {
             movingForward = true;
         }
-        if(movingForward)
+        if(movingForward) {
             body.setLinearVelocity(new Vector2(0.5f, 0f));
-        else
-            body.setLinearVelocity(new Vector2(-0.5f, 0f));
-
-        if (!destroyed) {
-            setRegion(getFrame(deltaT));
         }
+        else {
+            body.setLinearVelocity(new Vector2(-0.5f, 0f));
+        }
+        setRegion(getFrame(deltaT));
     }
 
-    public TextureRegion getFrame(float deltaT) {
-        currentState = getState();
-
+    private TextureRegion getFrame(float deltaT) {
         TextureRegion region;
-        switch(currentState) {
-            case DYING:
-                region = antDeath.getKeyFrame(stateTimer);
-                break;
-
-            default:
-                region = antStasis.getKeyFrame(stateTimer);
-                break;
+        if (movingForward) {
+            //When the Ant turns around, flipped is triggered once.
+            if (flipped) antWalk.getKeyFrame(stateTimer).flip(true, false);
+            flipped = false;
+            region = antWalk.getKeyFrame(stateTimer);
+        } else {
+            if (!flipped) antWalk.getKeyFrame(stateTimer).flip(true, false);
+            flipped = true;
+            region = antWalk.getKeyFrame(stateTimer);
         }
         stateTimer = currentState == previousState ? stateTimer + deltaT : 0;
-        previousState = currentState;
         return region;
-    }
-
-    public State getState() {
-        if(destroyed) {
-            return State.DYING;
-        } else {
-            return State.STANDING;
-        }
     }
 
     public void draw(SpriteBatch batch) {

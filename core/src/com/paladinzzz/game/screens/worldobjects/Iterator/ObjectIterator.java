@@ -1,26 +1,24 @@
 package com.paladinzzz.game.screens.worldobjects.Iterator;
 
-import com.paladinzzz.game.screens.worldobjects.IObject;
-
 import java.util.ArrayList;
 
 public class ObjectIterator implements IIteratorObject {
 
-    private ArrayList<IObject> list;
+    private ArrayList<com.paladinzzz.game.screens.worldobjects.IObject> list;
     private int currentPos;
 
     public ObjectIterator() {
         this.currentPos = -1;
-        this.list = new ArrayList<IObject>();
+        this.list = new ArrayList<com.paladinzzz.game.screens.worldobjects.IObject>();
     }
 
     @Override
-    public void add(IObject item) {
+    public void add(com.paladinzzz.game.screens.worldobjects.IObject item) {
         this.list.add(item);
     }
 
     @Override
-    public IObject getNext() {
+    public com.paladinzzz.game.screens.worldobjects.IObject getNext() {
         currentPos += 1;
         return this.list.get(currentPos);
         }

@@ -2,7 +2,7 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,14 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.database.Database;
-import com.paladinzzz.game.util.Constants;
 
 
 public class HighScoresScreen implements Screen{
 
-    private CrossplatformApp game;
+    private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
     private TextButton backButton;
     private OrthographicCamera camera;
@@ -32,11 +30,12 @@ public class HighScoresScreen implements Screen{
     private String[] playerscores;
     String nm = "";
     String sc = "";
+    private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
 
-    public HighScoresScreen (CrossplatformApp game) {
+    public HighScoresScreen (com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         this.background = new Texture("Screens/HighscoresScreen/highscores.png");
     }
@@ -51,6 +50,7 @@ public class HighScoresScreen implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
+                click.play(2.0f);
             }
         });
 

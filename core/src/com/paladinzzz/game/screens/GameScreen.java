@@ -14,27 +14,20 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.player.Player;
 import com.paladinzzz.game.scenes.HUD;
-import com.paladinzzz.game.screens.collision.CollisionListener;
-import com.paladinzzz.game.screens.worldobjects.*;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Ant;
-import com.paladinzzz.game.sprites.Mole;
-import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
-    public CrossplatformApp game;
+    public com.paladinzzz.game.CrossplatformApp game;
     private OrthographicCamera camera;
     private Viewport viewport;
     private HUD levelHUD;
@@ -52,15 +45,15 @@ public class GameScreen implements Screen {
     private TiledMap worldMap;
 
     //Playable character and AI:
-    private Mole player;
-    private Wurrumpie wurrumpie;
-    private antObject antsObject;
+    private com.paladinzzz.game.sprites.Mole player;
+    private com.paladinzzz.game.sprites.Wurrumpie wurrumpie;
+    private com.paladinzzz.game.screens.worldobjects.antObject antsObject;
 
     private ObjectIterator objectList;
-    private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
+    private com.paladinzzz.game.screens.worldobjects.IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
 
-    public GameScreen(CrossplatformApp gameFile) {
+    public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
@@ -72,10 +65,10 @@ public class GameScreen implements Screen {
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
         this.world = new World(new Vector2(0,-10), true);
-        this.moleAtlas = new TextureAtlas("Mole2.0/MoleRun.pack");
+        this.moleAtlas = new TextureAtlas("Mole3.0/Mole_3.0.pack");
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
-        this.player = new Mole(world, this);
-        this.wurrumpie = new Wurrumpie(world, this);
+        this.player = new com.paladinzzz.game.sprites.Mole(world, this);
+        this.wurrumpie = new com.paladinzzz.game.sprites.Wurrumpie(world, this);
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
@@ -88,9 +81,9 @@ public class GameScreen implements Screen {
         ramp = objectFactory.createObject(2, player);
         bounceBlocks = objectFactory.createObject(3, player);
         fluid = objectFactory.createObject(4, player);
-        antStoppers = new antStopObject();
-        antsObject = new antObject(this, world, worldMap);
-        finishBlocks = new finishObject(world, worldMap);
+        antStoppers = new com.paladinzzz.game.screens.worldobjects.antStopObject();
+        antsObject = new com.paladinzzz.game.screens.worldobjects.antObject(this, world, worldMap);
+        finishBlocks = new com.paladinzzz.game.screens.worldobjects.finishObject(world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -105,23 +98,21 @@ public class GameScreen implements Screen {
         }
         antStoppers.defineObject(world, worldMap);
 
-        world.setContactListener(new CollisionListener());
+        world.setContactListener(new com.paladinzzz.game.screens.collision.CollisionListener());
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
         musicHandler.playMusic();
-
     }
 
     @Override
     public void show() {
-
     }
 
     private void handleInput(float deltaT) {
         if (Constants.DEBUGGER_ON) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-                jump.play(1.0f);
+                jump.play(0.33f);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 HUD.spacepressed = true;
             }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.paladinzzz.game.util.Constants;
 
 public class antStopObject implements IObject {
     private Body body;
@@ -32,11 +31,11 @@ public class antStopObject implements IObject {
             bdef.type = BodyDef.BodyType.StaticBody;
 
             //De positie delen we door 2, omdat libgdx begint in het midden van elke vorm.
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / com.paladinzzz.game.util.Constants.PPM, (rect.getY() + rect.getHeight() / 2) / com.paladinzzz.game.util.Constants.PPM);
             this.body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / com.paladinzzz.game.util.Constants.PPM, rect.getHeight() / 2 / com.paladinzzz.game.util.Constants.PPM);
 
-            fdef.filter.categoryBits = Constants.ANT_STOP_BIT; //De grond is dus een GROUND_BITs
+            fdef.filter.categoryBits = com.paladinzzz.game.util.Constants.ANT_STOP_BIT; //De grond is dus een GROUND_BITs
 
             fdef.shape = shape;
             body.createFixture(fdef);

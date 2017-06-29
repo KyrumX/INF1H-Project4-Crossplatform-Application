@@ -23,11 +23,12 @@ public class Mole extends Sprite {
     private TextureRegion moleStand;
     private Animation<TextureRegion> moleRun;
     private Animation<TextureRegion> moleJump;
+    private Animation<TextureRegion> moleStasis;
     private float stateTimer;
     private GameScreen gameScreen;
 
     public Mole(World world, GameScreen screen) {
-        super(screen.getMoleAtlas().findRegion("MoleRun"));
+        super(screen.getMoleAtlas().findRegion("Mole"));
         this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
@@ -36,23 +37,30 @@ public class Mole extends Sprite {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i = 0; i < 4; i ++) {
-            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
-        }
-        moleRun = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-        for(int i=0; i< 4; i++){
-            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
+            frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
         }
         moleJump = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
+        for(int i=4; i < 8; i++){
+            frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
+        }
+        moleRun = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
+        for(int i=8; i < 12; i++){
+            frames.add(new TextureRegion(getTexture(), i * 34, 0, 32, 32));
+        }
+        moleStasis = new Animation<TextureRegion>(0.1f, frames);
+        frames.clear();
+
         defineMole();
-        moleStand = new TextureRegion(getTexture(),0, 0, 32, 32);
+        moleStand = new TextureRegion(getTexture(), 11 * 34, 0, 32, 32);
         setBounds(0, 0, 32 / Constants.PPM, 32 / Constants.PPM);
         setRegion(moleStand);
     }
 
-    public void defineMole() {
+    private void defineMole() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(32 / Constants.PPM, 310 / Constants.PPM);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -66,6 +74,7 @@ public class Mole extends Sprite {
         //Hier bepalen we waar we mee kunnen botsen:
         fixtureDef.filter.categoryBits = Constants.MOLE_BIT; //De mol is dus een MOLE_BIT
         fixtureDef.filter.maskBits = Constants.FINISH_BIT | Constants.ANT_BIT | Constants.GROUND_BIT | Constants.BOUNCY_BIT | Constants.POLYGON_BIT | Constants.FLUID_BIT | Constants.WURRUMPIE_BIT; //De mol kan dus botsen met GROUND_BITs, BOUNCY_BITs, POLYGON_BITs en FLUID_BIT;
+
         fixtureDef.shape = shape;
         body.createFixture(fixtureDef);
         body.setUserData(this);
@@ -76,7 +85,7 @@ public class Mole extends Sprite {
         setRegion(getFrame(deltaT));
     }
 
-    public TextureRegion getFrame(float deltaT) {
+    private TextureRegion getFrame(float deltaT) {
         currentState = getState();
 
         TextureRegion region;
@@ -90,7 +99,7 @@ public class Mole extends Sprite {
                 break;
 
             default:
-                region = moleStand;
+                region = moleStasis.getKeyFrame(stateTimer, true);
                 break;
         }
 
@@ -99,11 +108,12 @@ public class Mole extends Sprite {
         return region;
     }
 
-    public State getState() {
+    private State getState() {
         if(body.getLinearVelocity().y > 0) {
             return State.JUMPING;
-        }
-        else if (body.getLinearVelocity().x != 0) {
+        } else if (body.getLinearVelocity().y < 0) {
+            return State.JUMPING;
+        } else if (body.getLinearVelocity().x != 0) {
             return State.RUNNING;
         } else {
             return State.STANDING;

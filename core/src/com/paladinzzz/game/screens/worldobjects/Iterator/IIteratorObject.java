@@ -1,17 +1,15 @@
 package com.paladinzzz.game.screens.worldobjects.Iterator;
 
-import com.paladinzzz.game.screens.worldobjects.IObject;
-
 /**
  * Created by aaron on 25-Jun-17.
  */
 
 public interface IIteratorObject {
-    IObject getNext();
+    com.paladinzzz.game.screens.worldobjects.IObject getNext();
 
     void reset();
 
-    void add(IObject item);
+    void add(com.paladinzzz.game.screens.worldobjects.IObject item);
 
     boolean hasNext();
 }

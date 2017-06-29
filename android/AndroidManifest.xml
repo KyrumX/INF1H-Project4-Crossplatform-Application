@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="com.paladinzzz.game.AndroidLauncher"
+            android:name="com.paladinzzz.game.com.BluezamX.game.AndroidLauncher"
             android:label="@string/app_name" 
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
