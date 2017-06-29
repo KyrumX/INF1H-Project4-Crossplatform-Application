@@ -24,7 +24,6 @@ import com.paladinzzz.game.database.Database;
 
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
-import com.paladinzzz.game.scenes.HighScoresHUD;
 import com.paladinzzz.game.util.Constants;
 
 
