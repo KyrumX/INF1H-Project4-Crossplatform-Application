@@ -17,19 +17,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.paladinzzz.game.CrossplatformApp;
-import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.audio.MusicHandler;
 
-import static com.paladinzzz.game.screens.GameScreen.inPause;
-import static com.paladinzzz.game.screens.GameScreen.showtext;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 
 public class PauseScreen implements Screen {
 
     static GameScreen currentgame;
-    private CrossplatformApp game;
+    private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
     private ImageButton exitButton, playButton, optionsButton, highscoreButton;
     private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
@@ -40,11 +36,11 @@ public class PauseScreen implements Screen {
     private Table table;
 
 
-    public PauseScreen(GameScreen currentgame, CrossplatformApp game) {
+    public PauseScreen(GameScreen currentgame, com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
         this.currentgame = currentgame;
         this.camera = new OrthographicCamera();
-        this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.exitTexture = new Texture("Screens/TitleScreen/ExitGameButton.png");
         this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
         this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
@@ -88,7 +84,7 @@ public class PauseScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new OptionScreen(game));
-                showtext = true;
+                GameScreen.showtext = true;
             }
         });
 
@@ -127,8 +123,8 @@ public class PauseScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && inPause){
-            inPause = false;
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE) && GameScreen.inPause){
+            GameScreen.inPause = false;
             game.setScreen(currentgame);
             musicHandler.stopMusic();
             musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);

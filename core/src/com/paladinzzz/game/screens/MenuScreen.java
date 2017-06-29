@@ -18,18 +18,14 @@ package com.paladinzzz.game.screens;
         import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
         import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
         import com.badlogic.gdx.utils.viewport.FillViewport;
-        import com.paladinzzz.game.CrossplatformApp;
-        import com.paladinzzz.game.util.Constants;
         import com.paladinzzz.game.audio.MusicHandler;
-        import com.paladinzzz.game.util.playerMemory;
 
         import static com.badlogic.gdx.Gdx.input;
-        import static com.paladinzzz.game.screens.GameScreen.showtext;
 
 
 public class MenuScreen implements Screen {
 
-    private CrossplatformApp game;
+    private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
     private ImageButton exitButton, playButton, optionsButton, highscoreButton;
     private Texture exitTexture, playTexture, optionsTexture, highscoreTexture, background;
@@ -45,10 +41,10 @@ public class MenuScreen implements Screen {
 
     private int amountbackspacepressed = 0;
 
-    public MenuScreen(CrossplatformApp game) {
+    public MenuScreen(com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.exitTexture = new Texture("Screens/TitleScreen/ExitGameButton.png");
         this.playTexture = new Texture("Screens/TitleScreen/LevelButton.png");
         this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
@@ -92,7 +88,7 @@ public class MenuScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f);
                 game.setScreen(new OptionScreen(game));
-                showtext = true;
+                GameScreen.showtext = true;
 
             }
         });

@@ -3,8 +3,6 @@ package com.paladinzzz.game.audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
-
 public class MusicHandler {
 
     private Music music = null;

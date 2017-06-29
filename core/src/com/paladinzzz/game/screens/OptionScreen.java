@@ -2,7 +2,7 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,18 +11,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.paladinzzz.game.CrossplatformApp;
-import com.paladinzzz.game.util.Constants;
 
 
 public class OptionScreen implements Screen{
 
-    private CrossplatformApp game;
+    private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
     private OrthographicCamera camera;
     private Table table;
@@ -30,11 +27,12 @@ public class OptionScreen implements Screen{
     private ImageButton backButton;
     private Drawable drawableBack;
     private Texture background, backTexture;
+    private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
 
-    public OptionScreen(CrossplatformApp game) {
+    public OptionScreen(com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/OptionsScreen/OptionsScreen_InProgress.png");
@@ -53,6 +51,7 @@ public class OptionScreen implements Screen{
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
+                click.play(2.0f);
             }
         });
 

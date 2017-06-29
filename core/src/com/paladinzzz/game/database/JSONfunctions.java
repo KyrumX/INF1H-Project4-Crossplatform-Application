@@ -1,16 +1,10 @@
 package com.paladinzzz.game.database;
 
 
-import com.badlogic.gdx.utils.async.AsyncTask;
-
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import static com.badlogic.gdx.Input.Keys.R;
 
 /**
  * Created by Selim on 27/6/2017.

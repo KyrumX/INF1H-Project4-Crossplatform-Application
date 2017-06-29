@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-import com.paladinzzz.game.CrossplatformApp;
 
 public class AndroidLauncher extends AndroidApplication {
 	@Override
@@ -13,6 +12,6 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.hideStatusBar = true;
 		config.useImmersiveMode = false;
-		initialize(new CrossplatformApp(), config);
+		initialize(new com.paladinzzz.game.CrossplatformApp(), config);
 	}
 }

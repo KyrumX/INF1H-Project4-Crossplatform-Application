@@ -3,7 +3,7 @@ package com.paladinzzz.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,24 +13,18 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.paladinzzz.game.CrossplatformApp;
-import com.paladinzzz.game.player.Player;
-import com.paladinzzz.game.util.Constants;
-import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
-import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 
 public class LoginScreen implements Screen {
 
-    private CrossplatformApp game;
+    private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
     private ImageButton backButton, playButton;
     private Texture backTexture, playTexture, background;
@@ -42,11 +36,12 @@ public class LoginScreen implements Screen {
     public static String playername = "";
     private boolean isConverted = false;
     private Table table, table2;
+    private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
 
-    public LoginScreen(CrossplatformApp game) {
+    public LoginScreen(com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.stage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.playTexture = new Texture("Screens/LoginScreen/LvlSelection.png");
         this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
@@ -64,6 +59,7 @@ public class LoginScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
+                click.play(2.0f);
             }
         });
 
@@ -74,9 +70,10 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player = null;
-                playerMemory.player = new Player(playername, playerMemory.database);
+                playerMemory.player = new com.paladinzzz.game.player.Player(playername, playerMemory.database);
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
+                click.play(2.0f);
             }
         });
 

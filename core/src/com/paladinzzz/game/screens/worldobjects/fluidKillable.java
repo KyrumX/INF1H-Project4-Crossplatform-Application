@@ -9,13 +9,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.paladinzzz.game.util.Constants;
-import com.paladinzzz.game.sprites.Mole;
 
 public class fluidKillable implements IObject {
 
     private Body body;
-    private Mole player;
+    private com.paladinzzz.game.sprites.Mole player;
     private Rectangle rect;
     private FixtureDef fdef;
     private BodyDef bdef;
@@ -36,11 +34,11 @@ public class fluidKillable implements IObject {
             bdef.type = BodyDef.BodyType.StaticBody;
 
             //De positie delen we door 2, omdat libgdx begint in het midden van elke vorm.
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / Constants.PPM, (rect.getY() + rect.getHeight() / 2) / Constants.PPM);
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / com.paladinzzz.game.util.Constants.PPM, (rect.getY() + rect.getHeight() / 2) / com.paladinzzz.game.util.Constants.PPM);
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / com.paladinzzz.game.util.Constants.PPM, rect.getHeight() / 2 / com.paladinzzz.game.util.Constants.PPM);
 
-            fdef.filter.categoryBits = Constants.FLUID_BIT; //Het water/lava is dus een FLUID_BIT
+            fdef.filter.categoryBits = com.paladinzzz.game.util.Constants.FLUID_BIT; //Het water/lava is dus een FLUID_BIT
 
             fdef.shape = shape;
             body.createFixture(fdef);

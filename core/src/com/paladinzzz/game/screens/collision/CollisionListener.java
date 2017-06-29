@@ -6,14 +6,16 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.LevelScreen;
 import com.paladinzzz.game.screens.worldobjects.bounceObject;
+
 import com.paladinzzz.game.screens.worldobjects.finishObject;
 import com.paladinzzz.game.screens.worldobjects.fluidKillable;
-import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.sprites.Ant;
+
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
@@ -36,24 +38,24 @@ public class CollisionListener implements ContactListener {
         Object udA = fixOne.getBody().getUserData();
         Object udB = fixTwo.getBody().getUserData();
 
-        if (udA instanceof Mole) {
+        if (udA instanceof com.paladinzzz.game.sprites.Mole) {
             isAmole = true;
             isBmole = false;
-        } else if (udB instanceof Mole) {
+        } else if (udB instanceof com.paladinzzz.game.sprites.Mole) {
             isBmole = true;
             isAmole = false;
         }
 
         if ((isAmole) && (udB instanceof fluidKillable)) {
-            ((Mole) udA).killMole();
+            ((com.paladinzzz.game.sprites.Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof fluidKillable)) {
-            ((Mole) udB).killMole();
+            ((com.paladinzzz.game.sprites.Mole) udB).killMole();
         }
 
         if ((isAmole) && (udB instanceof Ant)) {
-            ((Mole) udA).killMole();
+            ((com.paladinzzz.game.sprites.Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof Ant)) {
-            ((Mole) udB).killMole();
+            ((com.paladinzzz.game.sprites.Mole) udB).killMole();
         }
 
         if ((isAmole) && (udB instanceof Wurrumpie)) {

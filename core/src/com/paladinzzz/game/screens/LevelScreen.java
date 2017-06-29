@@ -2,13 +2,13 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -28,6 +28,8 @@ public class LevelScreen implements Screen {
     private ImageButton level1, level2, level3;
     private Drawable level1drawable, level2drawable, level3drawable;
     private Table table;
+    private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
+
 
 
     public LevelScreen(CrossplatformApp game) {
@@ -53,6 +55,7 @@ public class LevelScreen implements Screen {
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
                 game.setScreen(new GameScreen(game));
                 levelstage.dispose();
+                click.play(2.0f);
             }
         });
 
@@ -63,6 +66,7 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level 2 clicked");
                 levelstage.dispose();
+                click.play(2.0f);
             }
         });
 
@@ -73,6 +77,7 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level 3 clicked");
                 levelstage.dispose();
+                click.play(2.0f);
             }
         });
 
