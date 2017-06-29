@@ -1,0 +1,39 @@
+Wurrumpie.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Wurrumpie
+  rotate: false
+  xy: 1, 1
+  size: 103, 32
+  orig: 103, 32
+  offset: 0, 0
+  index: 0
+Wurrumpie1
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+Wurrumpie2
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+Wurrumpie3
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+Wurrumpie4
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
