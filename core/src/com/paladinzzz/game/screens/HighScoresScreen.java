@@ -2,12 +2,9 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-<<<<<<< HEAD
 import com.badlogic.gdx.audio.Sound;
-=======
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
->>>>>>> scaling in android
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -45,11 +42,8 @@ public class HighScoresScreen implements Screen{
     private String[] playerscores;
     String nm = "";
     String sc = "";
-<<<<<<< HEAD
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
-=======
     private Actor nameslbl = new Label(("test"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
->>>>>>> scaling in android
 
     public HighScoresScreen (com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
@@ -62,7 +56,6 @@ public class HighScoresScreen implements Screen{
 
     @Override
     public void show() {
-<<<<<<< HEAD
 
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
@@ -77,8 +70,6 @@ public class HighScoresScreen implements Screen{
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
-=======
->>>>>>> scaling in android
         JSONfunctions json = new JSONfunctions();
         parseJSON parse = new parseJSON(json.doInBackground());
 
@@ -123,26 +114,6 @@ public class HighScoresScreen implements Screen{
 
         Gdx.input.setInputProcessor(stage);
 
-//        for (String i : parse.getNames()){
-//            if(i != null) {
-//                nm += i;
-//                nm += "\n\n";
-//            } else {
-//                break;
-//            }
-//        }
-//
-//        System.out.println(nm);
-////
-//        for (String i : parse.getScores()){
-//            if(i != null) {
-//                sc += i;
-//                sc += "\n\n";
-//            } else {
-//                break;
-//            }
-//        }
-
         table = new Table();
         table.setFillParent(true);
         table.bottom();
@@ -158,10 +129,6 @@ public class HighScoresScreen implements Screen{
     public void render(float delta) {
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
-//        font.draw(game.batch, nm, 100, 300);
-//        font.draw(game.batch, sc, 480, 300);
-
         game.batch.end();
         stage.draw();
 
