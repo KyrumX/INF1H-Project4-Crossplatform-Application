@@ -75,7 +75,6 @@ public class GameScreen implements Screen {
         this.moleAtlas = new TextureAtlas("Mole3.0/Mole_3.0.pack");
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
         this.player = new com.paladinzzz.game.sprites.Mole(world, this);
-        this.wurrumpie = new com.paladinzzz.game.sprites.Wurrumpie(world, this);
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {

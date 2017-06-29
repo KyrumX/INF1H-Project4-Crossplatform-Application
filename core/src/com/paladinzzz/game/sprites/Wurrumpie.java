@@ -26,7 +26,7 @@ public class Wurrumpie extends Sprite {
     private TextureRegion wurmStand;
     private float stateTimer;
 
-    public Wurrumpie (World world, GameScreen screen) {
+    public Wurrumpie (World world, GameScreen screen, float x, float y) {
         super(screen.getWurmAtlas().findRegion("Wurrumpie"));
         this.gameScreen = screen;
         this.world = world;
@@ -47,6 +47,7 @@ public class Wurrumpie extends Sprite {
         wurmDeath = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
+        setPosition(x, y);
         defineWurm();
         wurmStand = new TextureRegion(getTexture(),0, 0, 32, 32);
         setBounds(0, 0, 32 / Constants.PPM, 32 / Constants.PPM);
