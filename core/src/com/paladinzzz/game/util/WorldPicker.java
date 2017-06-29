@@ -12,4 +12,16 @@ public class WorldPicker {
             return "Worlds/level2/World2.tmx";
         }
     }
+
+    public static String getWorldName(int worldNum, int levelNum) {
+        if(worldNum == 1)
+            switch (levelNum) {
+                case 1: return "World 1-1";
+                case 2: return "World 1-2";
+                default: return "World 1-1";
+            }
+        else {
+            return "World 1-1";
+        }
+    }
 }
