@@ -137,7 +137,7 @@ public class GameScreen implements Screen {
                 player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
             }
         } else {
-            if (player.body.getLinearVelocity().x <= 1.0)
+            if (player.body.getLinearVelocity().x <= 1)
                 player.body.applyLinearImpulse(new Vector2(0.2f, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
                 jump.play(1.0f);
@@ -156,7 +156,13 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
-        camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+        System.out.println(player.body.getPosition().x);
+
+        if(!(player.body.getPosition().x - (170 / Constants.PPM) >= (75 / Constants.PPM) - (170 /  Constants.PPM)))
+            camera.position.x = (75 / Constants.PPM) + (170 / Constants.PPM);
+        else
+            camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+
         if(!(player.body.getPosition().y <= 133 / Constants.PPM))
             camera.position.y = player.body.getPosition().y;
 
