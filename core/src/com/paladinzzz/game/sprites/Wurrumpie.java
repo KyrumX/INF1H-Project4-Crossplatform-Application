@@ -1,5 +1,6 @@
 package com.paladinzzz.game.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -56,8 +57,8 @@ public class Wurrumpie extends Sprite {
 
     public void defineWurm() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(96 / Constants.PPM, 310 / Constants.PPM);
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(getX(), getY());
+        bodyDef.type = BodyDef.BodyType.StaticBody;
 
         body = world.createBody(bodyDef);
 
@@ -76,14 +77,6 @@ public class Wurrumpie extends Sprite {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.08f);
         if (!destroyed) {
             setRegion(getFrame(deltaT));
-        } else {
-            /* Gdx.app.postRunnable(new Runnable() {
-
-                @Override
-                public void run () {
-                    world.destroyBody(body);
-                }
-            });*/
         }
     }
 
@@ -119,7 +112,13 @@ public class Wurrumpie extends Sprite {
             System.out.println("Score + 10");
             this.destroyed = true;
         }
-        //destroy this
+        Gdx.app.postRunnable(new Runnable() {
+
+            @Override
+            public void run () {
+                world.destroyBody(body);
+            }
+        });
     }
 
     public void draw(SpriteBatch batch) {

@@ -20,9 +20,12 @@ import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
+import com.paladinzzz.game.screens.worldobjects.IObject;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
+import com.paladinzzz.game.screens.worldobjects.wormObject;
 import com.paladinzzz.game.sprites.Ant;
+import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
@@ -50,11 +53,11 @@ public class GameScreen implements Screen {
 
     //Playable character and AI:
     private com.paladinzzz.game.sprites.Mole player;
-    private com.paladinzzz.game.sprites.Wurrumpie wurrumpie;
     private com.paladinzzz.game.screens.worldobjects.antObject antsObject;
+    private wormObject wormObject;
 
     private ObjectIterator objectList;
-    private com.paladinzzz.game.screens.worldobjects.IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
+    private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
 
     public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
@@ -89,6 +92,7 @@ public class GameScreen implements Screen {
         fluid = objectFactory.createObject(4, player);
         antStoppers = new com.paladinzzz.game.screens.worldobjects.antStopObject();
         antsObject = new com.paladinzzz.game.screens.worldobjects.antObject(this, world, worldMap);
+        wormObject = new com.paladinzzz.game.screens.worldobjects.wormObject(this, world, worldMap);
         finishBlocks = new com.paladinzzz.game.screens.worldobjects.finishObject(world, worldMap);
 
         //Voeg de objecten toe aan een iterator:
@@ -160,9 +164,11 @@ public class GameScreen implements Screen {
             camera.position.y = player.body.getPosition().y;
 
         player.update(deltaT);
-        wurrumpie.update(deltaT);
         for(Ant ant : antsObject.getAnts()) {
             ant.update(deltaT);
+        }
+        for(Wurrumpie worm : wormObject.getWorms()) {
+            worm.update(deltaT);
         }
         camera.update();
         mapRenderer.setView(camera);
@@ -202,7 +208,9 @@ public class GameScreen implements Screen {
         for(Ant ant : antsObject.getAnts()) {
             ant.draw(game.batch);
         }
-        wurrumpie.draw(game.batch);
+        for(Wurrumpie worn : wormObject.getWorms()) {
+            worn.draw(game.batch);
+        }
 
         game.batch.end();
     }
