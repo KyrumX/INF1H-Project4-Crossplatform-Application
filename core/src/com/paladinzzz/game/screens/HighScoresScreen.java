@@ -2,12 +2,22 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+<<<<<<< HEAD
 import com.badlogic.gdx.audio.Sound;
+=======
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+>>>>>>> scaling in android
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,6 +27,7 @@ import com.paladinzzz.game.database.Database;
 
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
+import com.paladinzzz.game.scenes.HighScoresHUD;
 import com.paladinzzz.game.util.Constants;
 
 
@@ -34,7 +45,11 @@ public class HighScoresScreen implements Screen{
     private String[] playerscores;
     String nm = "";
     String sc = "";
+<<<<<<< HEAD
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
+=======
+    private Actor nameslbl = new Label(("test"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+>>>>>>> scaling in android
 
     public HighScoresScreen (com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
@@ -47,6 +62,7 @@ public class HighScoresScreen implements Screen{
 
     @Override
     public void show() {
+<<<<<<< HEAD
 
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
@@ -61,35 +77,81 @@ public class HighScoresScreen implements Screen{
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
+=======
+>>>>>>> scaling in android
         JSONfunctions json = new JSONfunctions();
         parseJSON parse = new parseJSON(json.doInBackground());
 
+        Table nametable = new Table();
+        nametable.center().padRight(420f).padBottom(115f);
+        nametable.setFillParent(true);
+//        nametable.add(nameslbl);
+
         for (String i : parse.getNames()){
+            Label nameslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             if(i != null) {
-                nm += i;
-                nm += "\n\n";
+                nametable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
+                nametable.row();
             } else {
                 break;
             }
         }
 
-        System.out.println(nm);
-//
+        Table scoretable = new Table();
+        scoretable.center().padLeft(450f).padBottom(115f);
+        scoretable.setFillParent(true);
+//        nametable.add(nameslbl);
+
         for (String i : parse.getScores()){
+            Label scoreslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
             if(i != null) {
-                sc += i;
-                sc += "\n\n";
+                scoretable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
+                scoretable.row();
             } else {
                 break;
             }
         }
-        
-        //Een table wordt aangemaakt om buttons aan toe te voegen.
+
+        backButton = new TextButton("back", skin);
+        backButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new MenuScreen(game));
+                MenuScreen.musicHandler.stopMusic();
+            }
+        });
+
+        Gdx.input.setInputProcessor(stage);
+
+//        for (String i : parse.getNames()){
+//            if(i != null) {
+//                nm += i;
+//                nm += "\n\n";
+//            } else {
+//                break;
+//            }
+//        }
+//
+//        System.out.println(nm);
+////
+//        for (String i : parse.getScores()){
+//            if(i != null) {
+//                sc += i;
+//                sc += "\n\n";
+//            } else {
+//                break;
+//            }
+//        }
+
         table = new Table();
         table.setFillParent(true);
         table.bottom();
         table.add(backButton).size(100, 100);
         stage.addActor(table);
+        stage.addActor(nametable);
+        stage.addActor(scoretable);
+
+//        stage.addActor(this.nameslbl);
     }
 
     @Override
@@ -97,11 +159,12 @@ public class HighScoresScreen implements Screen{
         game.batch.begin();
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        font.draw(game.batch, nm, 100, 300);
-        font.draw(game.batch, sc, 480, 300);
+//        font.draw(game.batch, nm, 100, 300);
+//        font.draw(game.batch, sc, 480, 300);
 
         game.batch.end();
         stage.draw();
+
     }
 
     @Override
