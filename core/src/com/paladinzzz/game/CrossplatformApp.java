@@ -22,7 +22,19 @@ public class CrossplatformApp extends Game {
 		System.out.println(json.doInBackground());
 
 		parseJSON parse = new parseJSON(json.doInBackground());
-		parse.getData();
+
+//		System.out.println(parse.getNames());
+		for (String i : parse.getNames()){
+			if(i != null) {
+				System.out.println(i);
+			}
+		}
+
+		for (String i : parse.getScores()){
+			if(i != null) {
+				System.out.println(i);
+			}
+		}
 
 	}
 

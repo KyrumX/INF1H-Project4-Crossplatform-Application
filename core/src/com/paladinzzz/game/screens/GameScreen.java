@@ -22,6 +22,8 @@ import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.WorldPicker;
+import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
@@ -57,13 +59,16 @@ public class GameScreen implements Screen {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
-        this.levelHUD = new HUD(gameFile.batch, "hoi");
+        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
 
         TmxMapLoader mapLoader = new TmxMapLoader();
-        worldMap = mapLoader.load("Worlds/level1/World1.tmx");
-        TiledMap worldMap = mapLoader.load("Worlds/level1/World1.tmx");
+
+        //Hier bepalen we welke wereld het wordt:
+        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
+
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
+      
         this.world = new World(new Vector2(0,-10), true);
         this.moleAtlas = new TextureAtlas("Mole3.0/Mole_3.0.pack");
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
@@ -98,7 +103,8 @@ public class GameScreen implements Screen {
         }
         antStoppers.defineObject(world, worldMap);
 
-        world.setContactListener(new com.paladinzzz.game.screens.collision.CollisionListener());
+
+        world.setContactListener(new CollisionListener(this.game));
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -123,8 +129,8 @@ public class GameScreen implements Screen {
                 player.body.applyLinearImpulse(new Vector2(-0.1f, 0), player.body.getWorldCenter(), true);
             }
         } else {
-            if (player.body.getLinearVelocity().x <= 1.0)
-                player.body.applyLinearImpulse(new Vector2(2, 0f), player.body.getWorldCenter(), true);
+            if (player.body.getLinearVelocity().x <= 1)
+                player.body.applyLinearImpulse(new Vector2(0.2f, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
                 jump.play(1.0f);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
@@ -142,7 +148,13 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
-        camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+        System.out.println(player.body.getPosition().x);
+
+        if(!(player.body.getPosition().x - (170 / Constants.PPM) >= (75 / Constants.PPM) - (170 /  Constants.PPM)))
+            camera.position.x = (75 / Constants.PPM) + (170 / Constants.PPM);
+        else
+            camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
+
         if(!(player.body.getPosition().y <= 133 / Constants.PPM))
             camera.position.y = player.body.getPosition().y;
 
@@ -229,8 +241,7 @@ public class GameScreen implements Screen {
         this.levelHUD.dispose();
     }
 
-    public void gameOver() {
-        dispose();
-        game.setScreen(new GameScreen(game));
+    public CrossplatformApp getGame() {
+        return game;
     }
 }
