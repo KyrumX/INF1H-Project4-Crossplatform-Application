@@ -52,6 +52,9 @@ public class Player {
         return this.playerScore;
     }
 
+    public void setPlayerScore(int playerScore) {
+        this.playerScore = playerScore;
+    }
 }
 
 
