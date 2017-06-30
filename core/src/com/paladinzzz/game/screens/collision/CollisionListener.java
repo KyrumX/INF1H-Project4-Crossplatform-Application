@@ -6,20 +6,15 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.LevelScreen;
-import com.paladinzzz.game.screens.worldobjects.bounceObject;
-
 import com.paladinzzz.game.screens.worldobjects.finishObject;
 import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.sprites.Ant;
-
-import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
-import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
+import com.paladinzzz.game.util.scoreMethods;
 
 //Deze klas registreert contact tussen twee fixtures in onze wereld
 public class CollisionListener implements ContactListener {
@@ -75,6 +70,9 @@ public class CollisionListener implements ContactListener {
 
                     @Override
                     public void run() {
+                        scoreMethods.score();
+                        playerMemory.player.setPlayerScore(0);
+                        playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                         game.setScreen(new LevelScreen(game));
                     }
                 });
@@ -94,6 +92,9 @@ public class CollisionListener implements ContactListener {
 
                     @Override
                     public void run() {
+                        scoreMethods.score();
+                        playerMemory.player.setPlayerScore(0);
+                        playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                         game.setScreen(new LevelScreen(game));
                     }
                 });
