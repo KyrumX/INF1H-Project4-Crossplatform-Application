@@ -145,6 +145,10 @@ public class LevelScreen implements Screen {
     @Override
     public void dispose() {
         levelstage.dispose();
-
+        background.dispose();
+        level1texture.dispose();
+        level2texture.dispose();
+        level3texture.dispose();
+        backbutton.dispose();
     }
 }

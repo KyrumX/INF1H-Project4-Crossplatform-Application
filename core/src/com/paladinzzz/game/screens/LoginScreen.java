@@ -69,7 +69,7 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player = null;
-                playerMemory.player = new com.paladinzzz.game.player.Player(playername, playerMemory.database);
+                playerMemory.player = new com.paladinzzz.game.player.Player(playername);
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
                 click.play(2.0f);
@@ -172,6 +172,8 @@ public class LoginScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-
+        backTexture.dispose();
+        playTexture.dispose();
+        background.dispose();
     }
 }
