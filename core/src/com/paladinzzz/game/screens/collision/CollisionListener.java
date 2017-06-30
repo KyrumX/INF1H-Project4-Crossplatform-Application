@@ -71,6 +71,7 @@ public class CollisionListener implements ContactListener {
         //Finish line
         if ((isAmole) && (udB instanceof finishObject)) {
             if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                playerMemory.player.levelOneDone = true;
                 Gdx.app.postRunnable(new Runnable() {
 
                     @Override
@@ -90,6 +91,7 @@ public class CollisionListener implements ContactListener {
             }
         } else if ((isBmole) && (udA instanceof finishObject)) {
             if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                playerMemory.player.levelOneDone = true;
                 Gdx.app.postRunnable(new Runnable() {
 
                     @Override

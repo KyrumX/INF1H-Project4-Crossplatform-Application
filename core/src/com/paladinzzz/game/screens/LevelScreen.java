@@ -48,7 +48,9 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                MenuScreen.musicHandler.stopMusic();
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
+                playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                 game.setScreen(new GameScreen(game));
                 levelstage.dispose();
                 click.play(2.0f);
@@ -61,7 +63,14 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level 2 clicked");
-                levelstage.dispose();
+                if (playerMemory.player.levelOneDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(2);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 1 first!");
+                }
                 click.play(2.0f);
             }
         });
@@ -72,7 +81,14 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Level 3 clicked");
-                levelstage.dispose();
+                if (playerMemory.player.levelTwoDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(3);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 2 first!");
+                }
                 click.play(2.0f);
             }
         });
@@ -83,8 +99,8 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Back button clicked");
-                levelstage.dispose();
                 game.setScreen(new LoginScreen(game));
+                levelstage.dispose();
                 click.play(2.0f);
             }
         });

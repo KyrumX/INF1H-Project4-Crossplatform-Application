@@ -38,7 +38,7 @@ public class finishObject implements IObject {
             this.body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() / 2 / Constants.PPM, rect.getHeight() / 2 / Constants.PPM);
 
-            fdef.filter.categoryBits = Constants.FINISH_BIT; //De grond is dus een Finish is dus een FINISH_BIT
+            fdef.filter.categoryBits = Constants.FINISH_BIT; //De grond is dus een FINISH_BIT
 
             fdef.shape = shape;
             body.createFixture(fdef);

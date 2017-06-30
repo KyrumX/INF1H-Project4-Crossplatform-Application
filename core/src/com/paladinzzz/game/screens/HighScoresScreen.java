@@ -104,6 +104,7 @@ public class HighScoresScreen implements Screen{
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(2.0f);
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
             }

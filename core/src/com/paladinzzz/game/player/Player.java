@@ -7,8 +7,8 @@ import com.paladinzzz.game.util.CurrentLevel;
 
 public class Player {
     private String playerName;
-    private Boolean levelOneDone;
-    private Boolean levelTwoDone;
+    public Boolean levelOneDone = false;
+    public Boolean levelTwoDone = false;
     private int playerScore;
     private Database db;
     public CurrentLevel worldAndLevelData;
