@@ -46,8 +46,13 @@ public class parseJSON {
 
     public int getPlayerScore() {
         JSONArray json = new JSONArray(x);
-        JSONObject e = json.getJSONObject(0);
-        return Integer.parseInt(e.getString("score"));
+        int c = 0;
+        for(int i=0;i<json.length();i++) {
+            JSONObject e = json.getJSONObject(i);
+            c += Integer.parseInt(e.getString("score"));
+//        JSONObject e = json.getJSONObject(0);
+        }
+        return c;
     }
 }
 
