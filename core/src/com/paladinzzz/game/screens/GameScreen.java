@@ -32,8 +32,6 @@ import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
-import com.paladinzzz.game.screens.collision.CollisionListener;
-import com.paladinzzz.game.CrossplatformApp;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
@@ -135,7 +133,7 @@ public class GameScreen implements Screen {
     private void handleInput(float deltaT) {
         if (Constants.DEBUGGER_ON) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-                jump.play(0.33f);
+                jump.play(0.20f);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 HUD.spacepressed = true;
             }
@@ -147,9 +145,9 @@ public class GameScreen implements Screen {
             }
         } else {
             if (player.body.getLinearVelocity().x <= 1)
-                player.body.applyLinearImpulse(new Vector2(0.2f, 0f), player.body.getWorldCenter(), true);
+                player.body.applyLinearImpulse(new Vector2(0.3f, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
-                jump.play(1.0f);
+                jump.play(0.20f);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 HUD.spacepressed = true;
             }
