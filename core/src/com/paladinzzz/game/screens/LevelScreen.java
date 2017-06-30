@@ -56,7 +56,7 @@ public class LevelScreen implements Screen {
                 click.play(2.0f);
             }
         });
-
+//seks
         level2drawable = new TextureRegionDrawable(new TextureRegion(level2texture));
         level2 = new ImageButton(level2drawable);
         level2.addListener(new ClickListener(){
