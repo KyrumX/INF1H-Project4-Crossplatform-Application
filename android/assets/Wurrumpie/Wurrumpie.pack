@@ -25,14 +25,14 @@ Wurrumpie2
   index: 1
 Wurrumpie3
   rotate: false
-  xy: 35, 1
+  xy: 69, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 Wurrumpie4
   rotate: false
-  xy: 35, 1
+  xy: 103, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

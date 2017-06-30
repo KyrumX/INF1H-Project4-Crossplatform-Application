@@ -23,9 +23,8 @@ public class Wurrumpie extends Sprite {
     private GameScreen gameScreen;
     private Animation<TextureRegion> wurmStasis;
     private Animation<TextureRegion> wurmDeath;
-    private boolean destroyed = false;
-    private TextureRegion wurmStand;
     private float stateTimer;
+    private boolean destroyed = false;
 
     public Wurrumpie (World world, GameScreen screen, float x, float y) {
         super(screen.getWurmAtlas().findRegion("Wurrumpie"));
@@ -40,12 +39,6 @@ public class Wurrumpie extends Sprite {
             frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
         }
         wurmStasis = new Animation<TextureRegion>(0.1f, frames);
-        frames.clear();
-
-        for(int i = 0; i < 4; i ++) {
-            frames.add(new TextureRegion(getTexture(), i * 33, 0, 32, 32));
-        }
-        wurmDeath = new Animation<TextureRegion>(0.1f, frames);
         frames.clear();
 
         setPosition(x, y);
@@ -73,9 +66,7 @@ public class Wurrumpie extends Sprite {
 
     public void update(float deltaT) {
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2 + 0.08f);
-        if (!destroyed) {
-            setRegion(getFrame(deltaT));
-        }
+        setRegion(getFrame(deltaT));
     }
 
     private TextureRegion getFrame(float deltaT) {
@@ -97,19 +88,13 @@ public class Wurrumpie extends Sprite {
     }
 
     private State getState() {
-        if(destroyed) {
-            return State.DYING;
-        } else {
-            return State.STANDING;
-        }
+        return State.STANDING;
     }
 
     public void killWurrumpie() {
-        if (!destroyed) {
-            System.out.println("Wurrumpie neeeeeee!");
-            System.out.println("Score + 10");
-            this.destroyed = true;
-        }
+        destroyed = true;
+        System.out.println("Wurrumpie neeeeeee!");
+        System.out.println("Score + 10");
         Gdx.app.postRunnable(new Runnable() {
 
             @Override

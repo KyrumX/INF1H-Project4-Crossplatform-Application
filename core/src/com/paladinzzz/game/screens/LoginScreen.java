@@ -50,7 +50,6 @@ public class LoginScreen implements Screen {
 
     @Override
     public void show() {
-
         //Geeft de texture van de backButton mee aan een nieuwe ImageButton
         drawableBack = new TextureRegionDrawable(new TextureRegion(backTexture));
         backButton = new ImageButton(drawableBack);
