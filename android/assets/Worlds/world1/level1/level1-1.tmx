@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="329">
+
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="328">
+
  <tileset firstgid="1" source="tiles.tsx"/>
  <tileset firstgid="925" source="../../level1/tiles.tsx"/>
  <imagelayer name="Image Layer 1">

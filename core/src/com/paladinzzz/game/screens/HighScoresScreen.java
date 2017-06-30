@@ -123,7 +123,9 @@ public class HighScoresScreen implements Screen{
 
     @Override
     public void render(float delta) {
+
         game.batch.begin();
+
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         game.batch.end();

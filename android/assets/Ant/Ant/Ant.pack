@@ -3,6 +3,13 @@ Ant.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+Ant
+  rotate: false
+  xy: 1, 1
+  size: 230, 32
+  orig: 230, 32
+  offset: 0, 0
+  index: -1
 Ant1
   rotate: false
   xy: 1, 1
@@ -41,6 +48,27 @@ Ant5
 Ant6
   rotate: false
   xy: 171, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ant7
+  rotate: false
+  xy: 205, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ant8
+  rotate: false
+  xy: 239, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Ant9
+  rotate: false
+  xy: 273, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
