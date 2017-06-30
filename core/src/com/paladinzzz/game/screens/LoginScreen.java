@@ -135,7 +135,7 @@ public class LoginScreen implements Screen {
         for (int i : x) {
             if (input.isKeyJustPressed(i)) {
                 System.out.println(i);
-                    if (i != 62 && i != 67 && i != 66) {
+                    if (i != 62 && i != 67) {
                         for(int d : letters){
                             if (d == i){
                                 playername += Input.Keys.toString(d).toLowerCase();
