@@ -42,23 +42,6 @@ public class JSONfunctions{
     }
 
     public void doInBackground2(String userurl) {
-
-//        try {
-//            URL url = new URL(userurl);
-//            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//
-//            bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//
-//            String json;
-//
-//            while ((json = bufferedReader.readLine()) != null)
-//                System.out.println(json);
-//            bufferedReader.close();
-//
-//
-//        }catch(Exception e){
-//
-//        }
         try {
             URL yahoo = new URL(userurl);
             URLConnection yc = yahoo.openConnection();
@@ -74,6 +57,27 @@ public class JSONfunctions{
 
         }
 
+    }
+
+    public String checkforhighscore(String userurl) {
+        BufferedReader bufferedReader = null;
+        try {
+            URL url = new URL(userurl);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            StringBuilder sb = new StringBuilder();
+
+            bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            String json;
+            while((json = bufferedReader.readLine())!= null){
+                sb.append(json+"\n");
+            }
+            System.out.println("checkforhighscore loop");
+            return sb.toString().trim();
+
+        }catch(Exception e){
+            return null;
+        }
     }
 
 
