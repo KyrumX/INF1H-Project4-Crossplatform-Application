@@ -18,24 +18,28 @@ public class CrossplatformApp extends Game {
 		playerMemory.database = new Database();
 		playerMemory.database.connect();
 
-		JSONfunctions json = new JSONfunctions();
-		System.out.println(json.doInBackground());
+		try {
+			JSONfunctions json = new JSONfunctions();
+			parseJSON parse = new parseJSON(json.doInBackground());
 
-		parseJSON parse = new parseJSON(json.doInBackground());
-
-//		System.out.println(parse.getNames());
-		for (String i : parse.getNames()){
-			if(i != null) {
-				System.out.println(i);
+			for (String i : parse.getNames()){
+				if(i != null) {
+					System.out.println(i);
+				}
 			}
-		}
 
-		for (String i : parse.getScores()){
-			if(i != null) {
-				System.out.println(i);
+			for (String i : parse.getScores()){
+				if(i != null) {
+					System.out.println(i);
+				}
 			}
-		}
 
+			playerMemory.isConnected = true;
+		}
+		catch (Exception e){
+			System.out.println(e);
+			playerMemory.isConnected = false;
+		}
 	}
 
 	@Override

@@ -4,13 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,11 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.paladinzzz.game.database.Database;
-
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
-import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.playerMemory;
 
 
 public class HighScoresScreen implements Screen{
@@ -69,37 +63,40 @@ public class HighScoresScreen implements Screen{
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
-        JSONfunctions json = new JSONfunctions();
-        parseJSON parse = new parseJSON(json.doInBackground());
+        if (playerMemory.isConnected) {
+            JSONfunctions json = new JSONfunctions();
+            parseJSON parse = new parseJSON(json.doInBackground());
 
-        Table nametable = new Table();
-        nametable.center().padRight(420f).padBottom(115f);
-        nametable.setFillParent(true);
+            Table nametable = new Table();
+            nametable.center().padRight(420f).padBottom(115f);
+            nametable.setFillParent(true);
 
-        for (String i : parse.getNames()){
-            Label nameslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-            if(i != null) {
-                nametable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
-                nametable.row();
-            } else {
-                break;
+            for (String i : parse.getNames()) {
+                Label nameslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                if (i != null) {
+                    nametable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
+                    nametable.row();
+                } else {
+                    break;
+                }
             }
-        }
 
-        Table scoretable = new Table();
-        scoretable.center().padLeft(450f).padBottom(115f);
-        scoretable.setFillParent(true);
+            Table scoretable = new Table();
+            scoretable.center().padLeft(450f).padBottom(115f);
+            scoretable.setFillParent(true);
 
-        for (String i : parse.getScores()){
-            Label scoreslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-            if(i != null) {
-                scoretable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
-                scoretable.row();
-            } else {
-                break;
+            for (String i : parse.getScores()) {
+                Label scoreslabel = new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+                if (i != null) {
+                    scoretable.add(new Label((i), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).padBottom(15f);
+                    scoretable.row();
+                } else {
+                    break;
+                }
             }
+            stage.addActor(nametable);
+            stage.addActor(scoretable);
         }
-
         backButton = new TextButton("back", skin);
         backButton.addListener(new ClickListener(){
             @Override
@@ -117,8 +114,6 @@ public class HighScoresScreen implements Screen{
         table.bottom();
         table.add(backButton).size(100, 100);
         stage.addActor(table);
-        stage.addActor(nametable);
-        stage.addActor(scoretable);
 
     }
 
