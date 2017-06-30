@@ -282,14 +282,19 @@ public class GameScreen implements Screen {
     }
 
     public void grantPoints(){
-
-        json.checkforhighscore("http://www.wemoney.nl/getpoints.php?user=" + playername + "&userpoints=" + playerMemory.player.getScore());
-        System.out.println("Granted " + playername + " points");
+        if (playerMemory.isConnected) {
+            json.checkforhighscore("http://www.wemoney.nl/getpoints.php?user=" + playername + "&userpoints=" + playerMemory.player.getScore());
+            System.out.println("Granted " + playername + " points");
+        }
     }
 
     public int getUserOnlineScore(){
-        String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
-        parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
-        return highscoreparser.getPlayerScore();
+        if (playerMemory.isConnected) {
+            String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
+            parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
+            return highscoreparser.getPlayerScore();
+        }
+        else
+            return 0;
     }
 }
