@@ -3,6 +3,8 @@ package com.paladinzzz.game.database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
+
 /**
  * Created by Selim on 28/6/2017.
  */
@@ -17,7 +19,6 @@ public class parseJSON {
     }
 
     public String[] getNames() {
-        System.out.println(x);
         JSONArray json = new JSONArray(x);
         for(int i=0;i<json.length();i++){
             JSONObject e = json.getJSONObject(i);
@@ -31,7 +32,6 @@ public class parseJSON {
     }
 
     public String[] getScores() {
-        System.out.println(x);
         JSONArray json = new JSONArray(x);
         for(int i=0;i<json.length();i++){
             JSONObject e = json.getJSONObject(i);
@@ -43,4 +43,12 @@ public class parseJSON {
         return a;
 
     }
+
+    public int getPlayerScore() {
+        JSONArray json = new JSONArray(x);
+        JSONObject e = json.getJSONObject(0);
+        return Integer.parseInt(e.getString("score"));
+    }
 }
+
+

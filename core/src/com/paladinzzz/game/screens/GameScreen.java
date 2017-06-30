@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.IObject;
@@ -31,10 +33,12 @@ import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
+    private int localplayerscore;
     public com.paladinzzz.game.CrossplatformApp game;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -61,10 +65,16 @@ public class GameScreen implements Screen {
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
+    private JSONfunctions json = new JSONfunctions();
+    private int onlinescore = getUserOnlineScore();
+    private int checkcnt = 0;
+    private boolean updatedonlinescore = false;
+
 
 
     public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
         this.game = gameFile;
+        parseJSON parse = new parseJSON(json.doInBackground());
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
@@ -82,6 +92,8 @@ public class GameScreen implements Screen {
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
         this.antAtlas = new TextureAtlas("Ant/Ant.pack");
         this.player = new com.paladinzzz.game.sprites.Mole(world, this);
+
+        this.localplayerscore = playerMemory.player.getScore();
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
@@ -122,6 +134,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     private void handleInput(float deltaT) {
@@ -173,19 +186,28 @@ public class GameScreen implements Screen {
             worm.update(deltaT);
         }
         camera.update();
+        levelHUD.update(deltaT);
         mapRenderer.setView(camera);
     }
 
     @Override
     public void render(float delta) {
         update(delta);
+        checkcnt++;
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        if (checkcnt > 500) {
+            localplayerscore = playerMemory.player.getScore();
+            onlinescore = getUserOnlineScore();
+            if (localplayerscore > onlinescore) {
+                grantPoints();
+            }
+            checkcnt = 0;
+        }
 
-        //Render de map
         mapRenderer.render();
 
         //Render de debug renderer lijntjes:
@@ -202,7 +224,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if (Gdx.input.isTouched()){
             levelHUD.removeSpaceText();
         }
 
@@ -257,5 +279,17 @@ public class GameScreen implements Screen {
 
     public CrossplatformApp getGame() {
         return game;
+    }
+
+    public void grantPoints(){
+
+        json.checkforhighscore("http://www.wemoney.nl/getpoints.php?user=" + playername + "&userpoints=" + playerMemory.player.getScore());
+        System.out.println("Granted " + playername + " points");
+    }
+
+    public int getUserOnlineScore(){
+        String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
+        parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
+        return highscoreparser.getPlayerScore();
     }
 }

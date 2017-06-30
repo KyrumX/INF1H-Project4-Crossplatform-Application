@@ -9,6 +9,7 @@ public class Player {
     private String playerName;
     private Boolean levelOneDone;
     private Boolean levelTwoDone;
+    private int playerScore;
     private Database db;
     public CurrentLevel worldAndLevelData;
 
@@ -33,6 +34,19 @@ public class Player {
             db.makePlayer(this.getName(), db.connect());
         } else
             System.out.println("Geen nieuwe speler aanmaken");
+    }
+
+    public void addPoints() {
+        this.playerScore += 10;
+    }
+
+    public void reducePoints() {
+        if (!(playerScore == 0))
+            this.playerScore -= 10;
+    }
+
+    public int getScore() {
+        return this.playerScore;
     }
 
 }
