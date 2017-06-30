@@ -199,13 +199,15 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        if (checkcnt > 500) {
-            localplayerscore = playerMemory.player.getScore();
-            onlinescore = getUserOnlineScore();
-            if (localplayerscore > onlinescore) {
-                grantPoints();
+        if (playerMemory.isConnected) {
+            if (checkcnt > 500) {
+                localplayerscore = playerMemory.player.getScore();
+                onlinescore = getUserOnlineScore();
+                if (localplayerscore > onlinescore) {
+                    grantPoints();
+                }
+                checkcnt = 0;
             }
-            checkcnt = 0;
         }
 
         mapRenderer.render();
@@ -289,12 +291,12 @@ public class GameScreen implements Screen {
     }
 
     public int getUserOnlineScore(){
-        if (playerMemory.isConnected) {
-            String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
-            parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
-            return highscoreparser.getPlayerScore();
-        }
-        else
-            return 0;
+//        if (playerMemory.isConnected) {
+        String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
+        parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
+        return highscoreparser.getPlayerScore();
+//        }
+//        else
+//            return 0;
     }
 }
