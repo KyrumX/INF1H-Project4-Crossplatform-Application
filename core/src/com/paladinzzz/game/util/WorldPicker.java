@@ -12,7 +12,7 @@ public class WorldPicker {
             switch (levelNum) {
                 case 1: return "Worlds/world2/level1/level2-1.tmx";
                 case 2: return "Worlds/world2/level2/level2-2.tmx";
-                default: return "Worlds/world2/level2/level2-1.tmx";
+                default: return "Worlds/world2/level1/level2-1.tmx";
             }
         } else {
 //            switch (levelNum) {

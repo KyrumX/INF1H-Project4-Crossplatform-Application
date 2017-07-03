@@ -169,7 +169,6 @@ public class CollisionListener implements ContactListener {
                     // anders ga je naar het volgende level
                     playerMemory.player.LevelData.addLevel();
                     Gdx.app.postRunnable(new Runnable() {
-
                         @Override
                         public void run() {
                             game.setScreen(new GameScreen(game));

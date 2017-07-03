@@ -64,13 +64,13 @@ public class GameScreen implements Screen {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
-        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.LevelData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
+        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.WorldData.getCurrentLevel(), playerMemory.player.LevelData.getCurrentLevel()));
 
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Hier bepalen we welke wereld het wordt:
-        System.out.println("Loading new world: " + playerMemory.player.LevelData.getCurrentWorld() + "-" + playerMemory.player.LevelData.getCurrentLevel() );
-        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.LevelData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
+        System.out.println("Loading new world: " + playerMemory.player.WorldData.getCurrentWorld() + "-" + playerMemory.player.LevelData.getCurrentLevel() );
+        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.WorldData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -154,7 +154,6 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
-        System.out.println(player.body.getPosition().x);
 
         if(!(player.body.getPosition().x - (170 / Constants.PPM) >= (75 / Constants.PPM) - (170 /  Constants.PPM)))
             camera.position.x = (75 / Constants.PPM) + (170 / Constants.PPM);
