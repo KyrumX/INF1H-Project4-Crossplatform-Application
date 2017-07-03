@@ -48,12 +48,12 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(Constants.soundLevel * 1.0f);
                 MenuScreen.musicHandler.stopMusic();
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
                 playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                 game.setScreen(new GameScreen(game));
                 levelstage.dispose();
-                click.play(2.0f);
             }
         });
 
@@ -62,6 +62,7 @@ public class LevelScreen implements Screen {
         level2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 System.out.println("Level 2 clicked");
                 if (playerMemory.player.levelOneDone) {
                     MenuScreen.musicHandler.stopMusic();
@@ -71,7 +72,6 @@ public class LevelScreen implements Screen {
                 } else {
                     System.out.println("Complete World 1 first!");
                 }
-                click.play(2.0f);
             }
         });
 //mega penis

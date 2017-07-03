@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
+import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
 
 
@@ -54,9 +55,9 @@ public class HighScoresScreen implements Screen{
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
-                click.play(2.0f);
             }
         });
 
@@ -101,7 +102,7 @@ public class HighScoresScreen implements Screen{
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play(2.0f);
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
             }

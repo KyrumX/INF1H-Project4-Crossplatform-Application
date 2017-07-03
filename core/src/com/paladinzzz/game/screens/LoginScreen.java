@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -58,9 +59,9 @@ public class LoginScreen implements Screen {
         backButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new MenuScreen(game));
                 MenuScreen.musicHandler.stopMusic();
-                click.play(2.0f);
             }
         });
 
@@ -70,11 +71,11 @@ public class LoginScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 playerMemory.player = null;
                 playerMemory.player = new com.paladinzzz.game.player.Player(playername);
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
-                click.play(2.0f);
             }
         });
 

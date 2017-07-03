@@ -112,7 +112,6 @@ public class GameScreen implements Screen {
         }
         antStoppers.defineObject(world, worldMap);
 
-
         world.setContactListener(new CollisionListener(this.game));
 
         musicHandler.stopMusic();
@@ -128,7 +127,7 @@ public class GameScreen implements Screen {
     private void handleInput(float deltaT) {
         if (Constants.DEBUGGER_ON) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
-                jump.play(0.20f);
+                jump.play(0.20f * Constants.soundLevel);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 HUD.spacepressed = true;
             }
@@ -142,7 +141,7 @@ public class GameScreen implements Screen {
             if (player.body.getLinearVelocity().x <= 1)
                 player.body.applyLinearImpulse(new Vector2(0.3f, 0f), player.body.getWorldCenter(), true);
             if (Gdx.input.isTouched() && player.body.getLinearVelocity().y == 0) {
-                jump.play(0.20f);
+                jump.play(0.20f * Constants.soundLevel);
                 player.body.applyLinearImpulse(new Vector2(0, 4f), player.body.getWorldCenter(), true);
                 HUD.spacepressed = true;
             }
