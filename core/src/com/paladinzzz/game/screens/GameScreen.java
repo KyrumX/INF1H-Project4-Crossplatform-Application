@@ -113,7 +113,7 @@ public class GameScreen implements Screen {
         antStoppers.defineObject(world, worldMap);
 
 
-        world.setContactListener(new CollisionListener(this.game));
+        world.setContactListener(new CollisionListener(gameFile));
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
@@ -156,8 +156,6 @@ public class GameScreen implements Screen {
         handleInput(deltaT);
 
         world.step(1/60f, 6, 2);
-
-        System.out.println(player.body.getPosition().x);
 
         if(!(player.body.getPosition().x - (170 / Constants.PPM) >= (75 / Constants.PPM) - (170 /  Constants.PPM)))
             camera.position.x = (75 / Constants.PPM) + (170 / Constants.PPM);
@@ -232,6 +230,8 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        System.out.println(viewport.getWorldHeight());
+        System.out.println(viewport.getWorldWidth());
     }
 
     @Override

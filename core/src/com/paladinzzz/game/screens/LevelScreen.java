@@ -14,7 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
@@ -29,11 +30,13 @@ public class LevelScreen implements Screen {
     private Drawable level1drawable, level2drawable, level3drawable, backdrawable;
     private Table table;
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
+    private Viewport viewport;
 
     public LevelScreen(CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
-        this.levelstage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
+        viewport = new FitViewport(Constants.WIDTH, Constants.HEIGHT, camera);
+        this.levelstage = new Stage(viewport);
         this.background = new Texture("Screens/LevelScreen/LevelSelection.png");
         this.backbutton = new Texture("Screens/BackButton.png");
         this.level1texture = new Texture("Screens/LevelScreen/Button1.png");
@@ -43,6 +46,8 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.viewport.apply();
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
         level1 = new ImageButton(level1drawable);
         level1.addListener(new ClickListener(){
@@ -113,6 +118,8 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.batch.setProjectionMatrix(levelstage.getCamera().combined);
+
         game.batch.begin();
 
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -124,7 +131,7 @@ public class LevelScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
