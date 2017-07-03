@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
 
@@ -48,6 +49,8 @@ public class LevelScreen implements Screen {
     public void show() {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.viewport.apply();
+        JSONfunctions s = new JSONfunctions();
+        int showbutton = s.getHasLevel("haslevel1", "selim");
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
         level1 = new ImageButton(level1drawable);
         level1.addListener(new ClickListener(){
@@ -101,8 +104,12 @@ public class LevelScreen implements Screen {
         table.top();
         table.add().expandX();
         table.add(level1).expandX().padTop(190);
-        table.add(level2).expandX().padTop(190);
-        table.add(level3).expandX().padTop(190);
+        if (showbutton == 1) {
+            table.add(level2).expandX().padTop(190);
+        }
+        if (showbutton == 2) {
+            table.add(level3).expandX().padTop(190);
+        }
         table.add().expandX();
         table.add().expandX();
         table.row();

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.LevelScreen;
 import com.paladinzzz.game.screens.worldobjects.finishObject;
@@ -16,9 +17,12 @@ import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.util.scoreMethods;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
+
 //Deze klas registreert contact tussen twee fixtures in onze wereld
 public class CollisionListener implements ContactListener {
     private CrossplatformApp game;
+    private JSONfunctions json = new JSONfunctions();
 
     public CollisionListener(CrossplatformApp game) {
         this.game = game;
@@ -70,6 +74,7 @@ public class CollisionListener implements ContactListener {
 
                     @Override
                     public void run() {
+                        json.sethaslevel(playername, "haslevel1", 1);
                         scoreMethods.score();
                         playerMemory.player.resetScore();
                         playerMemory.player.worldAndLevelData.setCurrentLevel(1);
@@ -86,12 +91,14 @@ public class CollisionListener implements ContactListener {
                     }
                 });
             }
+
         } else if ((isBmole) && (udA instanceof finishObject)) {
             if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                 Gdx.app.postRunnable(new Runnable() {
 
                     @Override
                     public void run() {
+                        json.sethaslevel(playername, "haslevel1", 1);
                         scoreMethods.score();
                         playerMemory.player.resetScore();
                         playerMemory.player.worldAndLevelData.setCurrentLevel(1);

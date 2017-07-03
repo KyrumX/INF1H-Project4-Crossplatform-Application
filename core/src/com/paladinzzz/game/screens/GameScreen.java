@@ -17,6 +17,8 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.IObject;
@@ -31,6 +33,7 @@ import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
@@ -122,6 +125,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     private void handleInput(float deltaT) {
