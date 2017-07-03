@@ -46,6 +46,10 @@ public class Player {
         json.setnewplayer(playerName);
     }
 
+    public void resetScore() {
+        this.playerScore = 0;
+    }
+
 }
 
 

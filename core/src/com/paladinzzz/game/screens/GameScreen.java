@@ -64,13 +64,13 @@ public class GameScreen implements Screen {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
-        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.WorldData.getCurrentLevel(), playerMemory.player.LevelData.getCurrentLevel()));
+        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
 
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Hier bepalen we welke wereld het wordt:
-        System.out.println("Loading new world: " + playerMemory.player.WorldData.getCurrentWorld() + "-" + playerMemory.player.LevelData.getCurrentLevel() );
-        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.WorldData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
+        System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
+        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
@@ -110,7 +110,8 @@ public class GameScreen implements Screen {
         }
         antStoppers.defineObject(world, worldMap);
 
-        world.setContactListener(new CollisionListener(this.game));
+
+        world.setContactListener(new CollisionListener(gameFile));
 
         musicHandler.stopMusic();
         musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
