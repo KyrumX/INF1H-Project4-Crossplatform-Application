@@ -25,7 +25,7 @@ public class CollisionListener implements ContactListener {
     }
 
     @Override
-    public void beginContact(Contact contact) {
+    public void beginContact(final Contact contact) {
         boolean isAmole = false;
         boolean isBmole = false;
         Fixture fixOne = contact.getFixtureA();
@@ -71,7 +71,7 @@ public class CollisionListener implements ContactListener {
                     @Override
                     public void run() {
                         scoreMethods.score();
-                        playerMemory.player.setPlayerScore(0);
+                        playerMemory.player.resetScore();
                         playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                         game.setScreen(new LevelScreen(game));
                     }
@@ -93,7 +93,7 @@ public class CollisionListener implements ContactListener {
                     @Override
                     public void run() {
                         scoreMethods.score();
-                        playerMemory.player.setPlayerScore(0);
+                        playerMemory.player.resetScore();
                         playerMemory.player.worldAndLevelData.setCurrentLevel(1);
                         game.setScreen(new LevelScreen(game));
                     }
