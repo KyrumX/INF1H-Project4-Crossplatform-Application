@@ -3,6 +3,7 @@ package com.paladinzzz.game.player;
 //Class voor het generen van players en bijhouden/uploaden van score
 
 import com.paladinzzz.game.database.Database;
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.CurrentLevel;
 
 public class Player {
@@ -30,6 +31,8 @@ public class Player {
 
     private void definePlayer() {
         if (!db.verifyPlayer(this.getName(), db.connect())) {
+            JSONfunctions makeplayerjson = new JSONfunctions();
+            makeplayerjson.setnewplayer(this.getName());
             System.out.println("Nieuwe speler aanmaken");
             db.makePlayer(this.getName(), db.connect());
         } else
