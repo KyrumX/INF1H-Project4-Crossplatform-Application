@@ -69,7 +69,7 @@ public class HighScoresScreen implements Screen{
             parseJSON parse = new parseJSON(json.doInBackground());
 
             Table nametable = new Table();
-            nametable.center().padRight(420f).padBottom(115f);
+            nametable.center().padRight(420f).padTop(65f);
             nametable.setFillParent(true);
 
             for (String i : parse.getNames()) {
@@ -83,7 +83,7 @@ public class HighScoresScreen implements Screen{
             }
 
             Table scoretable = new Table();
-            scoretable.center().padLeft(450f).padBottom(115f);
+            scoretable.center().padLeft(450f).padTop(65f);
             scoretable.setFillParent(true);
 
             for (String i : parse.getScores()) {

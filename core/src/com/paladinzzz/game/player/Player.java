@@ -2,6 +2,7 @@ package com.paladinzzz.game.player;
 
 //Class voor het generen van players en bijhouden/uploaden van score
 
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.CurrentLevel;
 
 public class Player {
@@ -37,6 +38,12 @@ public class Player {
     public void setPlayerScore(int playerScore) {
         this.playerScore = playerScore;
     }
+
+    public void addPlayer(){
+        JSONfunctions json = new JSONfunctions();
+        json.setnewplayer(playerName);
+    }
+
 }
 
 

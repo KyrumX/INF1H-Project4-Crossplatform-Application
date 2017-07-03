@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -74,6 +75,7 @@ public class LoginScreen implements Screen {
                 click.play(1.0f * Constants.soundLevel);
                 playerMemory.player = null;
                 playerMemory.player = new com.paladinzzz.game.player.Player(playername);
+                playerMemory.player.addPlayer();
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
             }
