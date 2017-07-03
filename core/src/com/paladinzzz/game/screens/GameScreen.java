@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -18,27 +17,24 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.database.JSONfunctions;
-import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.IObject;
 import com.paladinzzz.game.screens.worldobjects.Iterator.ObjectIterator;
+import com.paladinzzz.game.screens.worldobjects.antObject;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.screens.worldobjects.wormObject;
-import com.paladinzzz.game.screens.worldobjects.antObject;
 import com.paladinzzz.game.sprites.Ant;
+import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
-import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
     static boolean inPause = false;
-    private int localplayerscore;
     public com.paladinzzz.game.CrossplatformApp game;
     private OrthographicCamera camera;
     private Viewport viewport;
@@ -47,7 +43,6 @@ public class GameScreen implements Screen {
     private World world;
     private Sound jump = Gdx.audio.newSound(Gdx.files.internal("Audio/jump.wav"));
 
-    BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
     static boolean showtext = true;
     private TextureAtlas moleAtlas;
     private TextureAtlas wurmAtlas;
@@ -58,23 +53,17 @@ public class GameScreen implements Screen {
     private TiledMap worldMap;
 
     //Playable character and AI:
-    private com.paladinzzz.game.sprites.Mole player;
-    private com.paladinzzz.game.screens.worldobjects.antObject antObject;
+    private Mole player;
     private wormObject wormObject;
     private antObject antsObject;
 
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
-    private JSONfunctions json = new JSONfunctions();
-    private int onlinescore = getUserOnlineScore();
-    private int checkcnt = 0;
-    private boolean updatedonlinescore = false;
 
 
 
     public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
         this.game = gameFile;
-        parseJSON parse = new parseJSON(json.doInBackground());
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
         this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
@@ -82,6 +71,7 @@ public class GameScreen implements Screen {
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Hier bepalen we welke wereld het wordt:
+        System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
         this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
@@ -92,8 +82,6 @@ public class GameScreen implements Screen {
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
         this.antAtlas = new TextureAtlas("Ant/Ant.pack");
         this.player = new com.paladinzzz.game.sprites.Mole(world, this);
-
-        this.localplayerscore = playerMemory.player.getScore();
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
@@ -193,22 +181,10 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-        checkcnt++;
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        if (playerMemory.isConnected) {
-            if (checkcnt > 500) {
-                localplayerscore = playerMemory.player.getScore();
-                onlinescore = getUserOnlineScore();
-                if (localplayerscore > onlinescore) {
-                    grantPoints();
-                }
-                checkcnt = 0;
-            }
-        }
 
         mapRenderer.render();
 
@@ -283,20 +259,4 @@ public class GameScreen implements Screen {
         return game;
     }
 
-    public void grantPoints(){
-        if (playerMemory.isConnected) {
-            json.checkforhighscore("http://www.wemoney.nl/getpoints.php?user=" + playername + "&userpoints=" + playerMemory.player.getScore());
-            System.out.println("Granted " + playername + " points");
-        }
-    }
-
-    public int getUserOnlineScore(){
-//        if (playerMemory.isConnected) {
-        String userurl = "http://www.wemoney.nl/getuserpoints.php?user=" + playername;
-        parseJSON highscoreparser = new parseJSON(json.checkforhighscore(userurl));
-        return highscoreparser.getPlayerScore();
-//        }
-//        else
-//            return 0;
-    }
 }

@@ -93,8 +93,6 @@ public class Wurrumpie extends Sprite {
 
     public void killWurrumpie() {
         destroyed = true;
-        System.out.println("Wurrumpie neeeeeee!");
-        System.out.println("Score + 10");
         Gdx.app.postRunnable(new Runnable() {
 
             @Override

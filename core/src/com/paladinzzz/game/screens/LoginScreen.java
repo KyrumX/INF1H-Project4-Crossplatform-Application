@@ -2,6 +2,7 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -37,6 +38,7 @@ public class LoginScreen implements Screen {
     private boolean isConverted = false;
     private Table table, table2;
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
+    private int[] letters = new int[26];
 
     public LoginScreen(com.paladinzzz.game.CrossplatformApp game) {
         this.game = game;
@@ -69,23 +71,14 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player = null;
-                playerMemory.player = new com.paladinzzz.game.player.Player(playername, playerMemory.database);
+                playerMemory.player = new com.paladinzzz.game.player.Player(playername);
                 game.setScreen(new LevelScreen(game));
                 inPlayscreen = true;
                 click.play(2.0f);
             }
         });
 
-//        drawablePlay = new TextureRegionDrawable(new TextureRegion(playTexture));
-//        hugebutton = new ImageButton(drawableHighscore);
-//        hugebutton.addListener(new ClickListener(){
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//
-//                Gdx.input.setOnscreenKeyboardVisible(true);
-//            }
-//        });
-//
+
         stage.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -115,6 +108,16 @@ public class LoginScreen implements Screen {
             x[lel] = lel;
         }
 
+        int m = 29;
+        for (int i = 0; i <= 25; i++){
+            letters[i] = m;
+            m++;
+        }
+
+        for (int i : letters){
+            System.out.println(i);
+        }
+
     }
 
     @Override
@@ -128,20 +131,24 @@ public class LoginScreen implements Screen {
         //Er wordt een mogelijkheid gemaakt om de naam van de speler in te voeren
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        font.setColor(Color.WHITE);
+
         for (int i : x) {
             if (input.isKeyJustPressed(i)) {
                 System.out.println(i);
-                if (i != 62 && i != 67 && i != 66) {
-                    playername += Input.Keys.toString(i).toLowerCase();
-                } else if (i == 67 & playername.length() > 0) {
-                    playername = playername.substring(0, playername.length() - 1).toLowerCase();
-                } else {
-                    playername += " ";
-                }
+                    if (i != 62 && i != 67) {
+                        for(int d : letters){
+                            if (d == i){
+                                playername += Input.Keys.toString(d).toLowerCase();
+                            }
+                        }
+                    } else if (i == 67 & playername.length() > 0) {
+                        playername = playername.substring(0, playername.length() - 1).toLowerCase();
+                    } else {
+                        playername += " ";
+                    }
+
             }
         }
-
-
 
         font.draw(game.batch, playername, 180, 110);
 
@@ -172,6 +179,8 @@ public class LoginScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-
+        backTexture.dispose();
+        playTexture.dispose();
+        background.dispose();
     }
 }
