@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="305">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="306">
  <tileset firstgid="1" source="../../tileset/ijs.tsx"/>
  <tileset firstgid="925" source="../../tileset/icespikes.tsx"/>
  <imagelayer name="Afbeelding Laag 1">
@@ -64,6 +64,7 @@
   <object id="296" x="2064" y="592.667" width="14.6667" height="16.6667"/>
   <object id="297" x="1840" y="433.333" width="318.667" height="14.6667"/>
   <object id="301" x="960" y="480.667" width="80" height="14"/>
+  <object id="305" x="976" y="369.333" width="127.333" height="15.3333"/>
  </objectgroup>
  <objectgroup name="polygon">
   <object id="183" x="2704" y="274">
@@ -98,7 +99,6 @@
   <object id="247" x="849.333" y="566.667" width="43.3333" height="12"/>
   <object id="295" x="2066.67" y="612.667" width="12" height="26.6667"/>
   <object id="302" x="562" y="351.333" width="207.333" height="14.6667"/>
-  <object id="303" x="978.667" y="368.667" width="125.333" height="14.6667"/>
  </objectgroup>
  <objectgroup name="enemystopper">
   <object id="200" x="1504.67" y="449.333" width="15.3333" height="15.3333"/>
