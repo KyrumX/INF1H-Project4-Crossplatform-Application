@@ -60,19 +60,17 @@ public class GameScreen implements Screen {
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
-
-
     public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
-        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
+        this.levelHUD = new HUD(gameFile.batch, WorldPicker.getWorldName(playerMemory.player.LevelData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
 
         TmxMapLoader mapLoader = new TmxMapLoader();
 
         //Hier bepalen we welke wereld het wordt:
-        System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
-        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
+        System.out.println("Loading new world: " + playerMemory.player.LevelData.getCurrentWorld() + "-" + playerMemory.player.LevelData.getCurrentLevel() );
+        this.worldMap = mapLoader.load(WorldPicker.pickWorld(playerMemory.player.LevelData.getCurrentWorld(), playerMemory.player.LevelData.getCurrentLevel()));
 
         this.mapRenderer = new OrthogonalTiledMapRenderer(worldMap, 1  / Constants.PPM);
         this.camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);

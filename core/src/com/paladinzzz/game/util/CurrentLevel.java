@@ -1,7 +1,7 @@
 package com.paladinzzz.game.util;
 public class CurrentLevel {
-    public int currentWorld;
-    public int currentLevel;
+    private int currentWorld;
+    private int currentLevel;
 
     public CurrentLevel(int setWorld) {
         currentLevel = 1;

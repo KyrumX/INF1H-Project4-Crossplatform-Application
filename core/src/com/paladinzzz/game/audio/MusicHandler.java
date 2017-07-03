@@ -14,6 +14,10 @@ public class MusicHandler {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(path));
     }
 
+    public void setMusic(String path) {
+        this.music = Gdx.audio.newMusic(Gdx.files.internal(path));
+    }
+
     public void stopMusic() {
         this.music.stop();
     }

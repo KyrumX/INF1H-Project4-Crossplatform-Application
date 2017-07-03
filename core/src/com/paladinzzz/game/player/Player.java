@@ -10,11 +10,13 @@ public class Player {
     public Boolean levelOneDone = false;
     public Boolean levelTwoDone = false;
     private int playerScore;
-    public CurrentLevel worldAndLevelData;
+    public CurrentLevel LevelData;
+    public CurrentLevel WorldData;
 
     public Player(String playerName) {
         this.playerName = playerName;
-        this.worldAndLevelData = new CurrentLevel(1);
+        this.LevelData = new CurrentLevel(1);
+        this.WorldData = new CurrentLevel(1);
     }
 
 
