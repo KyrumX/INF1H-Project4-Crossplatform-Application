@@ -122,7 +122,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
     }
 
     private void handleInput(float deltaT) {
