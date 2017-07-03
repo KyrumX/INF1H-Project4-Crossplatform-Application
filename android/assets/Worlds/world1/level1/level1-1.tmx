@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="366">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="368">
  <tileset firstgid="1" source="tiles.tsx"/>
  <tileset firstgid="925" source="../../level1/tiles.tsx"/>
  <tileset firstgid="1849" source="../../tileset/righttileset.tsx"/>
+ <tileset firstgid="2773" source="../../tileset/ijs.tsx"/>
  <imagelayer name="Image Layer 1">
   <image source="bg2.jpg" width="4000" height="720"/>
  </imagelayer>
  <layer name="graphics" width="250" height="45">
   <data encoding="base64" compression="zlib">
-   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
+   eJzt3E1u00AYxnGTVkJC3TRHKHCBdMsSIeAOSCw4E+scxZwE9RDsGaeZYIyHzNc7ed/J/yeNrLZR7en4mS83GQYAAAAAAAAAAAAAAAAAAAAAAHR73AzjzhV/7PWctfVQB1wPcp6nhzrgemjO+buXLa4mDzmHJZpz/kVBzp9u1r9PzmGJ5pxLepFYllrVYePK1NXcSp1gYR/o12DbJTK3dee5d8UfW5zT56WWVn+31668ceXtys9Cc40SP8h5lzSMrS34vNQi0VelzjFi5x7AJcbWVsiDPqwLdGu1PkTfWBfoVXttq1XNsUbLPFtiDY8+1V7blgrl5ePdMHxy5fNdXn56G2uk/k7oT8keUMt9JclxMjQmWpjnuP55dP306L9mnwJYF8qGtnnOGtcPjZuhr/1VoJVa620N+88arkGKhTlXTVr2hTS65F6Vhj2B3GuwkCELcy4J15Bx/r9EzrxPLM2QdP+a2t48mygT2+/3PH+0pNb+ae4ebavnAfT3/yrp62L7fQ1zWFxWae40jMlWxqsac1zmyZBQaw0mmcVexisy+rflGMK+gH69ZFHSNdybWvfxbgfea6CJhWcOuXrIubX28de79j50yAut+3t+bmct52ttZK19QterYd+pd5rmcy1ZqVNs+2h/X4f02uFhGEZX9qll8TuyXxPzup9G+zNr88a5nPup9j1a63PTcq/DyrOTGA/K///dZXycGtpi1mvNw2L6x9pyc17T/z43rQXN+7Xn+qCV+0W9nKzHjKXH+n9dKwWXe1JjfJu31a/nr4cWWZfM+f3m8FlWp6OXMp+01u8v67yse6qUPujD8z1tQmrWre3BrPGZnvI9Ly3Gdcmc7zaHz6Y8HVNM9+w3d5yKhqzHrm+Xdc6pey5LOZ+kZD12P0CzqW2WGSfnf3Leej3n54g5+y6pOc85x/dAA1jL+URqvV7ShrX5awjl/Jj10ReJa5jvUceUlH3snJy/Px7nOZ9n/elG/vmTnyPmzBVTc+7PEVun+fOEpVDO3dphvztTptdsX7k1hkA5zleDJLK+1oYl902N94ScyfkgmXP0b+sy/HimHF7jMilRzuUcQLnY8ZycA3YxntvzG2oXN5U=
   </data>
  </layer>
  <objectgroup name="ground">
@@ -32,7 +33,6 @@
   <object id="179" x="16" y="418.667" width="174" height="12"/>
   <object id="180" x="194" y="482" width="140.667" height="12.6667"/>
   <object id="181" x="112.667" y="304.667" width="62" height="15.3333"/>
-  <object id="185" x="512" y="368.667" width="255.333" height="14"/>
   <object id="188" x="817.333" y="608.667" width="142.667" height="14.6667"/>
   <object id="194" x="1106" y="257.333" width="189.333" height="13.3333"/>
   <object id="195" x="1284" y="386" width="74.6667" height="12"/>
@@ -61,7 +61,6 @@
   <object id="270" x="1949.33" y="288.667" width="34.6667" height="16"/>
   <object id="285" x="962" y="431.333" width="221.333" height="16.6667"/>
   <object id="286" x="2592" y="561.333" width="112.667" height="12.6667"/>
-  <object id="287" x="482" y="368" width="29.3333" height="14"/>
   <object id="309" x="466.667" y="482.667" width="139.333" height="12.6667"/>
   <object id="310" x="242" y="370" width="188.667" height="14"/>
   <object id="314" x="653.333" y="576" width="18.6667" height="16"/>
@@ -82,6 +81,7 @@
   <object id="354" x="2642" y="449.333" width="109.333" height="14.6667"/>
   <object id="355" x="2737.33" y="465.333" width="77.3333" height="14.6667"/>
   <object id="357" x="2800.67" y="448.667" width="14.6667" height="16"/>
+  <object id="366" x="480" y="369.5" width="287.5" height="13"/>
  </objectgroup>
  <objectgroup name="polygon">
   <object id="242" x="2834.67" y="561.333">
