@@ -24,29 +24,25 @@ public class LevelScreen implements Screen {
     private OrthographicCamera camera;
     private CrossplatformApp game;
     public Stage levelstage;
-    private Texture background, level1texture, level2texture, level3texture;
-    private ImageButton level1, level2, level3;
-    private Drawable level1drawable, level2drawable, level3drawable;
+    private Texture background, level1texture, level2texture, level3texture, backbutton;
+    private ImageButton level1, level2, level3, back;
+    private Drawable level1drawable, level2drawable, level3drawable, backdrawable;
     private Table table;
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
-
-
 
     public LevelScreen(CrossplatformApp game) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.levelstage = new Stage(new FillViewport(Constants.WIDTH, Constants.HEIGHT, camera));
         this.background = new Texture("Screens/LevelScreen/LevelSelection.png");
+        this.backbutton = new Texture("Screens/BackButton.png");
         this.level1texture = new Texture("Screens/LevelScreen/Button1.png");
         this.level2texture = new Texture("Screens/LevelScreen/Button2.png");
         this.level3texture = new Texture("Screens/LevelScreen/Button3.png");
     }
 
-
-
     @Override
     public void show() {
-
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
         level1 = new ImageButton(level1drawable);
         level1.addListener(new ClickListener(){
@@ -81,14 +77,31 @@ public class LevelScreen implements Screen {
             }
         });
 
+        backdrawable = new TextureRegionDrawable(new TextureRegion(backbutton));
+        back = new ImageButton(backdrawable);
+        back.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Back button clicked");
+                levelstage.dispose();
+                game.setScreen(new LoginScreen(game));
+                click.play(2.0f);
+            }
+        });
+
         Gdx.input.setInputProcessor(levelstage);
 
         table = new Table();
         table.setFillParent(true);
         table.top();
-        table.add(level1).padRight(57).padTop(190);
-        table.add(level2).padRight(40).padTop(190);
-        table.add(level3).padRight(50).padTop(190);
+        table.add().expandX();
+        table.add(level1).expandX().padTop(190);
+        table.add(level2).expandX().padTop(190);
+        table.add(level3).expandX().padTop(190);
+        table.add().expandX();
+        table.add().expandX();
+        table.row();
+        table.add(back).expandX().padTop(50);
 
         levelstage.addActor(table);
 
@@ -132,6 +145,10 @@ public class LevelScreen implements Screen {
     @Override
     public void dispose() {
         levelstage.dispose();
-
+        background.dispose();
+        level1texture.dispose();
+        level2texture.dispose();
+        level3texture.dispose();
+        backbutton.dispose();
     }
 }

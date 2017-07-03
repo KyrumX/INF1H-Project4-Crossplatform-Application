@@ -42,23 +42,6 @@ public class JSONfunctions{
     }
 
     public void doInBackground2(String userurl) {
-
-//        try {
-//            URL url = new URL(userurl);
-//            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//
-//            bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//
-//            String json;
-//
-//            while ((json = bufferedReader.readLine()) != null)
-//                System.out.println(json);
-//            bufferedReader.close();
-//
-//
-//        }catch(Exception e){
-//
-//        }
         try {
             URL yahoo = new URL(userurl);
             URLConnection yc = yahoo.openConnection();
@@ -76,6 +59,45 @@ public class JSONfunctions{
 
     }
 
+    public String checkforhighscore(String userurl) {
+        BufferedReader bufferedReader = null;
+        try {
+            URL url = new URL(userurl);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            StringBuilder sb = new StringBuilder();
+
+            bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            String json;
+            while((json = bufferedReader.readLine())!= null){
+                sb.append(json+"\n");
+            }
+            System.out.println("checkforhighscore loop");
+            return sb.toString().trim();
+
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public void setnewplayer(String user) {
+        try {
+            String theurl = "http://www.wemoney.nl/newuser.php?user=" + user;
+            URL yahoo = new URL(theurl);
+            URLConnection yc = yahoo.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            yc.getInputStream()));
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null)
+                System.out.println(inputLine);
+            in.close();
+        } catch(Exception e){
+
+        }
+
+    }
 
 
 }

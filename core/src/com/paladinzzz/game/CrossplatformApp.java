@@ -2,7 +2,6 @@ package com.paladinzzz.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.paladinzzz.game.database.Database;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.screens.MenuScreen;
@@ -15,27 +14,28 @@ public class CrossplatformApp extends Game {
 	public void create () {
 		batch = new SpriteBatch();
 		setScreen(new MenuScreen(this));
-		playerMemory.database = new Database();
-		playerMemory.database.connect();
+		try {
+			JSONfunctions json = new JSONfunctions();
+			parseJSON parse = new parseJSON(json.doInBackground());
 
-		JSONfunctions json = new JSONfunctions();
-		System.out.println(json.doInBackground());
-
-		parseJSON parse = new parseJSON(json.doInBackground());
-
-//		System.out.println(parse.getNames());
-		for (String i : parse.getNames()){
-			if(i != null) {
-				System.out.println(i);
+			for (String i : parse.getNames()){
+				if(i != null) {
+					System.out.println(i);
+				}
 			}
-		}
 
-		for (String i : parse.getScores()){
-			if(i != null) {
-				System.out.println(i);
+			for (String i : parse.getScores()){
+				if(i != null) {
+					System.out.println(i);
+				}
 			}
-		}
 
+			playerMemory.isConnected = true;
+		}
+		catch (Exception e){
+			System.out.println(e);
+			playerMemory.isConnected = false;
+		}
 	}
 
 	@Override
