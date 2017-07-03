@@ -158,8 +158,12 @@ public class GameScreen implements Screen {
 
         world.step(1/60f, 6, 2);
 
+        System.out.println(player.body.getPosition().x);
+
         if(!(player.body.getPosition().x - (170 / Constants.PPM) >= (75 / Constants.PPM) - (170 /  Constants.PPM)))
             camera.position.x = (75 / Constants.PPM) + (170 / Constants.PPM);
+        else if (!(player.body.getPosition().x - (170 / Constants.PPM) <= (3585 / Constants.PPM) - (170 / Constants.PPM)))
+            camera.position.x = (3585 / Constants.PPM) + (170 / Constants.PPM);
         else
             camera.position.x = player.body.getPosition().x + (170 / Constants.PPM);
 
