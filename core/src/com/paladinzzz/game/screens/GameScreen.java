@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -25,9 +26,11 @@ import com.paladinzzz.game.screens.worldobjects.antObject;
 import com.paladinzzz.game.screens.worldobjects.factory.objectFactory;
 import com.paladinzzz.game.screens.worldobjects.wormObject;
 import com.paladinzzz.game.sprites.Ant;
+import com.paladinzzz.game.sprites.Hat;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
@@ -60,7 +63,11 @@ public class GameScreen implements Screen {
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
-    public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
+    private TempMS tempMS;
+    private Hat hat;
+
+    public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile, TempMS tempMS) {
+        this.tempMS = tempMS;
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
@@ -80,6 +87,7 @@ public class GameScreen implements Screen {
         this.wurmAtlas = new TextureAtlas("Wurrumpie/Wurrumpie.pack");
         this.antAtlas = new TextureAtlas("Ant/Ant.pack");
         this.player = new com.paladinzzz.game.sprites.Mole(world, this);
+        this.hat = new Hat(this.player);
 
         //Maak en bepaal of de debugger aan is.
         if(Constants.DEBUGGER_ON) {
@@ -113,11 +121,11 @@ public class GameScreen implements Screen {
         antStoppers.defineObject(world, worldMap);
 
 
-        world.setContactListener(new CollisionListener(gameFile));
+        world.setContactListener(new CollisionListener(gameFile, tempMS));
 
-        musicHandler.stopMusic();
-        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
+        tempMS.menuScreen.musicHandler.stopMusic();
+        tempMS.menuScreen.musicHandler.setMusic("Music/Town_Theme_1.ogg");
+        tempMS.menuScreen.musicHandler.playMusic();
     }
 
     @Override
@@ -176,6 +184,7 @@ public class GameScreen implements Screen {
         for(Wurrumpie worm : wormObject.getWorms()) {
             worm.update(deltaT);
         }
+        hat.update();
         camera.update();
         levelHUD.update(deltaT);
         mapRenderer.setView(camera);
@@ -213,8 +222,17 @@ public class GameScreen implements Screen {
         for(Ant ant : antsObject.getAnts()) {
             ant.draw(game.batch);
         }
-        for(Wurrumpie worn : wormObject.getWorms()) {
-            worn.draw(game.batch);
+        for(Wurrumpie worm : wormObject.getWorms()) {
+            worm.draw(game.batch);
+        }
+
+        if (hat.path != "None") {
+            // Hat wordt 1 pixel hoger gedrawd als de player jumpt
+            if (player.currentState == Mole.State.JUMPING) {
+                game.batch.draw(new Texture("Hats/" + hat.path), hat.x - (12 / Constants.PPM), hat.y + (3 / Constants.PPM), (32 / Constants.PPM), 32 / Constants.PPM);
+            } else {
+                game.batch.draw(new Texture("Hats/" + hat.path), hat.x - (12 / Constants.PPM), hat.y + (2 / Constants.PPM), (32 / Constants.PPM), 32 / Constants.PPM);
+            }
         }
 
         game.batch.end();

@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -42,7 +43,9 @@ public class LevelScreen implements Screen {
     private Viewport viewport;
 //    public static boolean Gdx.input.isTouched() = false;
 
-    public LevelScreen(CrossplatformApp game) {
+    private TempMS tempMS;
+
+    public LevelScreen(CrossplatformApp game, TempMS tempMS) {
         this.game = game;
         this.camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.WIDTH, Constants.HEIGHT, camera);
@@ -52,6 +55,7 @@ public class LevelScreen implements Screen {
         this.level1texture = new Texture("Screens/LevelScreen/Button1.png");
         this.level2texture = new Texture("Screens/LevelScreen/Button2.png");
         this.level3texture = new Texture("Screens/LevelScreen/Button3.png");
+        this.tempMS = tempMS;
         this.level2textureDeny = new Texture("Screens/LevelScreen/Button2NOT.png");
         this.level3textureDeny = new Texture("Screens/LevelScreen/Button3NOT.png");
         label2 = new Label(("Complete level 1 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -75,8 +79,13 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(Constants.soundLevel * 1.0f);
+                tempMS.menuScreen.musicHandler.stopMusic();
+                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
-                game.setScreen(new GameScreen(game));
+                playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
+                game.setScreen(new GameScreen(game, tempMS));
                 levelstage.dispose();
                 click.play(2.0f);
             }
@@ -87,21 +96,17 @@ public class LevelScreen implements Screen {
         level2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                playerMemory.player.worldAndLevelData.setCurrentWorld(2);
-                game.setScreen(new GameScreen(game));
-                levelstage.dispose();
-                click.play(2.0f);
-            }
-        });
-
-        level2deny = new TextureRegionDrawable(new TextureRegion(level2textureDeny));
-        level2NOT = new ImageButton(level2deny);
-        level2NOT.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Finish level 1 first");
-//                levelstage.dispose();
-                click.play(2.0f);
+                click.play(1.0f * Constants.soundLevel);
+                System.out.println("Level 2 clicked");
+                if (playerMemory.player.levelOneDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(2);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    game.setScreen(new GameScreen(game, tempMS));
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 1 first!");
+                }
             }
         });
 
@@ -111,22 +116,18 @@ public class LevelScreen implements Screen {
         level3.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                playerMemory.player.worldAndLevelData.setCurrentWorld(3);
-                game.setScreen(new GameScreen(game));
-                levelstage.dispose();
-                click.play(2.0f);
-            }
-        });
-
-        level3deny = new TextureRegionDrawable(new TextureRegion(level3textureDeny));
-        level3NOT = new ImageButton(level3deny);
-        level3NOT.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Finish level 2 first");
-//                levelstage.dispose();
-                click.play(2.0f);
-            }
+                click.play(1.0f * Constants.soundLevel);
+                System.out.println("Level 3 clicked");
+                if (playerMemory.player.levelTwoDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(3);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    game.setScreen(new GameScreen(game, tempMS));
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 2 first!");
+                }
+            }//
         });
 
         backdrawable = new TextureRegionDrawable(new TextureRegion(backbutton));
@@ -134,10 +135,8 @@ public class LevelScreen implements Screen {
         back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 System.out.println("Back button clicked");
-                levelstage.dispose();
-                game.setScreen(new LoginScreen(game));
-                click.play(2.0f);
             }
         });
 //

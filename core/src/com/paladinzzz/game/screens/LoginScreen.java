@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.util.TempMS;
 
 import com.paladinzzz.game.util.playerMemory;
 
@@ -40,8 +42,9 @@ public class LoginScreen implements Screen {
     private Table table, table2;
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
     private int[] letters = new int[26];
+    private TempMS tempMS;
 
-    public LoginScreen(com.paladinzzz.game.CrossplatformApp game) {
+    public LoginScreen(com.paladinzzz.game.CrossplatformApp game, TempMS tempMS) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
@@ -49,6 +52,7 @@ public class LoginScreen implements Screen {
         this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
         this.playername = "";
+        this.tempMS = tempMS;
     }
 
     @Override
@@ -60,8 +64,7 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new MenuScreen(game));
-                MenuScreen.musicHandler.stopMusic();
+                game.setScreen(tempMS.menuScreen);
             }
         });
 
@@ -75,7 +78,7 @@ public class LoginScreen implements Screen {
                 playerMemory.player = null;
                 playerMemory.player = new com.paladinzzz.game.player.Player(playername);
                 playerMemory.player.addPlayer();
-                game.setScreen(new LevelScreen(game));
+                game.setScreen(new LevelScreen(game, tempMS));
                 inPlayscreen = true;
             }
         });

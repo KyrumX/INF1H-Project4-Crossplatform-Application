@@ -2,6 +2,7 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,6 +21,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.TempMS;
+
 import static com.badlogic.gdx.Gdx.input;
 
 
@@ -42,7 +45,9 @@ public class MenuScreen implements Screen {
 
     private int amountbackspacepressed = 0;
 
-    public MenuScreen(com.paladinzzz.game.CrossplatformApp game) {
+    public TempMS tempMS;
+
+    public MenuScreen(com.paladinzzz.game.CrossplatformApp game, MusicHandler musicHandler) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
@@ -51,8 +56,8 @@ public class MenuScreen implements Screen {
         this.optionsTexture = new Texture("Screens/TitleScreen/OptionsButton.png");
         this.highscoreTexture = new Texture("Screens/TitleScreen/HighscoresButton.png");
         this.background = new Texture("Screens/TitleScreen/MainScreen.png");
-        musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
-        musicHandler.playMusic();
+        this.musicHandler = musicHandler;
+        this.tempMS = new TempMS(this);
     }
 
     @Override
@@ -76,7 +81,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new LoginScreen(game));
+                game.setScreen(new LoginScreen(game, tempMS));
                 inPlayscreen = true;
             }
         });
@@ -88,7 +93,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new OptionScreen(game));
+                game.setScreen(new OptionScreen(game, tempMS));
                 GameScreen.showtext = true;
 
             }
@@ -100,7 +105,7 @@ public class MenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new HighScoresScreen(game));
+                game.setScreen(new HighScoresScreen(game, tempMS));
             }
         });
 
