@@ -22,7 +22,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.database.JSONfunctions;
+import com.paladinzzz.game.scenes.HUD;
+import com.paladinzzz.game.scenes.MenuHUD;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -37,12 +40,15 @@ public class LevelScreen implements Screen {
     private ImageButton level1, level2, level3, back, level2NOT, level3NOT;
     private Drawable level1drawable, level2drawable, level3drawable, backdrawable, level2deny, level3deny;
     private Table table, table2, table3;
-    private Label label2, label3;
+    private Label label2;
+    private Label label3;
+    private MenuHUD MenuHUD;
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
     private Viewport viewport;
-//    public static boolean Gdx.input.isTouched() = false;
+    static boolean showtext = true;
 
-    public LevelScreen(CrossplatformApp game) {
+    public LevelScreen(com.paladinzzz.game.CrossplatformApp game) {
+        this.MenuHUD = new MenuHUD(game.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
         this.game = game;
         this.camera = new OrthographicCamera();
         viewport = new FitViewport(Constants.WIDTH, Constants.HEIGHT, camera);
@@ -57,11 +63,6 @@ public class LevelScreen implements Screen {
         label2 = new Label(("Complete level 1 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         label3 = new Label(("Complete level 2 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
     }
-//    public Overlay(SpriteBatch batch) {
-//
-//        this.button2stage = new Stage(viewport, batch);
-//        this.button3stage = new Stage(viewport, batch);
-//    }
 
     @Override
     public void show() {
@@ -72,7 +73,7 @@ public class LevelScreen implements Screen {
         int showbutton2 = s.getHasLevel("haslevel2", playername);
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
         level1 = new ImageButton(level1drawable);
-        level1.addListener(new ClickListener(){
+        level1.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
@@ -84,7 +85,7 @@ public class LevelScreen implements Screen {
 
         level2drawable = new TextureRegionDrawable(new TextureRegion(level2texture));
         level2 = new ImageButton(level2drawable);
-        level2.addListener(new ClickListener(){
+        level2.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player.worldAndLevelData.setCurrentWorld(2);
@@ -96,18 +97,20 @@ public class LevelScreen implements Screen {
 
         level2deny = new TextureRegionDrawable(new TextureRegion(level2textureDeny));
         level2NOT = new ImageButton(level2deny);
-        level2NOT.addListener(new ClickListener(){
+        level2NOT.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Finish level 1 first");
+                showtext = true;
 //                levelstage.dispose();
                 click.play(2.0f);
             }
         });
 
+
         level3drawable = new TextureRegionDrawable(new TextureRegion(level3texture));
         level3 = new ImageButton(level3drawable);
-        level3.addListener(new ClickListener(){
+        level3.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playerMemory.player.worldAndLevelData.setCurrentWorld(3);
@@ -119,10 +122,11 @@ public class LevelScreen implements Screen {
 
         level3deny = new TextureRegionDrawable(new TextureRegion(level3textureDeny));
         level3NOT = new ImageButton(level3deny);
-        level3NOT.addListener(new ClickListener(){
+        level3NOT.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Finish level 2 first");
+                showtext = true;
 //                levelstage.dispose();
                 click.play(2.0f);
             }
@@ -130,7 +134,7 @@ public class LevelScreen implements Screen {
 
         backdrawable = new TextureRegionDrawable(new TextureRegion(backbutton));
         back = new ImageButton(backdrawable);
-        back.addListener(new ClickListener(){
+        back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Back button clicked");
@@ -139,18 +143,6 @@ public class LevelScreen implements Screen {
                 click.play(2.0f);
             }
         });
-//
-//        Table table2 = new Table();
-//        table2.center();
-//        table2.setFillParent(true);
-//        table2.add(label2);
-//
-//
-//        Table table3 = new Table();
-//        table3.center();
-//        table3.setFillParent(true);
-//        table3.add(label3);
-
 
         Gdx.input.setInputProcessor(levelstage);
 
@@ -161,25 +153,26 @@ public class LevelScreen implements Screen {
         table.add(level1).expandX().padTop(190);
         if (showbutton == 1) {
             table.add(level2).expandX().padTop(190);
-        }
-        else {
+        } else {
             table.add(level2NOT).expandX().padTop(190);
-//            if (Gdx.input.isTouched()) {
-//                button2stage.clear();
-//            } else {
-//                button2stage.addActor(table2);
-//            }
+            if (Gdx.input.isTouched()) {
+                MenuHUD.clicked = false;
+                if (Gdx.input.isTouched()) {
+                    MenuHUD.clicked = true;
+                }
+            }
         }
+
         if (showbutton2 == 1) {
             table.add(level3).expandX().padTop(190);
-        }
-        else {
+        } else {
             table.add(level3NOT).expandX().padTop(190);
-//            if (Gdx.input.isTouched()) {
-//                button3stage.clear();
-//            } else {
-//                button3stage.addActor(table3);
-//            }
+            if (Gdx.input.isTouched()) {
+                MenuHUD.clicked = false;
+                if (Gdx.input.isTouched()) {
+                    MenuHUD.clicked = true;
+                }
+            }
         }
         table.add().expandX();
         table.add().expandX();
@@ -190,14 +183,33 @@ public class LevelScreen implements Screen {
 
     }
 
+
+//    private void update(float deltaT) {
+//        handleInput(deltaT);
+//        MenuHUD.update(deltaT);
+//    }
+
     @Override
     public void render(float delta) {
+//        update(delta);
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        game.batch.setProjectionMatrix(MenuHUD.button2stage.getCamera().combined);
+
+        MenuHUD.button2stage.draw();
+
+        game.batch.setProjectionMatrix(MenuHUD.button3stage.getCamera().combined);
+
+        MenuHUD.button3stage.draw();
 
         game.batch.setProjectionMatrix(levelstage.getCamera().combined);
 
         game.batch.begin();
+
+        if (Gdx.input.isTouched()){
+            MenuHUD.removeSpaceText();
+        }
 
         game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
