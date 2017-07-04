@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,7 +27,6 @@ import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
-import static com.badlogic.gdx.Gdx.input;
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
 public class LevelScreen implements Screen {
@@ -46,6 +44,7 @@ public class LevelScreen implements Screen {
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
     private Viewport viewport;
     static boolean showtext = true;
+    public final JSONfunctions s;
 
     private TempMS tempMS;
 
@@ -60,6 +59,7 @@ public class LevelScreen implements Screen {
         this.level2texture = new Texture("Screens/LevelScreen/Button2.png");
         this.level3texture = new Texture("Screens/LevelScreen/Button3.png");
         this.tempMS = tempMS;
+        this.s = new JSONfunctions();
         this.level2textureDeny = new Texture("Screens/LevelScreen/Button2NOT.png");
         this.level3textureDeny = new Texture("Screens/LevelScreen/Button3NOT.png");
         label2 = new Label(("Complete level 1 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -72,7 +72,6 @@ public class LevelScreen implements Screen {
     public void show() {
         Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.viewport.apply();
-        JSONfunctions s = new JSONfunctions();
         int showbutton = s.getHasLevel("haslevel1", playername);
         int showbutton2 = s.getHasLevel("haslevel2", playername);
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
@@ -99,7 +98,7 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
                 System.out.println("Level 2 clicked");
-                if (playerMemory.player.levelOneDone) {
+                if ((s.getHasLevel("haslevel1", playername) == 1))  {
                     MenuScreen.musicHandler.stopMusic();
                     playerMemory.player.worldAndLevelData.setCurrentWorld(2);
                     playerMemory.player.worldAndLevelData.setCurrentLevel(1);
@@ -119,7 +118,7 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
                 System.out.println("Level 3 clicked");
-                if (playerMemory.player.levelTwoDone) {
+                if (s.getHasLevel("haslevel2", playername) == 2) {
                     MenuScreen.musicHandler.stopMusic();
                     playerMemory.player.worldAndLevelData.setCurrentWorld(3);
                     playerMemory.player.worldAndLevelData.setCurrentLevel(1);
