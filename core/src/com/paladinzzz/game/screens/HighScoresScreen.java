@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
+import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.playerMemory;
 
 
@@ -121,7 +122,7 @@ public class HighScoresScreen implements Screen{
 
         game.batch.begin();
 
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         game.batch.end();
         stage.draw();
@@ -130,7 +131,7 @@ public class HighScoresScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
     }
 
     @Override
