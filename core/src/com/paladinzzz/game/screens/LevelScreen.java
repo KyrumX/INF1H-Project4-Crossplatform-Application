@@ -32,7 +32,7 @@ import static com.badlogic.gdx.Gdx.input;
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
 public class LevelScreen implements Screen {
-    
+
     private OrthographicCamera camera;
     private CrossplatformApp game;
     public Stage levelstage, button2stage, button3stage;
