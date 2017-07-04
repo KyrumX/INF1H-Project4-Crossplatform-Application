@@ -20,12 +20,11 @@ public class finishObject implements IObject {
     private BodyDef bdef;
     private PolygonShape shape;
 
-    public finishObject(World world, TiledMap map) {
+    public finishObject() {
         bdef = new BodyDef();
         shape = new PolygonShape();
         fdef = new FixtureDef();
         shape = new PolygonShape();
-        defineObject(world, map);
     }
 
     @Override
