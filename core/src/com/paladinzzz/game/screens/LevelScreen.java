@@ -47,11 +47,11 @@ public class LevelScreen implements Screen {
         this.level2texture = new Texture("Screens/LevelScreen/Button2.png");
         this.level3texture = new Texture("Screens/LevelScreen/Button3.png");
         this.tempMS = tempMS;
+
     }
 
     @Override
     public void show() {
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.viewport.apply();
         JSONfunctions s = new JSONfunctions();
         int showbutton = s.getHasLevel("haslevel1", "selim");
@@ -149,11 +149,9 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(levelstage.getCamera().combined);
-
         game.batch.begin();
 
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         game.batch.end();
         levelstage.draw();
@@ -162,7 +160,11 @@ public class LevelScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        System.out.println("RESIZE");
+
+//        viewport.update(width,height);
+//
+        game.batch.setProjectionMatrix(levelstage.getCamera().combined);
     }
 
     @Override

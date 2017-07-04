@@ -26,6 +26,7 @@ import com.paladinzzz.game.util.TempMS;
 import static com.badlogic.gdx.Gdx.input;
 
 
+
 public class MenuScreen implements Screen {
 
     private com.paladinzzz.game.CrossplatformApp game;
@@ -133,7 +134,7 @@ public class MenuScreen implements Screen {
 
         game.batch.begin();
 
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         game.batch.end();
         stage.draw();
@@ -141,7 +142,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
     }
 
     @Override

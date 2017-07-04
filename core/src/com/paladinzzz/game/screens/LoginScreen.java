@@ -2,7 +2,6 @@ package com.paladinzzz.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -21,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.util.TempMS;
+
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.badlogic.gdx.Gdx.input;
@@ -134,7 +134,7 @@ public class LoginScreen implements Screen {
         game.batch.begin();
 
         //Er wordt een mogelijkheid gemaakt om de naam van de speler in te voeren
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
 //        font.setColor(Color.WHITE);
 
         for (int i : x) {
@@ -163,7 +163,7 @@ public class LoginScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
     }
 
     @Override
