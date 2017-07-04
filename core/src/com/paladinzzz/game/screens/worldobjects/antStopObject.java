@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
 public class antStopObject implements IObject {
     private Body body;
@@ -41,5 +42,14 @@ public class antStopObject implements IObject {
             body.createFixture(fdef);
             body.setUserData(this);
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a antStopObject!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
     }
 }

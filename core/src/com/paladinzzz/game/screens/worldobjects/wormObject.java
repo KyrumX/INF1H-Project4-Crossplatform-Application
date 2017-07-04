@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.sprites.Wurrumpie;
 
 import java.util.ArrayList;
@@ -29,5 +30,15 @@ public class wormObject implements IObject {
 
     public ArrayList<Wurrumpie> getWorms() {
         return worms;
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a Worm!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
+        visitor.onWorm(this);
     }
 }

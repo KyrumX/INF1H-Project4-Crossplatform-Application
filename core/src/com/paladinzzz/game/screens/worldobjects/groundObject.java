@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
 public class groundObject implements IObject {
 
@@ -48,5 +49,14 @@ public class groundObject implements IObject {
             body.createFixture(fdef);
             body.setUserData(this);
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a groundObject!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
     }
 }
