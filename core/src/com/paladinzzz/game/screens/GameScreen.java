@@ -17,8 +17,6 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.audio.MusicHandler;
-import com.paladinzzz.game.database.JSONfunctions;
-import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.scenes.HUD;
 import com.paladinzzz.game.screens.collision.CollisionListener;
 import com.paladinzzz.game.screens.worldobjects.IObject;
@@ -30,6 +28,7 @@ import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
@@ -63,7 +62,10 @@ public class GameScreen implements Screen {
     private ObjectIterator objectList;
     private IObject ground, fluid, ramp, bounceBlocks, antStoppers, finishBlocks;
 
-    public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile) {
+    private TempMS tempMS;
+
+    public GameScreen(com.paladinzzz.game.CrossplatformApp gameFile, TempMS tempMS) {
+        this.tempMS = tempMS;
         this.game = gameFile;
         this.camera = new OrthographicCamera();
         this.viewport = new FillViewport(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM, camera);
@@ -114,11 +116,11 @@ public class GameScreen implements Screen {
         antStoppers.defineObject(world, worldMap);
 
 
-        world.setContactListener(new CollisionListener(gameFile));
+        world.setContactListener(new CollisionListener(gameFile, tempMS));
 
-        musicHandler.stopMusic();
-        musicHandler = new MusicHandler("Music/Town_Theme_1.ogg", true);
-        musicHandler.playMusic();
+        tempMS.menuScreen.musicHandler.stopMusic();
+        tempMS.menuScreen.musicHandler.setMusic("Music/Town_Theme_1.ogg");
+        tempMS.menuScreen.musicHandler.playMusic();
     }
 
     @Override

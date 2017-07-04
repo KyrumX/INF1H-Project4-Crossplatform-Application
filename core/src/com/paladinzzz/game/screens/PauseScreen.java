@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.audio.MusicHandler;
+import com.paladinzzz.game.util.TempMS;
 
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
@@ -35,8 +36,10 @@ public class PauseScreen implements Screen {
     public static boolean inPlayscreen = false;
     private Table table;
 
+    private TempMS tempMS;
 
-    public PauseScreen(GameScreen currentgame, com.paladinzzz.game.CrossplatformApp game) {
+    public PauseScreen(GameScreen currentgame, com.paladinzzz.game.CrossplatformApp game, TempMS tempMS) {
+        this.tempMS = tempMS;
         this.game = game;
         this.currentgame = currentgame;
         this.camera = new OrthographicCamera();
@@ -83,7 +86,7 @@ public class PauseScreen implements Screen {
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new OptionScreen(game));
+                game.setScreen(new OptionScreen(game, tempMS));
                 GameScreen.showtext = true;
             }
         });

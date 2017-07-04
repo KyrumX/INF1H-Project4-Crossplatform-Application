@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.playerMemory;
 
 
@@ -38,28 +39,20 @@ public class HighScoresScreen implements Screen{
     String sc = "";
     private Sound click = Gdx.audio.newSound(Gdx.files.internal("Audio/click.wav"));
     private Actor nameslbl = new Label(("test"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+    private TempMS tempMS;
 
-    public HighScoresScreen (com.paladinzzz.game.CrossplatformApp game) {
+    public HighScoresScreen (com.paladinzzz.game.CrossplatformApp game, TempMS tempMS) {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.stage = new Stage(new FillViewport(com.paladinzzz.game.util.Constants.WIDTH, com.paladinzzz.game.util.Constants.HEIGHT, camera));
         this.skin = new Skin(Gdx.files.internal("skin/uiskin.json"));
         this.background = new Texture("Screens/HighscoresScreen/highscores.png");
+        this.tempMS = tempMS;
     }
 
 
     @Override
     public void show() {
-
-        backButton = new TextButton("back", skin);
-        backButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new MenuScreen(game));
-                MenuScreen.musicHandler.stopMusic();
-            }
-        });
 
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
@@ -103,8 +96,7 @@ public class HighScoresScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-                game.setScreen(new MenuScreen(game));
-                MenuScreen.musicHandler.stopMusic();
+                game.setScreen(tempMS.menuScreen);
             }
         });
 
