@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="94">
+<map version="1.0" tiledversion="2017.06.27" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="94">
  <tileset firstgid="1" source="../../tileset/world1Tiles.tsx"/>
  <tileset firstgid="925" source="../../tileset/anttileset.tsx"/>
- <imagelayer name="Afbeelding Laag 1">
-  <image source="../../world1/level1/bg2.jpg" width="4000" height="720"/>
+ <imagelayer name="Afbeelding Laag 1" offsetx="1.66667" offsety="-60">
+  <image source="../../tileset/airplanebg.png" width="4000" height="720"/>
  </imagelayer>
- <layer name="graphics" width="250" height="45">
+ <layer name="graphics" width="250" height="45" offsetx="1.33333" offsety="144">
   <data encoding="base64" compression="zlib">
-   eJztw0EJAAAIBLAD+0ewqxX8CbLBEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAfunYBAAAAAAAAAAAAAAAAAAAAAAC4NThaBkE=
+   eJzt29tNwzAUAFBLSfsNbAMswy+wAizQHXiIf1iBxwAwA0xCIlHJdZM2QVGauudIV43iOLVaXz8aNQQAAAAAAAAAIGen8xDOojifr5fF57rer08dYDg/xa5bMD2XZQhXVVyX/yuHKUjn66Z5eyxTHGcW5epr2/FCntPTfdXfH3r0+b7XD3Xfx4aypnX58yyEl9nmOjdJ3I4wzjx1+MzkOUP4buhrr9W5t6K9PD0fXz9UG9ruG1/73lDWdK/PKse/Zut12t63qbzOyTjazm8q61LnqGrncRUnf+2N87heb9SRHsflcf0prk8AyEM6XwH5+ShWA8jbnTwfTf1ZLwPGpM9BPtr25PIc8hHvx+P1o/055M98DvmT5/nwvPQwdfne5fluDfkbvGelhyPdezftye3PYZra8tTz2MNmrQ75KMpwkY7p6ZoN2F/LHGf3tq2r6yi2/D/ZmpyaPrDfuuQ6sP+M1QAAAAAAAAAAAAAAAAAAAHn7BckPc9I=
   </data>
  </layer>
  <objectgroup name="ground"/>
