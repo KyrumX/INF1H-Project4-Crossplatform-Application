@@ -230,8 +230,6 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        System.out.println(viewport.getWorldHeight());
-        System.out.println(viewport.getWorldWidth());
     }
 
     @Override
