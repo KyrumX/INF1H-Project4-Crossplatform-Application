@@ -34,7 +34,6 @@ import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
-import static com.paladinzzz.game.screens.LoginScreen.playername;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 public class GameScreen implements Screen {
@@ -97,14 +96,14 @@ public class GameScreen implements Screen {
         }
 
         //Het maken van map objecten:
-        ground = objectFactory.createObject(1, this.player);
-        ramp = objectFactory.createObject(2, player);
-        bounceBlocks = objectFactory.createObject(3, player);
-        fluid = objectFactory.createObject(4, player);
-        antStoppers = new com.paladinzzz.game.screens.worldobjects.antStopObject();
+        ground = objectFactory.createObject(1);
+        ramp = objectFactory.createObject(2);
+        bounceBlocks = objectFactory.createObject(3);
+        fluid = objectFactory.createObject(4);
+        antStoppers = objectFactory.createObject(5);
         antsObject = new com.paladinzzz.game.screens.worldobjects.antObject(this, world, worldMap);
         wormObject = new com.paladinzzz.game.screens.worldobjects.wormObject(this, world, worldMap);
-        finishBlocks = new com.paladinzzz.game.screens.worldobjects.finishObject(world, worldMap);
+        finishBlocks = objectFactory.createObject(8);
 
         //Voeg de objecten toe aan een iterator:
         this.objectList = new ObjectIterator();
@@ -112,6 +111,8 @@ public class GameScreen implements Screen {
         this.objectList.add(ramp);
         this.objectList.add(bounceBlocks);
         this.objectList.add(fluid);
+        this.objectList.add(antStoppers);
+        this.objectList.add(finishBlocks);
 
         //Iterate door de objecten om ze te definiëren:
         while (objectList.hasNext()) {
