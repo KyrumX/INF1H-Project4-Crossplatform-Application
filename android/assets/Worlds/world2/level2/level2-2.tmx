@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="171">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="172">
  <tileset firstgid="1" source="../../tileset/icespikes.tsx"/>
  <imagelayer name="Afbeelding Laag 1">
   <image source="../../world1/level1/bg2.jpg" width="4000" height="720"/>
@@ -35,7 +35,6 @@
   <object id="81" x="272.667" y="515.333" width="64" height="11.3333"/>
   <object id="82" x="386.667" y="512.667" width="140.667" height="13.3333"/>
   <object id="83" x="180" y="384.667" width="136.667" height="16.6667"/>
-  <object id="90" x="1686.67" y="408" width="1.33333"/>
   <object id="92" x="1169.33" y="371.333" width="172" height="11.3333"/>
   <object id="95" x="3043.33" y="464" width="56.6667" height="14.6667"/>
   <object id="97" x="3170" y="465.333" width="92" height="15.3333"/>
@@ -98,6 +97,7 @@
  </objectgroup>
  <objectgroup name="finish">
   <object id="100" x="3968.67" y="498" width="36" height="30"/>
+  <object id="171" x="86" y="378" width="21.3333" height="38.6667"/>
  </objectgroup>
  <objectgroup name="worms">
   <object id="139" x="2416" y="397.333" width="20" height="21.3333"/>
