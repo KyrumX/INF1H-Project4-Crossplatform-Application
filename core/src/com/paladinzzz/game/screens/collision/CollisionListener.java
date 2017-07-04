@@ -71,6 +71,7 @@ public class CollisionListener implements ContactListener {
             if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen.
                     json.sethaslevel(playerMemory.player.getName(), "haslevel1", 1);
                     Gdx.app.postRunnable(new Runnable() {
                         @Override
