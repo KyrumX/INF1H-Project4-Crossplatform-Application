@@ -104,14 +104,14 @@ public class OptionScreen implements Screen{
     @Override
     public void render(float delta) {
         game.batch.begin();
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
         game.batch.end();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        game.batch.setProjectionMatrix(stage.getCamera().combined);
     }
 
     @Override
