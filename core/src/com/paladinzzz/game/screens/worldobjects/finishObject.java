@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.util.Constants;
 
 public class finishObject implements IObject {
@@ -44,5 +45,14 @@ public class finishObject implements IObject {
             body.createFixture(fdef);
             body.setUserData(this);
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a finishObject!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
     }
 }

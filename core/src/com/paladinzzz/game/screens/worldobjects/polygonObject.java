@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
 public class polygonObject implements IObject{
     private PolygonShape shape;
@@ -39,5 +40,14 @@ public class polygonObject implements IObject{
             fdef.shape = shape;
             world.createBody(bdef).createFixture(fdef);
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a polygonObject!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
     }
 }

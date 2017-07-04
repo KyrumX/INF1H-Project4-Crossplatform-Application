@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.sprites.Ant;
 
 import java.util.ArrayList;
@@ -25,6 +26,16 @@ public class antObject implements IObject {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             this.ants.add(new Ant(world, screen, rect.getX() / com.paladinzzz.game.util.Constants.PPM, rect.getY() / com.paladinzzz.game.util.Constants.PPM));
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a Ant!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
+        visitor.onAnt(this);
     }
 
     public ArrayList<Ant> getAnts() {
