@@ -35,10 +35,10 @@ public class HUD implements Disposable {
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
         this.worldName = worldName;
-
+        
         //Maken van de labels:
         scoreLabel = new Label(String.format("Score: " + "%03d", score), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
-        worldNameLabel = new Label((worldName), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
+        worldNameLabel = new Label(String.valueOf(playerMemory.player.worldAndLevelData.getCurrentWorld()) + "-" + String.valueOf(playerMemory.player.worldAndLevelData.getCurrentLevel()), new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         playerNameLabel = new Label(playername, new Label.LabelStyle(new BitmapFont(), Color.GOLD));
         startLabel = new Label(("Click the screen to jump!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
