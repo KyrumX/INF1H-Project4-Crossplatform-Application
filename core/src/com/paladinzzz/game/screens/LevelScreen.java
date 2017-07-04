@@ -81,10 +81,8 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 click.play(Constants.soundLevel * 1.0f);
                 tempMS.menuScreen.musicHandler.stopMusic();
-                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
-                playerMemory.player.worldAndLevelData.setCurrentWorld(1);
                 playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
+                playerMemory.player.worldAndLevelData.setCurrentWorld(1);
                 game.setScreen(new GameScreen(game, tempMS));
                 levelstage.dispose();
                 click.play(2.0f);
