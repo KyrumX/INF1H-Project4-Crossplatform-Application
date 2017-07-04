@@ -50,10 +50,20 @@ public class parseJSON {
         for(int i=0;i<json.length();i++) {
             JSONObject e = json.getJSONObject(i);
             c += Integer.parseInt(e.getString("score"));
-//        JSONObject e = json.getJSONObject(0);
         }
         return c;
     }
+
+    public int getHasLevel(String haslevel) {
+        JSONArray json = new JSONArray(x);
+        int c = 0;
+        for(int i=0;i<json.length();i++) {
+            JSONObject e = json.getJSONObject(i);
+            c += Integer.parseInt(e.getString(haslevel));
+        }
+        return c;
+    }
+
 }
 
 

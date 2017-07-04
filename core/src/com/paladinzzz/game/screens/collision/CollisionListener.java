@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.paladinzzz.game.CrossplatformApp;
+import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.LevelScreen;
 import com.paladinzzz.game.screens.MenuScreen;
@@ -18,9 +19,12 @@ import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.util.scoreMethods;
 
+import static com.paladinzzz.game.screens.LoginScreen.playername;
+
 //Deze klas registreert contact tussen twee fixtures in onze wereld
 public class CollisionListener implements ContactListener {
     private CrossplatformApp game;
+    private JSONfunctions json = new JSONfunctions();
 
     public CollisionListener(CrossplatformApp game) {
         this.game = game;
@@ -64,7 +68,6 @@ public class CollisionListener implements ContactListener {
             playerMemory.player.addPoints();
             ((Wurrumpie) udA).killWurrumpie();
         }
-
 
         //Finish line
         if ((isAmole) && (udB instanceof finishObject)) {

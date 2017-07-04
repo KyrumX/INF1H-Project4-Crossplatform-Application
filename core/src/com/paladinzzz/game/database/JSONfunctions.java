@@ -99,5 +99,51 @@ public class JSONfunctions{
 
     }
 
+    public int getHasLevel(String haslevel, String user) {
+        String theurl = "http://www.wemoney.nl/haslevel.php?user=" + user + "&level=" + haslevel;
+        System.out.println(theurl);
+        BufferedReader bufferedReader = null;
+        try {
+            URL url = new URL(theurl);
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            StringBuilder sb = new StringBuilder();
+
+            bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            String json;
+            while((json = bufferedReader.readLine())!= null){
+                sb.append(json+"\n");
+            }
+            System.out.println("checkforhighscore loop");
+
+            parseJSON parser = new parseJSON(sb.toString().trim());
+            return parser.getHasLevel(haslevel);
+
+
+
+        }catch(Exception e){
+            return 500;
+        }
+
+    }
+
+    public void sethaslevel(String user, String level, int value) {
+        try {
+            String theurl = "http://www.wemoney.nl/setlevel.php?user=" + user + "&level=" + level + "&value=" + value;
+            URL yahoo = new URL(theurl);
+            URLConnection yc = yahoo.openConnection();
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            yc.getInputStream()));
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null)
+                System.out.println(inputLine);
+            in.close();
+        } catch(Exception e){
+
+        }
+
+    }
 
 }
