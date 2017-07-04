@@ -181,7 +181,7 @@ public class LevelScreen implements Screen {
 
         levelstage.addActor(table);
 
-    }
+            }
 
 
 //    private void update(float deltaT) {

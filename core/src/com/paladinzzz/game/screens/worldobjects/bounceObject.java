@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
@@ -46,5 +47,14 @@ public class bounceObject implements com.paladinzzz.game.screens.worldobjects.IO
             body.createFixture(fdef);
             body.setUserData(this);
         }
+    }
+
+    @Override
+    public void getType() {
+        System.out.println("I am a bounceObject!");
+    }
+
+    @Override
+    public void visit(objectVisitor visitor) {
     }
 }

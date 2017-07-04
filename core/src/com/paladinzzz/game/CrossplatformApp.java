@@ -2,6 +2,7 @@ package com.paladinzzz.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.paladinzzz.game.audio.MusicHandler;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.screens.MenuScreen;
@@ -12,8 +13,10 @@ public class CrossplatformApp extends Game {
 
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		setScreen(new MenuScreen(this));
+		MusicHandler musicHandler = new MusicHandler("Music/Main_Menu_Theme.ogg", true);
+		musicHandler.playMusic();
+        batch = new SpriteBatch();
+        setScreen(new MenuScreen(this, musicHandler));
 		try {
 			JSONfunctions json = new JSONfunctions();
 			parseJSON parse = new parseJSON(json.doInBackground());

@@ -14,9 +14,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.screens.GameScreen;
 
+import java.util.Random;
+
 public class Mole extends Sprite {
-    private enum State{JUMPING, STANDING, RUNNING};
-    private State currentState;
+    public enum State{JUMPING, STANDING, RUNNING};
+    public State currentState;
     private State previousState;
     public World world;
     public Body body;

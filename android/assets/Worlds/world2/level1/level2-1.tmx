@@ -122,7 +122,6 @@
  </objectgroup>
  <objectgroup name="finish">
   <object id="276" x="3905" y="609" width="62.5" height="14"/>
-  <object id="306" x="179.333" y="380" width="24.6667" height="38"/>
  </objectgroup>
  <objectgroup name="worms">
   <object id="234" x="2373.33" y="417.333" width="18.6667" height="15.3333"/>
