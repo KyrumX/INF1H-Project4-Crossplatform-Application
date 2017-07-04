@@ -85,7 +85,8 @@ public class CollisionListener implements ContactListener {
                             game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
-                } else {
+                }
+                else {
                     playerMemory.player.worldAndLevelData.addLevel();
                     Gdx.app.postRunnable(new Runnable() {
 
@@ -96,29 +97,30 @@ public class CollisionListener implements ContactListener {
                     });
                 }
             }
-        } else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
-            if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
-                playerMemory.player.levelTwoDone = true;
-                json.sethaslevel(playerMemory.player.getName(), "haslevel2", 1);
-                Gdx.app.postRunnable(new Runnable() {
+            else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelTwoDone = true;
+                    json.sethaslevel(playerMemory.player.getName(), "haslevel1", 1);
+                    Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        scoreMethods.score();
-                        playerMemory.player.setPlayerScore(0);
-                        playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                        game.setScreen(new LevelScreen(game, tempMS));
-                    }
-                });
-            } else {
-                playerMemory.player.worldAndLevelData.addLevel();
-                Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game, tempMS));
+                        }
+                    });
+                } else {
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        game.setScreen(new GameScreen(game, tempMS));
-                    }
-                });
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game, tempMS));
+                        }
+                    });
+                }
             }
         }
     }
