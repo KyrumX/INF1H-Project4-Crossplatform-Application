@@ -1,5 +1,7 @@
 package com.paladinzzz.game.util;
 
+import java.math.BigDecimal;
+
 public final class Constants {
     public static final boolean DEBUGGER_ON = false;
     public static final int V_WIDTH = 480;
@@ -20,4 +22,6 @@ public final class Constants {
     public static final short ANT_STOP_BIT = 128;
     public static final short WURRUMPIE_BIT = 256;
     public static final short FINISH_BIT = 512;
+
+    public static float soundLevel = 1.0f;
 }

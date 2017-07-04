@@ -10,9 +10,11 @@ import com.paladinzzz.game.CrossplatformApp;
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.screens.GameScreen;
 import com.paladinzzz.game.screens.LevelScreen;
+import com.paladinzzz.game.screens.MenuScreen;
 import com.paladinzzz.game.screens.worldobjects.finishObject;
 import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.sprites.Ant;
+import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
 import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.util.scoreMethods;
@@ -37,26 +39,26 @@ public class CollisionListener implements ContactListener {
         Object udA = fixOne.getBody().getUserData();
         Object udB = fixTwo.getBody().getUserData();
 
-        if (udA instanceof com.paladinzzz.game.sprites.Mole) {
+        if (udA instanceof Mole) {
             isAmole = true;
             isBmole = false;
-        } else if (udB instanceof com.paladinzzz.game.sprites.Mole) {
+        } else if (udB instanceof Mole) {
             isBmole = true;
             isAmole = false;
         }
 
         if ((isAmole) && (udB instanceof fluidKillable)) {
-            ((com.paladinzzz.game.sprites.Mole) udA).killMole();
+            ((Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof fluidKillable)) {
-            ((com.paladinzzz.game.sprites.Mole) udB).killMole();
+            ((Mole) udB).killMole();
         }
 
         if ((isAmole) && (udB instanceof Ant)) {
             playerMemory.player.reducePoints();
-            ((com.paladinzzz.game.sprites.Mole) udA).killMole();
+            ((Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof Ant)) {
             playerMemory.player.reducePoints();
-            ((com.paladinzzz.game.sprites.Mole) udB).killMole();
+            ((Mole) udB).killMole();
         }
 
         if ((isAmole) && (udB instanceof Wurrumpie)) {
@@ -69,55 +71,179 @@ public class CollisionListener implements ContactListener {
 
         //Finish line
         if ((isAmole) && (udB instanceof finishObject)) {
-            if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
-                Gdx.app.postRunnable(new Runnable() {
+            // als level == 2
+            if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.resetScore();
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                        playerMemory.player.worldAndLevelData.addLevel();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                scoreMethods.score();
+                                playerMemory.player.setPlayerScore(0);
+                                playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                                game.setScreen(new LevelScreen(game));
+                            }
+                        });
+                    } else {
+                        // anders ga je naar het volgende level
+                        playerMemory.player.worldAndLevelData.addLevel();
+                        Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        json.sethaslevel(playername, "haslevel1", 1);
-                        scoreMethods.score();
-                        playerMemory.player.resetScore();
-                        playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                        game.setScreen(new LevelScreen(game));
+                            @Override
+                            public void run() {
+                                game.setScreen(new GameScreen(game));
+                            }
+                        });
                     }
-                });
+                }
+            } else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    // anders ga je naar het volgende level
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game));
+                        }
+                    });
+                }
             } else {
-                playerMemory.player.worldAndLevelData.addLevel();
-                Gdx.app.postRunnable(new Runnable() {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        game.setScreen(new GameScreen(game));
-                    }
-                });
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    // anders ga je naar het volgende level
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game));
+                        }
+                    });
+                }
             }
 
         } else if ((isBmole) && (udA instanceof finishObject)) {
-            if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
-                Gdx.app.postRunnable(new Runnable() {
+            // als level == 2
+            if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        json.sethaslevel(playername, "haslevel1", 1);
-                        scoreMethods.score();
-                        playerMemory.player.resetScore();
-                        playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                        game.setScreen(new LevelScreen(game));
-                    }
-                });
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.resetScore();
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            MenuScreen.musicHandler.stopMusic();
+                            MenuScreen.musicHandler.setMusic("Music/Main_Menu_Theme.ogg");
+                            MenuScreen.musicHandler.playMusic();
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    // anders ga je naar het volgende level
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game));
+                        }
+                    });
+                }
+            } else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    // anders ga je naar het volgende level
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game));
+                        }
+                    });
+                }
             } else {
-                playerMemory.player.worldAndLevelData.addLevel();
-                Gdx.app.postRunnable(new Runnable() {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    if (playerMemory.player.levelOneDone) playerMemory.player.levelTwoDone = true;
+                    playerMemory.player.levelOneDone = true;
+                    // reset player score, return naar LevelScreen
+                    Gdx.app.postRunnable(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        game.setScreen(new GameScreen(game));
-                    }
-                });
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game));
+                        }
+                    });
+                } else {
+                    // anders ga je naar het volgende level
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            game.setScreen(new GameScreen(game));
+                        }
+                    });
+                }
             }
         }
     }
-
 
     @Override
     public void endContact(Contact contact) {

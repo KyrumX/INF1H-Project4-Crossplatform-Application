@@ -1,6 +1,6 @@
 package com.paladinzzz.game.screens;
 
-        import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,9 +19,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.audio.MusicHandler;
-        import com.paladinzzz.game.util.Constants;
+import com.paladinzzz.game.util.Constants;
+import static com.badlogic.gdx.Gdx.input;
 
-        import static com.badlogic.gdx.Gdx.input;
 
 
 public class MenuScreen implements Screen {
@@ -64,7 +64,7 @@ public class MenuScreen implements Screen {
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                click.play(2.0f);
+                click.play(1.0f * Constants.soundLevel);
                 Gdx.app.exit();
             }
         });
@@ -75,7 +75,7 @@ public class MenuScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play(2.0f);
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new LoginScreen(game));
                 inPlayscreen = true;
             }
@@ -87,7 +87,7 @@ public class MenuScreen implements Screen {
         optionsButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play(1.0f);
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new OptionScreen(game));
                 GameScreen.showtext = true;
 
@@ -99,7 +99,7 @@ public class MenuScreen implements Screen {
         highscoreButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                click.play(2.0f);
+                click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new HighScoresScreen(game));
             }
         });

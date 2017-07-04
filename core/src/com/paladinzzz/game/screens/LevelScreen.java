@@ -56,10 +56,14 @@ public class LevelScreen implements Screen {
         level1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(Constants.soundLevel * 1.0f);
+                MenuScreen.musicHandler.stopMusic();
+                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
                 playerMemory.player.worldAndLevelData.setCurrentWorld(1);
+                playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                System.out.println("Loading new world: " + playerMemory.player.worldAndLevelData.getCurrentWorld() + "-" + playerMemory.player.worldAndLevelData.getCurrentLevel() );
                 game.setScreen(new GameScreen(game));
                 levelstage.dispose();
-                click.play(2.0f);
             }
         });
 
@@ -68,9 +72,17 @@ public class LevelScreen implements Screen {
         level2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 System.out.println("Level 2 clicked");
-                levelstage.dispose();
-                click.play(2.0f);
+                if (playerMemory.player.levelOneDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(2);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    game.setScreen(new GameScreen(game));
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 1 first!");
+                }
             }
         });
 
@@ -79,9 +91,17 @@ public class LevelScreen implements Screen {
         level3.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                click.play(1.0f * Constants.soundLevel);
                 System.out.println("Level 3 clicked");
-                levelstage.dispose();
-                click.play(2.0f);
+                if (playerMemory.player.levelTwoDone) {
+                    MenuScreen.musicHandler.stopMusic();
+                    playerMemory.player.worldAndLevelData.setCurrentWorld(3);
+                    playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                    game.setScreen(new GameScreen(game));
+                    levelstage.dispose();
+                } else {
+                    System.out.println("Complete World 2 first!");
+                }
             }
         });
 
@@ -91,8 +111,8 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Back button clicked");
-                levelstage.dispose();
                 game.setScreen(new LoginScreen(game));
+                levelstage.dispose();
                 click.play(2.0f);
             }
         });

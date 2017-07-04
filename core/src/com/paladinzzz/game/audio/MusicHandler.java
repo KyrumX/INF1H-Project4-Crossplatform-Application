@@ -2,6 +2,7 @@ package com.paladinzzz.game.audio;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.paladinzzz.game.util.Constants;
 
 public class MusicHandler {
 
@@ -13,11 +14,7 @@ public class MusicHandler {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(path));
     }
 
-    public void setMusic(String path, boolean looping){
-//        if (music != null) {
-//            this.music.dispose();
-//        }
-        this.loop = looping;
+    public void setMusic(String path) {
         this.music = Gdx.audio.newMusic(Gdx.files.internal(path));
     }
 
@@ -30,7 +27,7 @@ public class MusicHandler {
         this.music.play();
     }
 
-    public MusicHandler setM(String path){
-        return new MusicHandler(path, true);
+    public void setVolume (float volume){
+        this.music.setVolume(volume);
     }
 }
