@@ -71,6 +71,7 @@ public class CollisionListener implements ContactListener {
 
         //Finish line
         if (((isAmole) && (udB instanceof finishObject)) || (isBmole) && (udA instanceof finishObject)) {
+            System.out.println("!!!!!!!!! --> COLLISION");
             if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelOneDone = true;
@@ -92,6 +93,7 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(2);
                             game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
@@ -100,7 +102,7 @@ public class CollisionListener implements ContactListener {
             else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelTwoDone = true;
-                    json.sethaslevel(playerMemory.player.getName(), "haslevel1", 1);
+                    json.sethaslevel(playerMemory.player.getName(), "haslevel2", 1);
                     Gdx.app.postRunnable(new Runnable() {
 
                         @Override
@@ -117,6 +119,30 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(2);
+                            game.setScreen(new GameScreen(game, tempMS));
+                        }
+                    });
+                }
+            }
+            else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 3) {
+                if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
+                    Gdx.app.postRunnable(new Runnable() {
+                        @Override
+                        public void run() {
+                            scoreMethods.score();
+                            playerMemory.player.setPlayerScore(0);
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(1);
+                            game.setScreen(new LevelScreen(game, tempMS));
+                        }
+                    });
+                } else {
+                    playerMemory.player.worldAndLevelData.addLevel();
+                    Gdx.app.postRunnable(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            playerMemory.player.worldAndLevelData.setCurrentLevel(2);
                             game.setScreen(new GameScreen(game, tempMS));
                         }
                     });

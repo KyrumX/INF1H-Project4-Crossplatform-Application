@@ -209,14 +209,6 @@ public class LevelScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(MenuHUD.button2stage.getCamera().combined);
-
-        MenuHUD.button2stage.draw();
-
-        game.batch.setProjectionMatrix(MenuHUD.button3stage.getCamera().combined);
-
-        MenuHUD.button3stage.draw();
-
         game.batch.setProjectionMatrix(levelstage.getCamera().combined);
 
         game.batch.begin();
@@ -225,7 +217,7 @@ public class LevelScreen implements Screen {
             MenuHUD.removeSpaceText();
         }
 
-        game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(background, 0, 0, Constants.WIDTH, Constants.HEIGHT);
 
         game.batch.end();
         levelstage.draw();

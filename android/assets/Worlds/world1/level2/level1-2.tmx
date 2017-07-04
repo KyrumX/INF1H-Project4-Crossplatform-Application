@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="454">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="458">
  <tileset firstgid="1" source="../../tileset/world1Tiles.tsx"/>
  <tileset firstgid="925" source="../../tileset/tiles.tsx"/>
  <tileset firstgid="1849" source="../../tileset/righttileset.tsx"/>
@@ -12,7 +12,6 @@
   </data>
  </layer>
  <objectgroup name="ground">
-  <object id="169" x="0" y="672" width="4032"/>
   <object id="172" x="0" y="176" width="4000" height="16"/>
   <object id="173" x="3984" y="192" width="16" height="480"/>
   <object id="174" x="0" y="192" width="13" height="480"/>
@@ -66,6 +65,7 @@
   <object id="432" x="2816.67" y="641.333" width="62.6667" height="13.3333"/>
   <object id="448" x="3520" y="562" width="83.3333" height="13.3333"/>
   <object id="449" x="3504.67" y="656" width="64" height="15.3333"/>
+  <object id="455" x="0" y="672" width="3856" height="16"/>
  </objectgroup>
  <objectgroup name="polygon">
   <object id="316" x="753.333" y="529.333">
@@ -142,7 +142,7 @@
   <object id="447" x="2288" y="480.667" width="15.3333" height="14.6667"/>
  </objectgroup>
  <objectgroup name="finish">
-  <object id="443" x="3856" y="659.333" width="110.667" height="13.3333"/>
+  <object id="456" x="3856" y="672" width="144" height="16"/>
  </objectgroup>
  <objectgroup name="worms">
   <object id="396" x="1242" y="494.667" width="14" height="16.6667"/>

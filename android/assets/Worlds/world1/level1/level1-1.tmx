@@ -24,7 +24,6 @@
   <object id="163" x="0" y="176" width="3984" height="16"/>
   <object id="164" x="3984" y="192" height="496"/>
   <object id="165" x="3984" y="192" height="496"/>
-  <object id="166" x="3952" y="672" width="32" height="16"/>
   <object id="174" x="2.66667" y="664.667" width="317.333" height="16.6667"/>
   <object id="175" x="544.667" y="667.333" width="646" height="11.3333"/>
   <object id="176" x="1189.33" y="667.333" width="746.667" height="12.6667"/>
@@ -135,7 +134,7 @@
   <object id="319" x="1318" y="495.333" width="14.6667" height="11.3333"/>
  </objectgroup>
  <objectgroup name="finish">
-  <object id="255" x="3824" y="673.333" width="128" height="12.6667"/>
+  <object id="255" x="3824" y="673.333" width="160" height="12.6667"/>
  </objectgroup>
  <objectgroup name="worms">
   <object id="317" x="544.667" y="463.333" width="16" height="12.6667"/>
