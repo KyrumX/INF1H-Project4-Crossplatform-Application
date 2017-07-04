@@ -16,6 +16,7 @@ import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.sprites.Ant;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.sprites.Wurrumpie;
+import com.paladinzzz.game.util.TempMS;
 import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.util.scoreMethods;
 
@@ -26,9 +27,12 @@ public class CollisionListener implements ContactListener {
     private CrossplatformApp game;
     private JSONfunctions json = new JSONfunctions();
 
-    public CollisionListener(CrossplatformApp game) {
+    public CollisionListener(CrossplatformApp game, TempMS tempMS) {
         this.game = game;
+        this.tempMS = tempMS;
     }
+
+    private TempMS tempMS;
 
     @Override
     public void beginContact(final Contact contact) {
@@ -83,7 +87,7 @@ public class CollisionListener implements ContactListener {
                             scoreMethods.score();
                             playerMemory.player.resetScore();
                             playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -95,7 +99,7 @@ public class CollisionListener implements ContactListener {
                                 scoreMethods.score();
                                 playerMemory.player.setPlayerScore(0);
                                 playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                                game.setScreen(new LevelScreen(game));
+                                game.setScreen(new LevelScreen(game, tempMS));
                             }
                         });
                     } else {
@@ -105,7 +109,7 @@ public class CollisionListener implements ContactListener {
 
                             @Override
                             public void run() {
-                                game.setScreen(new GameScreen(game));
+                                game.setScreen(new GameScreen(game, tempMS));
                             }
                         });
                     }
@@ -122,7 +126,7 @@ public class CollisionListener implements ContactListener {
                             scoreMethods.score();
                             playerMemory.player.setPlayerScore(0);
                             playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -132,7 +136,7 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
-                            game.setScreen(new GameScreen(game));
+                            game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
                 }
@@ -147,7 +151,7 @@ public class CollisionListener implements ContactListener {
                             scoreMethods.score();
                             playerMemory.player.setPlayerScore(0);
                             playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -157,7 +161,7 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
-                            game.setScreen(new GameScreen(game));
+                            game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
                 }
@@ -179,7 +183,7 @@ public class CollisionListener implements ContactListener {
                             MenuScreen.musicHandler.stopMusic();
                             MenuScreen.musicHandler.setMusic("Music/Main_Menu_Theme.ogg");
                             MenuScreen.musicHandler.playMusic();
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -188,7 +192,7 @@ public class CollisionListener implements ContactListener {
                     Gdx.app.postRunnable(new Runnable() {
                         @Override
                         public void run() {
-                            game.setScreen(new GameScreen(game));
+                            game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
                 }
@@ -203,7 +207,7 @@ public class CollisionListener implements ContactListener {
                             scoreMethods.score();
                             playerMemory.player.setPlayerScore(0);
                             playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -213,7 +217,7 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
-                            game.setScreen(new GameScreen(game));
+                            game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
                 }
@@ -229,7 +233,7 @@ public class CollisionListener implements ContactListener {
                             scoreMethods.score();
                             playerMemory.player.setPlayerScore(0);
                             playerMemory.player.worldAndLevelData.setCurrentLevel(1);
-                            game.setScreen(new LevelScreen(game));
+                            game.setScreen(new LevelScreen(game, tempMS));
                         }
                     });
                 } else {
@@ -239,7 +243,7 @@ public class CollisionListener implements ContactListener {
 
                         @Override
                         public void run() {
-                            game.setScreen(new GameScreen(game));
+                            game.setScreen(new GameScreen(game, tempMS));
                         }
                     });
                 }
