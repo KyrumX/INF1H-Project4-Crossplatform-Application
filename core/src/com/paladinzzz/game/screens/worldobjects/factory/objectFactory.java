@@ -1,14 +1,21 @@
 package com.paladinzzz.game.screens.worldobjects.factory;
 
+import com.paladinzzz.game.screens.worldobjects.antStopObject;
+import com.paladinzzz.game.screens.worldobjects.bounceObject;
+import com.paladinzzz.game.screens.worldobjects.finishObject;
+import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
+import com.paladinzzz.game.screens.worldobjects.polygonObject;
 
 public abstract class objectFactory {
-    public static com.paladinzzz.game.screens.worldobjects.IObject createObject(int objectNum, com.paladinzzz.game.sprites.Mole mole) {
+    public static com.paladinzzz.game.screens.worldobjects.IObject createObject(int objectNum) {
         switch (objectNum) {
-            case 1: return new groundObject(mole);
-            case 2: return new com.paladinzzz.game.screens.worldobjects.polygonObject();
-            case 3: return new com.paladinzzz.game.screens.worldobjects.bounceObject();
-            case 4: return new com.paladinzzz.game.screens.worldobjects.fluidKillable();
+            case 1: return new groundObject();
+            case 2: return new polygonObject();
+            case 3: return new bounceObject();
+            case 4: return new fluidKillable();
+            case 5: return new antStopObject();
+            case 8: return new finishObject();
             default: return null;
         }
     }

@@ -20,15 +20,11 @@ public class groundObject implements IObject {
     private BodyDef bdef;
     private PolygonShape shape;
 
-    public groundObject(com.paladinzzz.game.sprites.Mole player) {
+    public groundObject() {
         bdef = new BodyDef();
         shape = new PolygonShape();
         fdef = new FixtureDef();
         shape = new PolygonShape();
-    }
-
-    public boolean collides() {
-        return (this.body.getPosition().y / 2 >= player.body.getPosition().y);
     }
 
     @Override
