@@ -73,6 +73,7 @@ public class CollisionListener implements ContactListener {
         if ((isAmole) && (udB instanceof finishObject)) {
             // als level == 2
             if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
+                json.sethaslevel(playername, "haslevel1", 1);
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelOneDone = true;
                     // reset player score, return naar LevelScreen
@@ -110,6 +111,7 @@ public class CollisionListener implements ContactListener {
                     }
                 }
             } else if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 2) {
+                json.sethaslevel(playername, "haslevel2", 1);
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelOneDone = true;
                     // reset player score, return naar LevelScreen
