@@ -95,6 +95,7 @@ public class MenuScreen implements Screen {
                 click.play(1.0f * Constants.soundLevel);
                 game.setScreen(new OptionScreen(game, tempMS));
                 GameScreen.showtext = true;
+
             }
         });
 
