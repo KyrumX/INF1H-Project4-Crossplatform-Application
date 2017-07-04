@@ -71,7 +71,6 @@ public class CollisionListener implements ContactListener {
 
         //Finish line
         if (((isAmole) && (udB instanceof finishObject)) || (isBmole) && (udA instanceof finishObject)) {
-            System.out.println("!!!!!!!!! --> COLLISION");
             if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {
                     playerMemory.player.levelOneDone = true;
