@@ -56,6 +56,7 @@ public class OptionScreen implements Screen{
                     MenuScreen.musicHandler.setVolume(Constants.soundLevel);
                 }
                 click.play(1.0f * Constants.soundLevel);
+                // text
             }
         });
 

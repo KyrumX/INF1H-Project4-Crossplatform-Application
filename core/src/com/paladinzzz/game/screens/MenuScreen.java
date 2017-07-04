@@ -1,6 +1,6 @@
 package com.paladinzzz.game.screens;
 
-        import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,9 +19,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.paladinzzz.game.audio.MusicHandler;
-        import com.paladinzzz.game.util.Constants;
-
-        import static com.badlogic.gdx.Gdx.input;
+import com.paladinzzz.game.util.Constants;
+import static com.badlogic.gdx.Gdx.input;
 
 
 public class MenuScreen implements Screen {
