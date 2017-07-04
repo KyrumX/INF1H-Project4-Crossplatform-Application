@@ -53,8 +53,6 @@ public class HUD implements Disposable {
             hudStage.addActor(table1);
         }
 
-
-
         Table table = new Table();
         table.top();
         table.setFillParent(true);
