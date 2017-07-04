@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-down" width="250" height="45" tilewidth="16" tileheight="16" nextobjectid="94">
+ <tileset firstgid="1" source="../../tileset/world1Tiles.tsx"/>
+ <tileset firstgid="925" source="../../tileset/anttileset.tsx"/>
+ <imagelayer name="Afbeelding Laag 1">
+  <image source="../../world1/level1/bg2.jpg" width="4000" height="720"/>
+ </imagelayer>
+ <layer name="graphics" width="250" height="45">
+  <data encoding="base64" compression="zlib">
+   eJztw0EJAAAIBLAD+0ewqxX8CbLBEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAfunYBAAAAAAAAAAAAAAAAAAAAAAC4NThaBkE=
+  </data>
+ </layer>
+ <objectgroup name="ground"/>
+ <objectgroup name="polygon"/>
+ <objectgroup name="bounceblocks"/>
+ <objectgroup name="fluidkillable"/>
+ <objectgroup name="enemystopper"/>
+ <objectgroup name="ants"/>
+ <objectgroup name="finish"/>
+ <objectgroup name="worms"/>
+</map>
