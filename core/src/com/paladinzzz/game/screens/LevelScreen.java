@@ -105,7 +105,6 @@ public class LevelScreen implements Screen {
             }
         });
 
-
         level3drawable = new TextureRegionDrawable(new TextureRegion(level3texture));
         level3 = new ImageButton(level3drawable);
         level3.addListener(new ClickListener(){
@@ -147,12 +146,10 @@ public class LevelScreen implements Screen {
 //        table2.add(label2);
 //
 //
-//
 //        Table table3 = new Table();
 //        table3.center();
 //        table3.setFillParent(true);
 //        table3.add(label3);
-
 
 
         Gdx.input.setInputProcessor(levelstage);
