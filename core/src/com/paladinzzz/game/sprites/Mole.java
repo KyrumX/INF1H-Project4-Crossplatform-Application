@@ -27,11 +27,9 @@ public class Mole extends Sprite {
     private Animation<TextureRegion> moleJump;
     private Animation<TextureRegion> moleStasis;
     private float stateTimer;
-    private GameScreen gameScreen;
 
     public Mole(World world, GameScreen screen) {
         super(screen.getMoleAtlas().findRegion("Mole"));
-        this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;

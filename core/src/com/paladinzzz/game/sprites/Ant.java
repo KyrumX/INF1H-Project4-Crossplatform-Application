@@ -19,7 +19,6 @@ public class Ant extends Sprite implements ISprite{
     private State currentState;
     private State previousState;
     private World world;
-    private GameScreen gameScreen;
     private Animation<TextureRegion> antWalk;
     private Body body;
     private boolean movingForward;
@@ -28,7 +27,6 @@ public class Ant extends Sprite implements ISprite{
 
     public Ant(World world, GameScreen screen, float x, float y) {
         super(screen.getAntAtlas().findRegion("Ant"));
-        this.gameScreen = screen;
         this.world = world;
         currentState = State.WALKING;
         previousState = State.WALKING;
