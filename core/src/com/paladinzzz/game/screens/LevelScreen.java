@@ -191,7 +191,6 @@ public class LevelScreen implements Screen {
 
         levelstage.addActor(table);
 
-
     }
 
     @Override
