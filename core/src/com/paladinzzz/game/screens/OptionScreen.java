@@ -48,7 +48,7 @@ public class OptionScreen implements Screen{
     @Override
     public void show() {
         //Geef de texture van de backButton mee aan een nieuwe ImageButton
-        drawableSoundM = new TextureRegionDrawable(new TextureRegion(backTexture));
+        drawableSoundM = new TextureRegionDrawable(new TextureRegion(noTexture));
         soundMButton = new ImageButton(drawableSoundM);
         soundMButton.addListener(new ClickListener(){
             @Override
@@ -63,7 +63,7 @@ public class OptionScreen implements Screen{
             }
         });
 
-        drawableSoundP = new TextureRegionDrawable(new TextureRegion(backTexture));
+        drawableSoundP = new TextureRegionDrawable(new TextureRegion(noTexture));
         soundPButton = new ImageButton(drawableSoundP);
         soundPButton.addListener(new ClickListener(){
             @Override
@@ -77,7 +77,7 @@ public class OptionScreen implements Screen{
             }
         });
 
-        drawableBack = new TextureRegionDrawable(new TextureRegion(backTexture));
+        drawableBack = new TextureRegionDrawable(new TextureRegion(noTexture));
         backButton = new ImageButton(drawableBack);
         backButton.addListener(new ClickListener(){
             @Override

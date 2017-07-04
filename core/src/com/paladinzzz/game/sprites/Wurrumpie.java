@@ -20,7 +20,6 @@ public class Wurrumpie extends Sprite {
     private State previousState;
     public World world;
     public Body body;
-    private GameScreen gameScreen;
     private Animation<TextureRegion> wurmStasis;
     private Animation<TextureRegion> wurmDeath;
     private float stateTimer;
@@ -28,7 +27,6 @@ public class Wurrumpie extends Sprite {
 
     public Wurrumpie (World world, GameScreen screen, float x, float y) {
         super(screen.getWurmAtlas().findRegion("Wurrumpie"));
-        this.gameScreen = screen;
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
