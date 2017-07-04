@@ -43,7 +43,7 @@ public class Hat extends Sprite {
                 System.out.println("6");
                 break;
             case 7:
-                this.path = "Crown/png";
+                this.path = "Crown.png";
                 System.out.println("7");
                 break;
             default:
