@@ -147,12 +147,11 @@ public class LevelScreen implements Screen {
 //        table2.add(label2);
 //
 //
-//
+
 //        Table table3 = new Table();
 //        table3.center();
 //        table3.setFillParent(true);
 //        table3.add(label3);
-
 
 
         Gdx.input.setInputProcessor(levelstage);
@@ -190,7 +189,6 @@ public class LevelScreen implements Screen {
         table.add(back).expandX().padTop(50);
 
         levelstage.addActor(table);
-
 
     }
 
