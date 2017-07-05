@@ -7,10 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Selim on 27/6/2017.
- */
-
 public class JSONfunctions{
 
     public static final String MY_JSON ="MY_JSON";

@@ -3,12 +3,6 @@ package com.paladinzzz.game.database;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import static com.paladinzzz.game.screens.LoginScreen.playername;
-
-/**
- * Created by Selim on 28/6/2017.
- */
-
 public class parseJSON {
     String[] a = new String[255];
     String[] b = new String[255];

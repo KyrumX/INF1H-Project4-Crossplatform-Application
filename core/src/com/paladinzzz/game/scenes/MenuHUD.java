@@ -12,10 +12,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.util.Constants;
 
-/**
- * Created by ryanw on 4-7-2017.
- */
-
 public class MenuHUD implements Disposable {
     public Stage button2stage;
     public Stage button3stage;
