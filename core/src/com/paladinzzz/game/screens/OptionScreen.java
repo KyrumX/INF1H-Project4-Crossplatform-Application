@@ -77,7 +77,7 @@ public class OptionScreen implements Screen{
             }
         });
 
-        drawableBack = new TextureRegionDrawable(new TextureRegion(noTexture));
+        drawableBack = new TextureRegionDrawable(new TextureRegion(backTexture));
         backButton = new ImageButton(drawableBack);
         backButton.addListener(new ClickListener(){
             @Override
@@ -90,16 +90,17 @@ public class OptionScreen implements Screen{
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         Gdx.input.setInputProcessor(stage);
 
-        //Een table wordt aangemaakt om de back button toe te voegen.
         table = new Table();
-        table.top();
-        table.add(soundMButton).expandX().padBottom(240);
-        table.add().expandX().padBottom(240);
-        table.add(soundPButton).expandX().padBottom(240);
-        table.row();
+        //table.debug();
         table.bottom();
         table.setFillParent(true);
-        table.add(backButton).padBottom(13).padRight(640);
+        table.add().expandX().padRight(10);
+        table.add(soundMButton).expandX().padBottom(240).padLeft(20);
+        table.add(soundPButton).expandX().padBottom(240).padRight(30);
+        table.add().expandX();
+        table.add().expandX();
+        table.row();
+        table.add(backButton).padBottom(13).padRight(160);
         stage.addActor(table);
     }
 
