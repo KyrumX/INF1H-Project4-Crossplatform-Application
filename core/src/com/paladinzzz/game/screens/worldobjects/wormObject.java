@@ -10,6 +10,9 @@ import com.paladinzzz.game.sprites.Wurrumpie;
 
 import java.util.ArrayList;
 
+//Deze klas beschrijft waar de Wormen, punten, worden geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de Worms layer, vervolgens spawnen we daar onze Wurrumpies
+
 public class wormObject implements IObject {
     private ArrayList<Wurrumpie> worms;
     private com.paladinzzz.game.screens.GameScreen screen;

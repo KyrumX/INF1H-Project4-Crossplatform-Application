@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
+//Deze klas beschrijft waar de blokken worden geplaatst binnen onze wereld waar de speler niet doorheen kan
+//We roepen uit de TiledMap alle Rectangles op van de ground layer, vervolgens spawnen we daar de grond
+
 public class groundObject implements IObject {
 
     private Body body;

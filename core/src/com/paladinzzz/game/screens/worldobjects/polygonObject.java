@@ -9,6 +9,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
+//Deze klas beschrijft waar de Polygon objecten worden geplaatst binnen onze wereld, denk hierbij aan ramps e.d.
+//We roepen uit de TiledMap alle Polygons op van de Polygon layer, vervolgens spawnen we daar Polygons
+//Deze objecten zijn net als de grond maar hebben geen vierkante vorm.
+
 public class polygonObject implements IObject{
     private PolygonShape shape;
     private BodyDef bdef;
