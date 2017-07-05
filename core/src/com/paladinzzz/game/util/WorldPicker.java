@@ -7,7 +7,7 @@ public class WorldPicker {
         if (worldNum == 1)
             switch (levelNum) {
                 case 1:
-                    return "Worlds/world3/level2/level3-2.tmx";
+                    return "Worlds/world1/level1/level1-1.tmx";
                 case 2:
                     return "Worlds/world1/level2/level1-2.tmx";
                 default:
