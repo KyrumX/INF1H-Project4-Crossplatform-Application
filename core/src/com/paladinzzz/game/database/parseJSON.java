@@ -5,10 +5,6 @@ import org.json.JSONObject;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
-/**
- * Created by Selim on 28/6/2017.
- */
-
 //This class parses json, so that the retrieved data can be used in our game
 
 public class parseJSON {

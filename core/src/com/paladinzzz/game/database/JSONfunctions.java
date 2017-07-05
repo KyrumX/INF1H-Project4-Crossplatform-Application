@@ -7,10 +7,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-/**
- * Created by Selim on 27/6/2017.
- */
-
 //This class retrieves unparsed json output from a given url
 // using PHP for queries on the webserver and retrieving and inserting data from mysqli
 
