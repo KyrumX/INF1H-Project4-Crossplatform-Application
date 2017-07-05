@@ -13,6 +13,9 @@ import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.sprites.Mole;
 import com.paladinzzz.game.util.Constants;
 
+//Deze klas beschrijft waar de bounce pads worden geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de bouncyBlock layer, vervolgens spawnen we daar een bouncyBlock
+
 public class bounceObject implements com.paladinzzz.game.screens.worldobjects.IObject {
     private Body body;
     private Mole player;
