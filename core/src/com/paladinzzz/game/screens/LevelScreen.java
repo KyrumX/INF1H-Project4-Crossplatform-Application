@@ -29,6 +29,8 @@ import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
+//De class van het wereld selectie scherm
+
 public class LevelScreen implements Screen {
 
     private OrthographicCamera camera;
@@ -70,8 +72,6 @@ public class LevelScreen implements Screen {
 
     @Override
     public void show() {
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        this.viewport.apply();
         int showbutton = s.getHasLevel("haslevel1", playername);
         int showbutton2 = s.getHasLevel("haslevel2", playername);
         level1drawable = new TextureRegionDrawable(new TextureRegion(level1texture));
@@ -136,7 +136,6 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Finish level 1 first");
                 showtext = true;
-//                levelstage.dispose();
                 click.play(2.0f);
             }
         });
@@ -148,7 +147,6 @@ public class LevelScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Finish level 2 first");
                 showtext = true;
-//                levelstage.dispose();
                 click.play(2.0f);
             }
         });
@@ -159,7 +157,6 @@ public class LevelScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 click.play(1.0f * Constants.soundLevel);
-//                levelstage.dispose();
                 game.setScreen(new LoginScreen(game, tempMS));
 
             }

@@ -1,5 +1,7 @@
 package com.paladinzzz.game.util;
 
+//De class die we gebruiken om de juiste wereld de af te spelen
+
 public class WorldPicker {
     public static String pickWorld(int worldNum, int levelNum) {
         if(worldNum == 1)

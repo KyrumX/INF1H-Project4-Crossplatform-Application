@@ -20,6 +20,7 @@ import com.paladinzzz.game.util.playerMemory;
 import com.paladinzzz.game.util.scoreMethods;
 
 //Deze klas registreert contact tussen twee fixtures in onze wereld
+
 public class CollisionListener implements ContactListener {
     private CrossplatformApp game;
     private JSONfunctions json = new JSONfunctions();
@@ -32,6 +33,7 @@ public class CollisionListener implements ContactListener {
 
     @Override
     public void beginContact(final Contact contact) {
+        //Eerst moeten we uitzoeken of de mol deel naamt aan botsing
         boolean isAmole = false;
         boolean isBmole = false;
         Fixture fixOne = contact.getFixtureA();
@@ -47,6 +49,7 @@ public class CollisionListener implements ContactListener {
             isAmole = false;
         }
 
+        //Vervolgens checken we of de mol gedood wordt door e.g. fluids en Ants
         if ((isAmole) && (udB instanceof fluidKillable)) {
             ((Mole) udA).killMole();
         } else if ((isBmole) && (udA instanceof fluidKillable)) {
@@ -61,6 +64,7 @@ public class CollisionListener implements ContactListener {
             ((Mole) udB).killMole();
         }
 
+        //Verder checken we natuurlijk of de mol een worm eet en dus punten scoort
         if ((isAmole) && (udB instanceof Wurrumpie)) {
             playerMemory.player.addPoints();
             ((Wurrumpie) udB).killWurrumpie();
@@ -69,7 +73,7 @@ public class CollisionListener implements ContactListener {
             ((Wurrumpie) udA).killWurrumpie();
         }
 
-        //Finish line
+        //En als laatste de finish:
         if (((isAmole) && (udB instanceof finishObject)) || (isBmole) && (udA instanceof finishObject)) {
             if (playerMemory.player.worldAndLevelData.getCurrentWorld() == 1) {
                 if (playerMemory.player.worldAndLevelData.getCurrentLevel() == 2) {

@@ -8,6 +8,8 @@ import com.paladinzzz.game.database.parseJSON;
 import com.paladinzzz.game.screens.MenuScreen;
 import com.paladinzzz.game.util.playerMemory;
 
+//De core launcher van het hele spel
+
 public class CrossplatformApp extends Game {
 	public static SpriteBatch batch;
 
@@ -17,22 +19,16 @@ public class CrossplatformApp extends Game {
 		musicHandler.playMusic();
         batch = new SpriteBatch();
         setScreen(new MenuScreen(this, musicHandler));
+
+		//Met de onderstaande try and catch checken we de internet verbinding, als de database geen namen returnt weten we dat er iets mis is en zetten we de internet optie uit
 		try {
 			JSONfunctions json = new JSONfunctions();
 			parseJSON parse = new parseJSON(json.doInBackground());
-
 			for (String i : parse.getNames()){
 				if(i != null) {
 					System.out.println(i);
 				}
 			}
-
-			for (String i : parse.getScores()){
-				if(i != null) {
-					System.out.println(i);
-				}
-			}
-
 			playerMemory.isConnected = true;
 		}
 		catch (Exception e){

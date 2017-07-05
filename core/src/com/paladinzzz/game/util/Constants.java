@@ -1,6 +1,6 @@
 package com.paladinzzz.game.util;
 
-import java.math.BigDecimal;
+//In deze file zetten we alle final variable die we waar dan ook nodig moeten hebben
 
 public final class Constants {
     public static final boolean DEBUGGER_ON = false;
