@@ -115,7 +115,6 @@ public class GameScreen implements Screen {
         while (objectList.hasNext()) {
             objectList.getNext().defineObject(world, worldMap);
         }
-        antStoppers.defineObject(world, worldMap);
 
 
         world.setContactListener(new CollisionListener(gameFile, tempMS));
@@ -131,6 +130,13 @@ public class GameScreen implements Screen {
     }
 
     private void handleInput(float deltaT) {
+
+        //Haal de tekst 'Press to jump' weg
+        if (Gdx.input.isTouched()){
+            levelHUD.removeSpaceText();
+        }
+
+        //Check of de debugger aan of uit is
         if (Constants.DEBUGGER_ON) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && (!(player.body.getLinearVelocity().y > 0 || player.body.getLinearVelocity().y < 0))) {
                 jump.play(0.20f * Constants.soundLevel);
@@ -189,6 +195,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        //Voordat we alls tekenenen moeten we eerst alles updaten: posities e.d.
         update(delta);
 
         //Voordat we beginnen met tekenen maken we het scherm leeg:
@@ -204,17 +211,11 @@ public class GameScreen implements Screen {
         //Zet de positie van de camera:
         game.batch.setProjectionMatrix(levelHUD.hudStage.getCamera().combined);
 
-        //Teken de HUD:
-        levelHUD.hudStage.draw();
-
         //Open de batch en teken alles:
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        if (Gdx.input.isTouched()){
-            levelHUD.removeSpaceText();
-        }
-
+        //Teken eerst de speler, gevolgd door alle ants en daarna alle wormen
         player.draw(game.batch);
         for(Ant ant : antsObject.getAnts()) {
             ant.draw(game.batch);
@@ -223,6 +224,7 @@ public class GameScreen implements Screen {
             worm.draw(game.batch);
         }
 
+        //Teken de hoedjes van de Mol
         if (hat.path != "None") {
             // Hat wordt 1 pixel hoger gedrawd als de player jumpt
             if (player.currentState == Mole.State.JUMPING) {
@@ -233,6 +235,9 @@ public class GameScreen implements Screen {
         }
 
         game.batch.end();
+
+        //Teken de HUD:
+        levelHUD.hudStage.draw();
     }
 
     public TextureAtlas getMoleAtlas(){
