@@ -7,6 +7,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+//This class retrieves unparsed json output from a given url
+// using PHP for queries on the webserver and retrieving and inserting data from mysqli
+
 public class JSONfunctions{
 
     public static final String MY_JSON ="MY_JSON";
@@ -75,7 +78,7 @@ public class JSONfunctions{
             return null;
         }
     }
-
+    
     public void setnewplayer(String user) {
         try {
             String theurl = "http://www.wemoney.nl/newuser.php?user=" + user;
