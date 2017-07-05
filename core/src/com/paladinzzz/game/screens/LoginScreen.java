@@ -51,7 +51,7 @@ public class LoginScreen implements Screen {
         this.playTexture = new Texture("Screens/LoginScreen/LvlSelection.png");
         this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
-        this.emptyTexture = new Texture("Screens/LevelScreen/Empty.png");
+        this.emptyTexture = new Texture("Screens/LoginScreen/LongEmpty.png");
         this.playername = "";
         this.tempMS = tempMS;
     }
