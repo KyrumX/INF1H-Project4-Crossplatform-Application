@@ -30,9 +30,9 @@ public class LoginScreen implements Screen {
 
     private com.paladinzzz.game.CrossplatformApp game;
     private Stage stage;
-    private ImageButton backButton, playButton;
-    private Texture backTexture, playTexture, background;
-    private Drawable drawableBack, drawablePlay;
+    private ImageButton backButton, playButton, emptyButton;
+    private Texture backTexture, playTexture, emptyTexture, background;
+    private Drawable drawableBack, drawablePlay, drawableEmpty;
     private OrthographicCamera camera;
     BitmapFont font = new BitmapFont();
     int[] x = new int[255];
@@ -51,6 +51,7 @@ public class LoginScreen implements Screen {
         this.playTexture = new Texture("Screens/LoginScreen/LvlSelection.png");
         this.backTexture = new Texture("Screens/BackButton.png");
         this.background = new Texture("Screens/LoginScreen/loginscreen.png");
+        this.emptyTexture = new Texture("Screens/LevelScreen/Empty.png");
         this.playername = "";
         this.tempMS = tempMS;
     }
@@ -83,13 +84,15 @@ public class LoginScreen implements Screen {
             }
         });
 
-
-        stage.addListener(new ClickListener(){
+        drawableEmpty = new TextureRegionDrawable(new TextureRegion(emptyTexture));
+        emptyButton = new ImageButton(drawableEmpty);
+        emptyButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.input.setOnscreenKeyboardVisible(true);
             }
         });
+
 
         //Hiermee kunnen elementen nu aan de stage worden toegevoegd
         input.setInputProcessor(stage);
@@ -98,6 +101,8 @@ public class LoginScreen implements Screen {
         table = new Table();
         table.bottom();
         table.setFillParent(true);
+        table.add(emptyButton).padBottom(20);
+        table.row();
         table.add(playButton).padBottom(40);
         stage.addActor(table);
 
@@ -140,17 +145,17 @@ public class LoginScreen implements Screen {
         for (int i : x) {
             if (input.isKeyJustPressed(i)) {
                 System.out.println(i);
-                    if (i != 62 && i != 67) {
-                        for(int d : letters){
-                            if (d == i){
-                                playername += Input.Keys.toString(d).toLowerCase();
-                            }
+                if (i != 62 && i != 67) {
+                    for(int d : letters){
+                        if (d == i){
+                            playername += Input.Keys.toString(d).toLowerCase();
                         }
-                    } else if (i == 67 & playername.length() > 0) {
-                        playername = playername.substring(0, playername.length() - 1).toLowerCase();
-                    } else {
-                        playername += " ";
                     }
+                } else if (i == 67 & playername.length() > 0) {
+                    playername = playername.substring(0, playername.length() - 1).toLowerCase();
+                } else {
+                    playername += " ";
+                }
 
             }
         }
