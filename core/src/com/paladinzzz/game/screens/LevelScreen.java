@@ -24,7 +24,6 @@ import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.scenes.MenuHUD;
 import com.paladinzzz.game.util.Constants;
 import com.paladinzzz.game.util.TempMS;
-import com.paladinzzz.game.util.WorldPicker;
 import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
@@ -66,7 +65,7 @@ public class LevelScreen implements Screen {
         this.level3textureDeny = new Texture("Screens/LevelScreen/Button3NOT.png");
         label2 = new Label(("Complete level 1 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         label3 = new Label(("Complete level 2 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        this.MenuHUD = new MenuHUD(game.batch, WorldPicker.getWorldName(playerMemory.player.worldAndLevelData.getCurrentWorld(), playerMemory.player.worldAndLevelData.getCurrentLevel()));
+        this.MenuHUD = new MenuHUD(game.batch);
 
     }
 

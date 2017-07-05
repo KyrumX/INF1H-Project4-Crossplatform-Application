@@ -1,6 +1,5 @@
 package com.paladinzzz.game.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,9 +11,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.paladinzzz.game.util.Constants;
-import com.paladinzzz.game.util.playerMemory;
-
-import static com.paladinzzz.game.screens.LoginScreen.playername;
 
 /**
  * Created by ryanw on 4-7-2017.
@@ -26,19 +22,17 @@ public class MenuHUD implements Disposable {
     private Viewport viewport;
 
     //HUD tekst:
-    private String worldName;
     private int score;
     private Label label2;
     private Label label3;
     public static boolean clicked = false;
 
 
-    public MenuHUD(SpriteBatch batch, String worldName) {
+    public MenuHUD(SpriteBatch batch) {
         this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera());
         this.button2stage = new Stage(viewport, batch);
         this.button3stage = new Stage(viewport, batch);
         this.score = 0;
-        this.worldName = worldName;
 
         //Maken van de labels:
         label2 = new Label(("Complete level 1 first!"), new Label.LabelStyle(new BitmapFont(), Color.WHITE));

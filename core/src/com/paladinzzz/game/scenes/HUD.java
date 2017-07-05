@@ -15,6 +15,9 @@ import com.paladinzzz.game.util.playerMemory;
 
 import static com.paladinzzz.game.screens.LoginScreen.playername;
 
+//Deze HUD tekenen we over ons gameScreen heen
+//De hud houdt dingen zoals naam, wereld en score bij.
+
 public class HUD implements Disposable {
     public Stage hudStage;
     private Viewport viewport;
@@ -30,7 +33,7 @@ public class HUD implements Disposable {
 
 
 
-    public HUD(SpriteBatch batch, String worldName) {
+    public HUD(SpriteBatch batch) {
         this.viewport = new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera());
         this.hudStage = new Stage(viewport, batch);
         this.score = 0;
@@ -81,6 +84,9 @@ public class HUD implements Disposable {
     }
 
     public void update(float dt) {
+        //Binnen de hud hoeven we alleen de score steeds up te daten.
+        //De naam en wereld veranderen namelijk niet.
+
         this.scoreLabel.setText(String.format("Score: " + "%03d", playerMemory.player.getScore()));
     }
 
