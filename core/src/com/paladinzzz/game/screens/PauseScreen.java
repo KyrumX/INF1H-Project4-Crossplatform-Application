@@ -23,6 +23,8 @@ import com.paladinzzz.game.util.TempMS;
 import static com.paladinzzz.game.screens.MenuScreen.musicHandler;
 
 
+//Een ongebruikte klas die een teamgenoot zomaar aanmaakte
+
 public class PauseScreen implements Screen {
 
     static GameScreen currentgame;

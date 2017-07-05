@@ -12,6 +12,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 import com.paladinzzz.game.util.Constants;
 
+//Deze klas beschrijft waar de finish lijn wordt geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de finsihBlocks layer, vervolgens spawnen we daar een finsih lijn
+
 public class finishObject implements IObject {
 
     private Body body;

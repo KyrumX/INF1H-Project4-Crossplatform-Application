@@ -11,6 +11,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
+//Deze klas beschrijft waar de antStoppers worden geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de antStoppers layer, vervolgens spawnen we daar blokken waar de ants niet doorheen kunnen.
+//De speler kan wel door deze blokken heen.
+
 public class antStopObject implements IObject {
     private Body body;
     private Rectangle rect;

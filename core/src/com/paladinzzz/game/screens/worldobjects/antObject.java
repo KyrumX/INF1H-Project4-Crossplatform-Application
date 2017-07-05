@@ -10,6 +10,9 @@ import com.paladinzzz.game.sprites.Ant;
 
 import java.util.ArrayList;
 
+//Deze klas beschrijft waar de Ants worden geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de Ants layer, vervolgens spawnen we daar Ants
+
 public class antObject implements IObject {
     private ArrayList<Ant> ants;
     private com.paladinzzz.game.screens.GameScreen screen;

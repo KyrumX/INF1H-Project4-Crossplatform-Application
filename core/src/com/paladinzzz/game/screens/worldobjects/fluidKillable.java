@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.paladinzzz.game.screens.worldobjects.visitor.objectVisitor;
 
+//Deze klas beschrijft waar de dodelijke objecten (water, spikes, etc.) worden geplaatst binnen onze wereld
+//We roepen uit de TiledMap alle Rectangles op van de fluidKillable layer, vervolgens spawnen we daar blokken die de speler doden wanneer deze elkaar aanraken
+
 public class fluidKillable implements IObject {
 
     private Body body;

@@ -1,4 +1,7 @@
 package com.paladinzzz.game.util;
+
+//Een class die we gebruiken om bij te houden in welke wereld+level de speler zit
+
 public class CurrentLevel {
     private int currentWorld;
     private int currentLevel;

@@ -7,6 +7,8 @@ import com.paladinzzz.game.screens.worldobjects.fluidKillable;
 import com.paladinzzz.game.screens.worldobjects.groundObject;
 import com.paladinzzz.game.screens.worldobjects.polygonObject;
 
+//De factory die we gebruiken om een groot deel van onze wereld objecten te maken
+
 public abstract class objectFactory {
     public static com.paladinzzz.game.screens.worldobjects.IObject createObject(int objectNum) {
         switch (objectNum) {

@@ -2,8 +2,9 @@ package com.paladinzzz.game.util;
 
 import com.paladinzzz.game.database.JSONfunctions;
 import com.paladinzzz.game.database.parseJSON;
-
 import static com.paladinzzz.game.screens.LoginScreen.playername;
+
+//De methodes die we gebruiken voor score
 
 public class scoreMethods {
     public static void grantPoints(){

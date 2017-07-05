@@ -2,6 +2,8 @@ package com.paladinzzz.game.screens.worldobjects.Iterator;
 
 import java.util.ArrayList;
 
+//De objectIterator gebruiken we om door alle wereld objecten heen te lopen
+
 public class ObjectIterator implements IIteratorObject {
 
     private ArrayList<com.paladinzzz.game.screens.worldobjects.IObject> list;
